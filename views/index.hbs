@@ -7,6 +7,9 @@
 
     socket.on('message', function(msg) {
         console.log(msg)
+        const p = document.createElement("p")
+        p.innerHTML = msg;
+        document.body.appendChild(p)
     });
 
 </script>
