@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {StartIteration} = require("../application/api/commands/iteration");
 const { v4: uuidv4 } = require('uuid');
+const {CreateGame} = require("../application/api/commands/game");
 
 const init = application => {
 
@@ -10,7 +11,9 @@ const init = application => {
   });
 
   router.post('/:gameId/iteration', function (req, res, next) {
-    const command = StartIteration(uuidv4());
+    const gameId = req.params.gameId;
+    application.execute(CreateGame(gameId));
+    const command = StartIteration(gameId, uuidv4());
     application.execute(command)
     res.send({params: req.params, body: req.body, iterationId: command.iterationId});
   });

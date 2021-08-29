@@ -1,35 +1,47 @@
 const EventBus = require("../application/EventBus");
 const {EndIteration} = require("./api/commands/iteration");
 const {IterationStarted, IterationFinished} = require("./api/events/iteration");
-const {GameCreated} = require("./api/events/game");
+const InMemoryDatabase = require("./InMemoryDatabase");
+const {CreateGame} = require("./domain/game");
 
-function createGame(gameId) {
-  return {gameId, iterations: []};
+
+function StartIteration(games, publish) {
+  const execute = (command) => {
+    const game = games.find(command.gameId);
+    game.iterations.push(command.iterationId)
+    publish(IterationStarted(game.gameId, command.iterationId));
+  };
+  return {
+    execute: execute
+  }
 }
 
-const Application = () => {
+const endIteration = (games, publish) => {
+  const execute = command => {
+    const game = games.find(command.gameId)
+
+    if (game && game.iterations.includes(command.iterationId))
+      publish(IterationFinished(game.gameId, command.iterationId));
+  }
+
+  return {execute}
+};
+
+const Application = (games = InMemoryDatabase()) => {
   const {publish, subscribe} = EventBus();
-  let state = []
+
+  const handlers = {
+    'CreateGame': CreateGame(games, publish),
+    'StartIteration': StartIteration(games, publish),
+    'EndIteration': endIteration(games, publish)
+  }
 
   const execute = command => {
-    switch (command.type) {
-      case 'CreateGame':
-        state = [...state, createGame(command.gameId)]
-        publish(GameCreated(command.gameId));
-        break;
-      case 'StartIteration':
-        state.filter(game => game.gameId === command.gameId)
-             .forEach(game => game.iterations.push(command.iterationId))
-        publish(IterationStarted(command.gameId, command.iterationId));
-        break;
-      case 'EndIteration':
-        const game = state.find(game => game.gameId === command.gameId)
-
-        if (game && game.iterations.includes(command.iterationId))
-          publish(IterationFinished(command.gameId, command.iterationId));
-        break;
-      default:
-        throw `Unknown command: ${JSON.stringify(command)}`;
+    if (handlers.hasOwnProperty(command.type))
+      handlers[command.type].execute(command);
+    else {
+      console.log({handlers});
+      throw `Unknown command: ${JSON.stringify(command)}`;
     }
   };
 
