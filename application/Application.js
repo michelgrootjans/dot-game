@@ -6,7 +6,8 @@ const {GameCreated} = require("./api/events/game");
 const Application = () => {
   const {publish, subscribe} = EventBus();
   const state = []
-  const iterations = []
+
+  const handlers = []
 
   const execute = command => {
     switch (command.type) {
@@ -34,6 +35,7 @@ const Application = () => {
 
   return {
     execute,
+    publish,
     subscribe
   }
 };
