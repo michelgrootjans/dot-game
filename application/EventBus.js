@@ -1,6 +1,5 @@
 const EventBus = () => {
   const subscribers = []
-  const listeners = []
 
   const subscribe = (eventType, handler) => subscribers.push({eventType, handler})
   const publish = event => {

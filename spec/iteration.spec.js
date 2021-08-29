@@ -1,38 +1,40 @@
 const Application = require("../application/Application");
-const EventBus = require("../application/EventBus");
+const {CreateGame} = require("../application/api/commands/game");
 const {StartIteration, EndIteration} = require("../application/api/commands/iteration");
 const {IterationStarted, IterationFinished} = require("../application/api/events/iteration");
+const {GameCreated} = require("../application/api/events/game");
 
 describe('Iteration', () => {
   let application = undefined;
   let events = undefined;
 
   beforeEach(function () {
-    events = [];
     application = Application();
+    application.execute(CreateGame('g1'))
+    events = [];
     application.subscribe("*", event => events.push(event))
   });
 
   it('can start', function () {
-    application.execute(StartIteration('i1'))
+    application.execute(StartIteration('g1', 'i1'))
     expect(events).toMatchObject([
-      IterationStarted('i1')
+      IterationStarted('g1', 'i1')
     ]);
   });
 
   it('can end', function () {
-    application.execute(StartIteration('i1'))
-    application.execute(EndIteration('i1'))
+    application.execute(StartIteration('g1', 'i1'))
+    application.execute(EndIteration('g1', 'i1'))
     expect(events).toMatchObject([
-      IterationStarted('i1'),
-      IterationFinished('i1')
+      IterationStarted('g1', 'i1'),
+      IterationFinished('g1', 'i1')
     ]);
   });
 
   it('cannot start a started iteration', function () {
-    application.execute(StartIteration('i1'), StartIteration('i1'))
+    application.execute(StartIteration('g1', 'i1'), StartIteration('g1', 'i1'))
     expect(events).toMatchObject([
-      IterationStarted('i1')
+      IterationStarted('g1', 'i1')
     ]);
   });
 
@@ -46,11 +48,11 @@ describe('Iteration', () => {
     afterEach(jest.useRealTimers);
 
     it('ends the iteration after a timeout', function () {
-      application.execute(StartIteration('i1'))
+      application.execute(StartIteration('g1', 'i1'))
       jest.runAllTimers();
       expect(events).toMatchObject([
-        IterationStarted('i1'),
-        IterationFinished('i1')
+        IterationStarted('g1', 'i1'),
+        IterationFinished('g1', 'i1')
       ]);
     });
   });
