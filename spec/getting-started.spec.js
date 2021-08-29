@@ -1,12 +1,16 @@
 const Application = (publish) => {
+  const iterations = []
+
   return {
     execute: command => {
       switch (command.type) {
         case 'StartIteration':
-          publish(IterationStarted());
+          iterations.push(command.iterationId)
+          publish(IterationStarted(command.iterationId));
           break;
         case 'EndIteration':
-          publish(IterationFinished());
+          if(iterations.includes(command.iterationId))
+            publish(IterationFinished(command.iterationId));
           break;
         default:
           throw `Unkown command: ${command}`;
@@ -14,12 +18,12 @@ const Application = (publish) => {
     }
   }
 }
-const StartIteration = () => {return {type: 'StartIteration'}}
-const EndIteration = () => {return {type: 'EndIteration'}}
-const IterationStarted = () => {return {type: 'IterationStarted'}}
-const IterationFinished = () => {return {type: 'IterationFinished'}}
+const StartIteration = (iterationId) => {return {type: 'StartIteration', iterationId}}
+const EndIteration = (iterationId) => {return {type: 'EndIteration', iterationId: iterationId}}
+const IterationStarted = (iterationId) => {return {type: 'IterationStarted', iterationId}}
+const IterationFinished = (iterationId) => {return {type: 'IterationFinished', iterationId}}
 
-describe('a simple iteration', () => {
+describe('Iteration', () => {
   let application = undefined;
   let events = undefined;
 
@@ -28,18 +32,24 @@ describe('a simple iteration', () => {
     application = Application(event => events.push(event));
   });
 
-  it('start iteration', function () {
-    application.execute(StartIteration())
+  it('can start', function () {
+    application.execute(StartIteration('i1'))
     expect(events).toMatchObject([
-      IterationStarted()
+      IterationStarted('i1')
     ]);
   });
-  it('end iteration', function () {
-    application.execute(StartIteration())
-    application.execute(EndIteration())
+
+  it('can end', function () {
+    application.execute(StartIteration('i1'))
+    application.execute(EndIteration('i1'))
     expect(events).toMatchObject([
-      IterationStarted(),
-      IterationFinished()
+      IterationStarted('i1'),
+      IterationFinished('i1')
     ]);
+  });
+
+  it('cannot end an unstarted iteration', function () {
+    application.execute(EndIteration('i1'))
+    expect(events).toMatchObject([]);
   });
 });
