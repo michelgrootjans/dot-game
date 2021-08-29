@@ -1,6 +1,5 @@
 const {IterationStarted, IterationFinished} = require("./api/events/iteration");
 const {EndIteration} = require("./api/commands/iteration");
-const {application} = require("express");
 const EventBus = require("../application/EventBus");
 
 let counter = 0;
