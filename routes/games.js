@@ -6,7 +6,7 @@ const { v4: uuidv4 } = require('uuid');
 const init = application => {
 
   router.get('/', function(req, res, next) {
-    res.send({ title: `Dot Game v2 - ${application.name}` });
+    res.send({ title: 'Dot Game v2' });
   });
 
   router.post('/:gameId/iteration', function (req, res, next) {

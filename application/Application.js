@@ -5,12 +5,9 @@ const EventBus = require("../application/EventBus");
 let counter = 0;
 
 const Application = () => {
-  const eventBus = EventBus();
-  const subscribe = eventBus.subscribe
-  const publish = eventBus.publish
+  const {publish, subscribe} = EventBus();
 
   const iterations = []
-  const name = "application" + counter++
 
   const execute = command => {
     switch (command.type) {
@@ -31,8 +28,7 @@ const Application = () => {
 
   return {
     execute,
-    subscribe,
-    name
+    subscribe
   }
 };
 
