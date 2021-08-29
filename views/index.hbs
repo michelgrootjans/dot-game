@@ -5,10 +5,10 @@
 <script>
     var socket = io();
 
-    socket.on('message', function(msg) {
-        console.log(msg)
+    socket.on('message', function(event) {
+        console.log(event)
         const p = document.createElement("p")
-        p.innerHTML = msg;
+        p.innerHTML = JSON.stringify(event);
         document.body.appendChild(p)
     });
 

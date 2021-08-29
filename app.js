@@ -1,18 +1,21 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var socketApi = require('./socketapi')
+const http = require('http');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const socketApi = require('./socketapi')
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
 const Application = require("./application/application");
 
-var application = Application({publish: console.log, subscribe: console.log});
-var gamesRouter = require('./routes/games')
+const gamesRouter = require('./routes/games')
 
-var app = express();
+
+const application = Application({publish: console.log, subscribe: console.log});
+
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -44,4 +47,11 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = {app};
+var port = (process.env.PORT || '3000');
+app.set('port', port);
+
+var server = http.createServer(app);
+socketApi.init(server)
+
+
+module.exports = {server, port};

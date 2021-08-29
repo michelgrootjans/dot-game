@@ -3,20 +3,21 @@ const { Server } = require("socket.io");
 let init = server => {
   const io = new Server(server);
 
-  io.on('connection', (socket) => {
-    const publish = message => {
-      console.log({message, clientId: socket.client.id, id: socket.id})
-      io.emit('message', message)
-    };
+  const publish = event => {
+    console.log({message: event})
+    io.emit('message', event)
+  };
 
-    publish('a user joined');
+  io.on('connection', (socket) => {
+
+    publish({type: 'UserJoined'});
 
     socket.on('disconnect', () => {
-      publish('a user left');
+      publish({type: 'UserLeft'});
     });
   });
 
+  return {publish}
 };
-
 
 module.exports = {init}
