@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watchAll",
     "start": "node ./bin/www",
     "devstart": "nodemon ./bin/www",
     "serverstart": "DEBUG=dot-game:* npm run devstart"
@@ -18,6 +20,7 @@
     "socket.io": "^4.1.3"
   },
   "devDependencies": {
+    "jest": "^27.1.0",
     "nodemon": "^2.0.12"
   }
 }
