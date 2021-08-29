@@ -3,12 +3,12 @@ const { Server } = require("socket.io");
 let init = server => {
   const io = new Server(server);
 
-  const publish = message => {
-    console.log(message);
-    io.emit('message', message)
-  };
-
   io.on('connection', (socket) => {
+    const publish = message => {
+      console.log({message, clientId: socket.client.id, id: socket.id})
+      io.emit('message', message)
+    };
+
     publish('a user joined');
 
     socket.on('disconnect', () => {
