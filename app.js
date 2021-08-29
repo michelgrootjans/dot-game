@@ -13,7 +13,7 @@ const Application = require("./application/Application");
 const gamesRouter = require('./routes/games')
 
 
-const application = Application({publish: console.log, subscribe: console.log});
+const application = Application();
 
 const app = express();
 
@@ -51,7 +51,8 @@ var port = (process.env.PORT || '3000');
 app.set('port', port);
 
 var server = http.createServer(app);
-socketApi.init(server)
+const socket = socketApi.init(server)
+application.tap(socket.publish);
 
 
 module.exports = {server, port};

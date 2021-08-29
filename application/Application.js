@@ -28,7 +28,7 @@ const Application = () => {
     }
   };
 
-  subscribe('IterationStarted', event => setTimeout(() => execute(EndIteration(event.iterationId)), 1000))
+  subscribe('IterationStarted', event => setTimeout(() => execute(EndIteration(event.iterationId)), 5 * 1000))
 
   return {
     execute,
