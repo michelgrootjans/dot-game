@@ -3,16 +3,18 @@ const {EndIteration} = require("./api/commands/iteration");
 const {IterationStarted, IterationFinished} = require("./api/events/iteration");
 const {GameCreated} = require("./api/events/game");
 
+function createGame(gameId) {
+  return {gameId, iterations: []};
+}
+
 const Application = () => {
   const {publish, subscribe} = EventBus();
-  const state = []
-
-  const handlers = []
+  let state = []
 
   const execute = command => {
     switch (command.type) {
       case 'CreateGame':
-        state.push({gameId: command.gameId, iterations: []})
+        state = [...state, createGame(command.gameId)]
         publish(GameCreated(command.gameId));
         break;
       case 'StartIteration':
