@@ -8,7 +8,7 @@ const socketApi = require('./socketapi')
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const Application = require("./application/application");
+const Application = require("./application/Application");
 
 const gamesRouter = require('./routes/games')
 

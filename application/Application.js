@@ -1,14 +1,18 @@
 const {IterationStarted, IterationFinished} = require("./api/events/iteration");
 const {EndIteration} = require("./api/commands/iteration");
 const {application} = require("express");
+const EventBus = require("../application/EventBus");
 
 let counter = 0;
 
-const Application = ({publish, subscribe}) => {
+const Application = () => {
+  const eventBus = EventBus();
+  const subscribe = eventBus.subscribe
+  const publish = eventBus.publish
+  const tap = eventBus.tap
+
   const iterations = []
   const name = "application" + counter++
-  console.log(`creating ${name}`)
-
 
   const execute = command => {
     switch (command.type) {
@@ -29,6 +33,7 @@ const Application = ({publish, subscribe}) => {
 
   return {
     execute,
+    tap,
     name
   }
 };
