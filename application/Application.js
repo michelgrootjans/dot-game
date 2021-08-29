@@ -8,7 +8,6 @@ const Application = () => {
   const eventBus = EventBus();
   const subscribe = eventBus.subscribe
   const publish = eventBus.publish
-  const tap = eventBus.tap
 
   const iterations = []
   const name = "application" + counter++
@@ -32,7 +31,7 @@ const Application = () => {
 
   return {
     execute,
-    tap,
+    subscribe,
     name
   }
 };

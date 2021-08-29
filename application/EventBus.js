@@ -4,16 +4,13 @@ const EventBus = () => {
 
   const subscribe = (eventType, handler) => subscribers.push({eventType, handler})
   const publish = event => {
-    subscribers.filter(subscriber => subscriber.eventType === event.type)
-      .forEach(subscriber => subscriber.handler(event));
-    listeners.forEach(listener => listener(event));
+    subscribers.filter(subscriber => [event.type, '*'].includes(subscriber.eventType))
+               .forEach(subscriber => subscriber.handler(event));
   }
-  const tap = listener => listeners.push(listener)
 
   return {
     publish,
-    subscribe,
-    tap
+    subscribe
   }
 };
 

@@ -52,7 +52,7 @@ app.set('port', port);
 
 var server = http.createServer(app);
 const socket = socketApi.init(server)
-application.tap(socket.publish);
+application.subscribe('*', socket.publish);
 
 
 module.exports = {server, port};

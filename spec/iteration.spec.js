@@ -10,7 +10,7 @@ describe('Iteration', () => {
   beforeEach(function () {
     events = [];
     application = Application();
-    application.tap(event => events.push(event))
+    application.subscribe("*", event => events.push(event))
   });
 
   it('can start', function () {
@@ -26,6 +26,13 @@ describe('Iteration', () => {
     expect(events).toMatchObject([
       IterationStarted('i1'),
       IterationFinished('i1')
+    ]);
+  });
+
+  it('cannot start a started iteration', function () {
+    application.execute(StartIteration('i1'), StartIteration('i1'))
+    expect(events).toMatchObject([
+      IterationStarted('i1')
     ]);
   });
 
