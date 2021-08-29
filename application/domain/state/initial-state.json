@@ -2,6 +2,11 @@
   "games": [
     {
       "id": "g1",
+      "stats": {
+        "throughput": 0,
+        "cycle time": 0,
+        "wip": 0
+      },
       "board": {
         "columns": [
           {"id": "c1", "name": "To do"},
@@ -15,18 +20,16 @@
           {"id": "c9", "name": "Done"}
         ],
         "iterations": [{
+          "id": "i1",
+          "startTime": "",
+          "endTime": "",
           "workItems": [
             {"id":  "t1", "column":"c1"},
             {"id":  "t2", "column":"c1"},
             {"id":  "t3", "column":"c1"},
             {"id":  "t4", "column":"c1"},
             {"id":  "t5", "column":"c1"}
-          ],
-          "stats": {
-            "throughput": 0,
-            "cycle time": 0,
-            "wip": 0
-          }
+          ]
         }]
       }
 
