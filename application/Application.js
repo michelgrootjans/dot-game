@@ -1,10 +1,9 @@
 const EventBus = require("../application/EventBus");
-const InMemoryDatabase = require("./InMemoryDatabase");
 const {CreateGame} = require("./domain/game");
 const {StartIteration, EndIterationHandler, IterationProcessManager} = require("./domain/iteration");
 
 
-const Application = (games = InMemoryDatabase()) => {
+const Application = (games) => {
   const {publish, subscribe} = EventBus();
 
   const handlers = {
@@ -16,8 +15,7 @@ const Application = (games = InMemoryDatabase()) => {
   const execute = command => {
     if (handlers.hasOwnProperty(command.type)) {
       handlers[command.type].execute(command);
-    }
-    else {
+    } else {
       throw `Unknown command: ${JSON.stringify(command)}`;
     }
   };

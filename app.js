@@ -11,9 +11,10 @@ const usersRouter = require('./routes/users');
 const Application = require("./application/Application");
 
 const gamesRouter = require('./routes/games')
+const InMemoryDatabase = require("./application/InMemoryDatabase");
 
 
-const application = Application();
+const application = Application(InMemoryDatabase());
 
 const app = express();
 
