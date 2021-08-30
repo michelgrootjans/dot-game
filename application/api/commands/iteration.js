@@ -1,5 +1,5 @@
-const StartIteration = (gameId, iterationId) => {
-  return {type: 'StartIteration', gameId, iterationId}
+const StartIteration = (gameId, iterationId, duration) => {
+  return {type: 'StartIteration', gameId, iterationId, duration}
 }
 const EndIteration = (gameId, iterationId) => {
   return {type: 'EndIteration', gameId, iterationId}

@@ -1,14 +1,14 @@
 const {IterationStarted, IterationFinished} = require("../api/events/iteration");
 const {EndIteration} = require("../api/commands/iteration");
 
-function StartIteration(games, publish) {
+const StartIteration = (games, publish) => {
   const execute = command => {
     const game = games.find(command.gameId);
     game.iterations.push(command.iterationId)
-    publish(IterationStarted(game.gameId, command.iterationId));
+    publish(IterationStarted(game.gameId, command.iterationId, command.duration));
   };
   return {execute}
-}
+};
 
 const EndIterationHandler = (games, publish) => {
   const execute = command => {

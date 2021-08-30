@@ -12,7 +12,7 @@ const init = application => {
   });
 
   router.post('/:gameId/iteration', function (req, res, next) {
-    const command = StartIteration(req.params.gameId, req.body.iterationId);
+    const command = StartIteration(req.params.gameId, req.body.iterationId, req.body.duration || 5 * 60 * 1000);
     application.execute(command)
     res.send({params: req.params, body: req.body, command: JSON.stringify(command)});
   });
