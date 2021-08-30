@@ -2,7 +2,6 @@ const Application = require("../application/Application");
 const {CreateGame} = require("../application/api/commands/game");
 const {StartIteration, EndIteration} = require("../application/api/commands/iteration");
 const {IterationStarted, IterationFinished} = require("../application/api/events/iteration");
-const {GameCreated} = require("../application/api/events/game");
 const InMemoryDatabase = require("../application/InMemoryDatabase");
 
 describe('Iteration', () => {

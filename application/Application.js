@@ -6,15 +6,15 @@ const {StartIteration, EndIterationHandler, IterationProcessManager} = require("
 const Application = (games) => {
   const {publish, subscribe} = EventBus();
 
-  const handlers = {
+  const commandHandlers = {
     'CreateGame': CreateGame(games, publish),
     'StartIteration': StartIteration(games, publish),
     'EndIteration': EndIterationHandler(games, publish)
   }
 
   const execute = command => {
-    if (handlers.hasOwnProperty(command.type)) {
-      handlers[command.type].execute(command);
+    if (commandHandlers.hasOwnProperty(command.type)) {
+      commandHandlers[command.type].execute(command);
     } else {
       throw `Unknown command: ${JSON.stringify(command)}`;
     }
