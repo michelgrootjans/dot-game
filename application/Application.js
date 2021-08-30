@@ -2,8 +2,7 @@ const EventBus = require("../application/EventBus");
 const {CreateGame} = require("./domain/game");
 const {StartIteration, EndIterationHandler, IterationProcessManager} = require("./domain/iteration");
 
-
-const Application = (games) => {
+const Application = (games, delay) => {
   const {publish, subscribe} = EventBus();
 
   const commandHandlers = {
@@ -20,7 +19,7 @@ const Application = (games) => {
     }
   };
 
-  IterationProcessManager().initialize(subscribe, execute);
+  IterationProcessManager().initialize(subscribe, execute, delay);
 
   return {
     execute,

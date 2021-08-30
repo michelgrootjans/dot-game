@@ -9,7 +9,7 @@ describe('Iteration', () => {
   let events = undefined;
 
   beforeEach(function () {
-    application = Application(InMemoryDatabase());
+    application = Application(InMemoryDatabase(), () => {});
     application.execute(CreateGame('g1'))
     events = [];
     application.subscribe("*", event => events.push(event))
@@ -41,20 +41,6 @@ describe('Iteration', () => {
   it('cannot end an unstarted iteration', function () {
     application.execute(EndIteration('i1'))
     expect(events).toMatchObject([]);
-  });
-
-  describe('Process manager', () => {
-    beforeEach(jest.useFakeTimers);
-    afterEach(jest.useRealTimers);
-
-    it('ends the iteration after a timeout', function () {
-      application.execute(StartIteration('g1', 'i1'))
-      jest.runAllTimers();
-      expect(events).toMatchObject([
-        IterationStarted('g1', 'i1'),
-        IterationFinished('g1', 'i1')
-      ]);
-    });
   });
 });
 

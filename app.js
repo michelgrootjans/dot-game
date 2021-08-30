@@ -13,8 +13,7 @@ const Application = require("./application/Application");
 const gamesRouter = require('./routes/games')
 const InMemoryDatabase = require("./application/InMemoryDatabase");
 
-
-const application = Application(InMemoryDatabase());
+const application = Application(InMemoryDatabase(), setTimeout);
 
 const app = express();
 
