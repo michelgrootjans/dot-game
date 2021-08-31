@@ -3,7 +3,7 @@ const {CreateGame} = require("../application/api/commands/game");
 const {StartIteration, EndIteration} = require("../application/api/commands/iteration");
 const InMemoryDatabase = require("../application/InMemoryDatabase");
 const {CreateTask, MoveTask} = require("../application/api/commands/task");
-const {TaskCreated, TaskMoved} = require("../application/api/events/task");
+const {TaskCreated, TaskMoved, TaskFinished} = require("../application/api/events/task");
 const {IterationFinished} = require("../application/api/events/iteration");
 
 describe('Tasks', () => {
@@ -43,6 +43,25 @@ describe('Tasks', () => {
       TaskCreated({gameId: 'g1', taskId:'t1', columnId: 'c1'}),
       TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c2'}),
       TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c3'})
+    ]);
+  });
+
+  it('moves a task until done', () => {
+    application.execute(CreateTask({gameId: 'g1', taskId: 't1'}));
+    for (let i = 1; i < 9; i++) {
+      application.execute(MoveTask({gameId: 'g1', taskId: 't1'}))
+    }
+    expect(events).toMatchObject([
+      TaskCreated({gameId: 'g1', taskId:'t1', columnId: 'c1'}),
+      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c2'}),
+      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c3'}),
+      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c4'}),
+      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c5'}),
+      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c6'}),
+      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c7'}),
+      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c8'}),
+      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c9'}),
+      TaskFinished({gameId: 'g1', taskId:'t1'}),
     ]);
   });
 
