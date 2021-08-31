@@ -1,4 +1,4 @@
-const CreateTask = (gameId, taskId) => {
+const CreateTask = ({gameId, taskId}) => {
   return {type: 'CreateTask', gameId, taskId}
 };
 

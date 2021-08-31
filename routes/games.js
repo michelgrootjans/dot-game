@@ -10,26 +10,25 @@ const init = application => {
   router.post('/', function (req, res, next) {
     const command = CreateGame({...req.body, ...req.params});
     application.execute(command);
-    res.send({...req.params, ...req.body, command: JSON.stringify(command)});
+    res.sendStatus(200);
   });
 
   router.post('/:gameId/iterations', function (req, res, next) {
     const command = StartIteration({duration: 5 * 60 * 1000, ...req.body, ...req.params});
     application.execute(command)
-    console.log({...req.params, ...req.body, command: JSON.stringify(command)})
-    res.send({...req.params, ...req.body, command: JSON.stringify(command)});
+    res.sendStatus(200);
   });
 
   router.post('/:gameId/tasks', function (req, res, next) {
-    const command = CreateTask(req.params.gameId, req.body.taskId);
+    const command = CreateTask({...req.body, ...req.params});
     application.execute(command)
-    res.send({...req.params, ...req.body, command: JSON.stringify(command)});
+    res.sendStatus(200);
   });
 
   router.post('/:gameId/tasks/:taskId/move', function (req, res, next) {
     const command = MoveTask(req.params.gameId, req.params.taskId);
     application.execute(command)
-    res.send({...req.params, ...req.body, command: JSON.stringify(command)});
+    res.sendStatus(200);
   });
 
   

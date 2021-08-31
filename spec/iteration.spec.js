@@ -16,6 +16,12 @@ describe('Iteration', () => {
     application.subscribe("*", event => events.push(event))
   });
 
+
+  it('cannot start a game again', function () {
+    application.execute(CreateGame({gameId: 'g1'}))
+    expect(events).toMatchObject([]);
+  });
+
   it('can start', function () {
     application.execute(StartIteration({gameId: 'g1'}))
     expect(events).toMatchObject([
