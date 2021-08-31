@@ -9,7 +9,8 @@ describe('Iteration', () => {
   let events = undefined;
 
   beforeEach(function () {
-    application = Application(InMemoryDatabase(), () => {});
+    const database = InMemoryDatabase();
+    application = Application(database, () => {});
     application.execute(CreateGame('g1'))
     events = [];
     application.subscribe("*", event => events.push(event))
@@ -29,18 +30,6 @@ describe('Iteration', () => {
       IterationStarted('g1', 'i1'),
       IterationFinished('g1', 'i1')
     ]);
-  });
-
-  it('cannot start a started iteration', function () {
-    application.execute(StartIteration('g1', 'i1'))
-    expect(events).toMatchObject([
-      IterationStarted('g1', 'i1')
-    ]);
-  });
-
-  it('cannot end an unstarted iteration', function () {
-    application.execute(EndIteration('i1'))
-    expect(events).toMatchObject([]);
   });
 });
 

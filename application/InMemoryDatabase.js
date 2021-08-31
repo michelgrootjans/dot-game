@@ -1,9 +1,11 @@
 const InMemoryDatabase = () => {
   let games = [];
 
+  const add = game => games = [...games, game];
+  const find = gameId => games.find(game => game.gameId === gameId);
   return {
-    add: game => games = [...games, game],
-    find: gameId => games.find(game => game.gameId === gameId)
+    add,
+    find
   }
 };
 

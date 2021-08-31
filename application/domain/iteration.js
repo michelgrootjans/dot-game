@@ -4,8 +4,10 @@ const {EndIteration} = require("../api/commands/iteration");
 const StartIteration = (games, publish) => {
   const execute = command => {
     const game = games.find(command.gameId);
-    game.iterations.push(command.iterationId)
-    publish(IterationStarted(game.gameId, command.iterationId, command.duration));
+    if (game) {
+      game.iterations.push(command.iterationId);
+      publish(IterationStarted(game.gameId, command.iterationId, command.duration));
+    }
   };
   return {execute}
 };
@@ -14,7 +16,7 @@ const EndIterationHandler = (games, publish) => {
   const execute = command => {
     const game = games.find(command.gameId)
 
-    if (game && game.iterations.includes(command.iterationId)) {
+    if (game) {
       publish(IterationFinished(game.gameId, command.iterationId));
     }
   }
