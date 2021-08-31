@@ -2,7 +2,7 @@ const Application = require("../application/Application");
 const {CreateGame} = require("../application/api/commands/game");
 const {StartIteration} = require("../application/api/commands/iteration");
 const InMemoryDatabase = require("../application/InMemoryDatabase");
-const CreateTask = require("../application/api/commands/task");
+const {CreateTask} = require("../application/api/commands/task");
 const {TaskCreated} = require("../application/api/events/task");
 
 describe('Tasks', () => {
