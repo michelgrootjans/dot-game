@@ -3,7 +3,7 @@ import {useEffect} from "react";
 
 export default function Home() {
   useEffect(() => {
-    const socket = io('http://127.0.0.1:3000');
+    const socket = io();
     socket.on('message', function (event) {
       console.log(event)
     });
