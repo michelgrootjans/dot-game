@@ -1,4 +1,4 @@
-const IterationStarted = (gameId, iterationId, duration) => {
+const IterationStarted = (gameId, iterationId, duration = 5000) => {
   return {type: 'IterationStarted', gameId, iterationId, duration}
 }
 const IterationFinished = (gameId, iterationId) => {
