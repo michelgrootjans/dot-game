@@ -1,7 +1,7 @@
 const EventBus = require("../application/EventBus");
 const {CreateGameHandler} = require("./domain/gameHandlers");
-const {StartIterationHandler, EndIterationHandler, IterationProcessManager} = require("./domain/iteration");
-const {CreateTaskHandler, MoveTaskHandler} = require("./domain/task");
+const {StartIterationHandler, EndIterationHandler, IterationProcessManager} = require("./domain/iterationHandlers");
+const {CreateTaskHandler, MoveTaskHandler} = require("./domain/taskHandlers");
 
 const Application = (games, delay) => {
   const {publish, subscribe} = EventBus();
