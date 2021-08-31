@@ -17,14 +17,14 @@ describe('Iteration', () => {
   });
 
   it('can start', function () {
-    application.execute(StartIteration('g1', 'i1'))
+    application.execute(StartIteration({gameId: 'g1'}))
     expect(events).toMatchObject([
-      IterationStarted('g1', 'i1')
+      IterationStarted('g1')
     ]);
   });
 
   it('can end', function () {
-    application.execute(StartIteration('g1'))
+    application.execute(StartIteration({gameId: 'g1'}))
     application.execute(EndIteration('g1'))
     expect(events).toMatchObject([
       IterationStarted('g1'),

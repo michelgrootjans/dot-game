@@ -14,7 +14,7 @@ describe('Tasks', () => {
     const database = InMemoryDatabase();
     application = Application(database, () => {});
     application.execute(CreateGame({gameId: 'g1'}))
-    application.execute(StartIteration('g1'))
+    application.execute(StartIteration({gameId: 'g1'}))
     events = [];
     application.subscribe("*", event => events.push(event))
   });

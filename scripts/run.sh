@@ -1,5 +1,5 @@
 http -f POST :3000/games/ gameId=1
-http -f POST :3000/games/1/iterations duration=10000
+http -f POST :3000/games/1/iterations duration=5000
 
 http -f POST :3000/games/1/tasks taskId='t1'
 http -f POST :3000/games/1/tasks taskId='t2'

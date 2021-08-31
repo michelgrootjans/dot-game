@@ -14,7 +14,7 @@ const init = application => {
   });
 
   router.post('/:gameId/iterations', function (req, res, next) {
-    const command = StartIteration(req.params.gameId, req.body.duration || 5 * 60 * 1000);
+    const command = StartIteration({duration: 5 * 60 * 1000, ...req.body, ...req.params});
     application.execute(command)
     console.log({...req.params, ...req.body, command: JSON.stringify(command)})
     res.send({...req.params, ...req.body, command: JSON.stringify(command)});

@@ -1,5 +1,5 @@
-const StartIteration = (gameId, duration = 5000) => {
-  return {type: 'StartIteration', gameId, duration}
+const StartIteration = (input) => {
+  return {...input, type: 'StartIteration'}
 }
 const EndIteration = (gameId) => {
   return {type: 'EndIteration', gameId}
