@@ -6,7 +6,7 @@ const StartIterationHandler = (games, publish) => {
     const game = games.find(gameId);
     if (game) {
       game.startIteration(duration);
-      publish(IterationStarted(game.gameId, duration));
+      publish(IterationStarted({...game, duration}));
     }
   };
   return {execute}

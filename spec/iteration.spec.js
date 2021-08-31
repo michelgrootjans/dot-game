@@ -25,7 +25,7 @@ describe('Iteration', () => {
   it('can start', function () {
     application.execute(StartIteration({gameId: 'g1'}))
     expect(events).toMatchObject([
-      IterationStarted('g1')
+      IterationStarted({gameId: 'g1'})
     ]);
   });
 
@@ -33,7 +33,7 @@ describe('Iteration', () => {
     application.execute(StartIteration({gameId: 'g1'}))
     application.execute(EndIteration({gameId: 'g1'}))
     expect(events).toMatchObject([
-      IterationStarted('g1'),
+      IterationStarted({gameId: 'g1'}),
       IterationFinished('g1')
     ]);
   });
