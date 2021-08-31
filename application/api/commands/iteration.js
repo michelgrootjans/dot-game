@@ -1,8 +1,8 @@
 const StartIteration = (input) => {
   return {...input, type: 'StartIteration'}
 }
-const EndIteration = (gameId) => {
-  return {type: 'EndIteration', gameId}
+const EndIteration = (input) => {
+  return {...input, type: 'EndIteration'}
 }
 
 module.exports = {

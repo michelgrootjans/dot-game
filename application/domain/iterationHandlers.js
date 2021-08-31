@@ -27,7 +27,7 @@ const EndIterationHandler = (games, publish) => {
 
 const IterationProcessManager = () => {
   const initialize = (subscribe, execute, delay) => {
-    subscribe('IterationStarted', event => delay(() => execute(EndIteration(event.gameId, event.iterationId)), event.duration));
+    subscribe('IterationStarted', event => delay(() => execute(EndIteration(event)), event.duration));
   };
 
   return {initialize};

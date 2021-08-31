@@ -47,7 +47,7 @@ describe('Tasks', () => {
   });
 
   it('cannot create a task when iteration is finished', () => {
-    application.execute(EndIteration('g1'))
+    application.execute(EndIteration({gameId: 'g1'}))
     application.execute(CreateTask('g1', 't1'))
     expect(events).toMatchObject([
       IterationFinished('g1')
@@ -56,7 +56,7 @@ describe('Tasks', () => {
 
   it('cannot move a task when iteration is finished', () => {
     application.execute(CreateTask('g1', 't1'))
-    application.execute(EndIteration('g1'))
+    application.execute(EndIteration({gameId: 'g1'}))
     application.execute(MoveTask('g1', 't1'))
     expect(events).toMatchObject([
       TaskCreated('g1', 't1', 'c1'),

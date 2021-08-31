@@ -25,7 +25,7 @@ describe('Iteration', () => {
 
   it('can end', function () {
     application.execute(StartIteration({gameId: 'g1'}))
-    application.execute(EndIteration('g1'))
+    application.execute(EndIteration({gameId: 'g1'}))
     expect(events).toMatchObject([
       IterationStarted('g1'),
       IterationFinished('g1')
