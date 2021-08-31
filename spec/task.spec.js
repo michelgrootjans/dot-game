@@ -3,6 +3,7 @@ const {CreateGame} = require("../application/api/commands/game");
 const {StartIteration} = require("../application/api/commands/iteration");
 const InMemoryDatabase = require("../application/InMemoryDatabase");
 const CreateTask = require("../application/api/commands/task");
+const {TaskCreated} = require("../application/api/events/task");
 
 describe('Tasks', () => {
   let application = undefined;
@@ -18,11 +19,10 @@ describe('Tasks', () => {
   });
 
   it('creates a workitem', function () {
-    application.execute(CreateTask('g1', 'w1'))
-    // expect(events).toMatchObject([
-    //   WorkItemCreated('g1', 'w1')
-    // ]);
-
+    application.execute(CreateTask('g1', 't1'))
+    expect(events).toMatchObject([
+      TaskCreated('g1', 't1')
+    ]);
   });
 
 });
