@@ -1,38 +1,33 @@
 {
-  "games": [
-    {
-      "id": "g1",
-      "stats": {
-        "throughput": 0,
-        "cycle time": 0,
-        "wip": 0
-      },
-      "board": {
-        "columns": [
-          {"id": "c1", "name": "To do"},
-          {"id": "c2", "name": "Analysis"},
-          {"id": "c3", "name": "Ready for design"},
-          {"id": "c4", "name": "Design"},
-          {"id": "c5", "name": "Reday for development"},
-          {"id": "c6", "name": "Development"},
-          {"id": "c7", "name": "Ready for QA"},
-          {"id": "c8", "name": "QA"},
-          {"id": "c9", "name": "Done"}
-        ],
-        "iterations": [{
-          "id": "i1",
-          "startTime": "",
-          "endTime": "",
-          "workItems": [
-            {"id":  "t1", "column":"c1"},
-            {"id":  "t2", "column":"c1"},
-            {"id":  "t3", "column":"c1"},
-            {"id":  "t4", "column":"c1"},
-            {"id":  "t5", "column":"c1"}
-          ]
-        }]
-      }
-
-    }
-  ],
+  "id": "g1",
+  "board": {
+    "columns": [
+      {"id": "c1", "name": "To do"},
+      {"id": "c2", "name": "Analysis"},
+      {"id": "c3", "name": "Ready for design"},
+      {"id": "c4", "name": "Design"},
+      {"id": "c5", "name": "Reday for development"},
+      {"id": "c6", "name": "Development"},
+      {"id": "c7", "name": "Ready for QA"},
+      {"id": "c8", "name": "QA"},
+      {"id": "c9", "name": "Done"}
+    ]
+  },
+  "iterations": [{
+    "id": "i1",
+    "startTime": "",
+    "endTime": "",
+    "stats": {
+      "throughput": 0,
+      "cycle time": 0,
+      "wip": 0
+    },
+    "workItems": [
+      {"id":  "t1", "column":"c1"},
+      {"id":  "t2", "column":"c1"},
+      {"id":  "t3", "column":"c1"},
+      {"id":  "t4", "column":"c1"},
+      {"id":  "t5", "column":"c1"}
+    ]
+  }]
 }
