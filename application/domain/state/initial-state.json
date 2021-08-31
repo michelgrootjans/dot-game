@@ -1,14 +1,14 @@
 {
   "columns": [
-    {"columnId": "c1", "name": "To do"},
-    {"columnId": "c2", "name": "Analysis"},
-    {"columnId": "c3", "name": "Ready for design"},
-    {"columnId": "c4", "name": "Design"},
-    {"columnId": "c5", "name": "Reday for development"},
-    {"columnId": "c6", "name": "Development"},
-    {"columnId": "c7", "name": "Ready for QA"},
-    {"columnId": "c8", "name": "QA"},
-    {"columnId": "c9", "name": "Done"}
+    {"columnId": "c1", "title": "To do"},
+    {"columnId": "c2", "title": "Analysis"},
+    {"columnId": "c3", "title": "Ready for design"},
+    {"columnId": "c4", "title": "Design"},
+    {"columnId": "c5", "title": "Reday for development"},
+    {"columnId": "c6", "title": "Development"},
+    {"columnId": "c7", "title": "Ready for QA"},
+    {"columnId": "c8", "title": "QA"},
+    {"columnId": "c9", "title": "Done"}
   ],
   "iterations": []
 }
