@@ -2,6 +2,10 @@ const Game = game => {
   const columns = game.columns;
   const todo = columns[0];
 
+
+  const findTask = taskId => game.tasks.find(t => t.taskId === taskId);
+  const findColumn = columnId => columns.find(c => c.columnId === columnId);
+
   const startIteration = (duration) => {
     game.currentIteration = {duration};
     game.tasks = []
@@ -22,8 +26,8 @@ const Game = game => {
   const moveTask = taskId => {
     if (!game.currentIteration) return;
 
-    const task = game.tasks.find(t => t.taskId === taskId);
-    const column = columns.find(c => c.columnId === task.columnId)
+    const task = findTask(taskId);
+    const column = findColumn(task.columnId)
     task.columnId = column.nextColumnId;
 
     return task
