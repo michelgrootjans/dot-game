@@ -16,14 +16,18 @@ describe('Iteration', () => {
   });
 
   it('can start', function () {
-    application.execute(StartIteration('g1', 'i1'))
+    application.execute(
+      StartIteration('g1', 'i1')
+    )
     expect(events).toMatchObject([
       IterationStarted('g1', 'i1')
     ]);
   });
 
   it('can end', function () {
-    application.execute(StartIteration('g1', 'i1'))
+    application.execute(
+      StartIteration('g1', 'i1')
+    )
     application.execute(EndIteration('g1', 'i1'))
     expect(events).toMatchObject([
       IterationStarted('g1', 'i1'),
@@ -32,14 +36,19 @@ describe('Iteration', () => {
   });
 
   it('cannot start a started iteration', function () {
-    application.execute(StartIteration('g1', 'i1'), StartIteration('g1', 'i1'))
+    application.execute(
+      StartIteration('g1', 'i1'),
+      StartIteration('g1', 'i1')
+    )
     expect(events).toMatchObject([
       IterationStarted('g1', 'i1')
     ]);
   });
 
   it('cannot end an unstarted iteration', function () {
-    application.execute(EndIteration('i1'))
+    application.execute(
+      EndIteration('i1')
+    )
     expect(events).toMatchObject([]);
   });
 });
