@@ -1,16 +1,12 @@
-const Iteration = iteration => {
-
-  return {
-
-  }
-}
-
 const Game = game => {
-  const todo = game.columns[0];
+  const columns = game.columns;
+  const todo = columns[0];
 
-  const startIteration = iterationId => {
-    game.iterations.push(iterationId);
-    game.currentIteration = iterationId;
+  game.tasks = game.tasks || []
+  const tasks = game.tasks
+
+  const startIteration = (duration) => {
+    game.currentIteration = {duration};
   }
 
   const endIteration = () => {
@@ -18,12 +14,21 @@ const Game = game => {
   }
 
   const createTask = taskId => {
-    return {taskId, columnId: todo.columnId}
+    if (!game.currentIteration) return;
+
+    const task = {taskId, columnId: todo.columnId};
+    tasks.push(task);
+    return task
   }
 
   const moveTask = taskId => {
-    if(game.currentIteration)
-      return {taskId, columnId: 'c2'}
+    if (!game.currentIteration) return;
+
+    const task = tasks.find(t => t.taskId === taskId);
+    const column = columns.find(c => c.columnId === task.columnId)
+    task.columnId = column.nextColumnId;
+
+    return task
   }
 
   return {
@@ -33,5 +38,5 @@ const Game = game => {
     createTask,
     moveTask,
   }
-}
+};
 module.exports = Game;

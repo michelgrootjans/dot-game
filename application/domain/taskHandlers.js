@@ -4,7 +4,8 @@ const CreateTaskHandler = (games, publish) => {
   const execute = ({gameId, taskId}) => {
     const game = games.find(gameId);
     const task = game.createTask(taskId)
-    publish(TaskCreated(gameId, task.taskId, task.columnId))
+    if(task)
+      publish(TaskCreated(gameId, task.taskId, task.columnId))
   };
   return {execute}
 };

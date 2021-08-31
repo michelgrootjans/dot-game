@@ -35,7 +35,7 @@ describe('Tasks', () => {
     ]);
   });
 
-  xit('moves a task twice', () => {
+  it('moves a task twice', () => {
     application.execute(CreateTask('g1', 't1'))
     application.execute(MoveTask('g1', 't1'))
     application.execute(MoveTask('g1', 't1'))
@@ -43,6 +43,14 @@ describe('Tasks', () => {
       TaskCreated('g1', 't1', 'c1'),
       TaskMoved('g1', 't1', 'c2'),
       TaskMoved('g1', 't1', 'c3')
+    ]);
+  });
+
+  it('cannot create a task when iteration is finished', () => {
+    application.execute(EndIteration('g1'))
+    application.execute(CreateTask('g1', 't1'))
+    expect(events).toMatchObject([
+      IterationFinished('g1')
     ]);
   });
 
