@@ -5,10 +5,6 @@ http -f POST :3000/games/1/tasks taskId='t1'
 http -f POST :3000/games/1/tasks taskId='t2'
 http -f POST :3000/games/1/tasks taskId='t3'
 http -f POST :3000/games/1/tasks taskId='t4'
-http -f POST :3000/games/1/tasks taskId='t5'
-http -f POST :3000/games/1/tasks taskId='t6'
-http -f POST :3000/games/1/tasks taskId='t7'
-
 
 sleep 1
 http -f POST :3000/games/1/tasks/t1/move

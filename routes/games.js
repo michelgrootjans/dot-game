@@ -32,6 +32,7 @@ const init = application => {
     res.send({...req.params, ...req.body, command: JSON.stringify(command)});
   });
 
+  
   return router;
 }
 
