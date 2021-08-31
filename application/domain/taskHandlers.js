@@ -5,7 +5,7 @@ const CreateTaskHandler = (games, publish) => {
     const game = games.find(gameId);
     const task = game.createTask(taskId)
     if(task)
-      publish(TaskCreated(gameId, task.taskId, task.columnId))
+      publish(TaskCreated({...task, gameId}))
   };
   return {execute}
 };
@@ -15,7 +15,7 @@ const MoveTaskHandler = (games, publish) => {
     const game = games.find(gameId);
     const task = game.moveTask(taskId)
     if(task)
-      publish(TaskMoved(gameId, task.taskId, task.columnId))
+      publish(TaskMoved({...task, gameId}))
   };
   return {execute}
 };

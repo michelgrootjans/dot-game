@@ -22,7 +22,7 @@ describe('Tasks', () => {
   it('creates a task', () => {
     application.execute(CreateTask({gameId: 'g1', taskId: 't1'}))
     expect(events).toMatchObject([
-      TaskCreated('g1', 't1', 'c1')
+      TaskCreated({gameId: 'g1', taskId:'t1', columnId: 'c1'})
     ]);
   });
 
@@ -30,8 +30,8 @@ describe('Tasks', () => {
     application.execute(CreateTask({gameId: 'g1', taskId: 't1'}))
     application.execute(MoveTask({gameId: 'g1', taskId: 't1'}))
     expect(events).toMatchObject([
-      TaskCreated('g1', 't1', 'c1'),
-      TaskMoved('g1', 't1', 'c2')
+      TaskCreated({gameId: 'g1', taskId:'t1', columnId: 'c1'}),
+      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c2'})
     ]);
   });
 
@@ -40,9 +40,9 @@ describe('Tasks', () => {
     application.execute(MoveTask({gameId: 'g1', taskId: 't1'}))
     application.execute(MoveTask({gameId: 'g1', taskId: 't1'}))
     expect(events).toMatchObject([
-      TaskCreated('g1', 't1', 'c1'),
-      TaskMoved('g1', 't1', 'c2'),
-      TaskMoved('g1', 't1', 'c3')
+      TaskCreated({gameId: 'g1', taskId:'t1', columnId: 'c1'}),
+      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c2'}),
+      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c3'})
     ]);
   });
 
@@ -59,7 +59,7 @@ describe('Tasks', () => {
     application.execute(EndIteration({gameId: 'g1'}))
     application.execute(MoveTask({gameId: 'g1', taskId: 't1'}))
     expect(events).toMatchObject([
-      TaskCreated('g1', 't1', 'c1'),
+      TaskCreated({gameId: 'g1', taskId:'t1', columnId: 'c1'}),
       IterationFinished('g1')
     ]);
   });
