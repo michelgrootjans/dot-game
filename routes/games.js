@@ -14,8 +14,9 @@ const init = application => {
   });
 
   router.post('/:gameId/iterations', function (req, res, next) {
-    const command = StartIteration(req.params.gameId, req.body.iterationId, req.body.duration || 5 * 60 * 1000);
+    const command = StartIteration(req.params.gameId, req.body.duration || 5 * 60 * 1000);
     application.execute(command)
+    console.log({...req.params, ...req.body, command: JSON.stringify(command)})
     res.send({...req.params, ...req.body, command: JSON.stringify(command)});
   });
 
@@ -26,7 +27,7 @@ const init = application => {
   });
 
   router.post('/:gameId/tasks/:taskId/move', function (req, res, next) {
-    const command = MoveTask(req.params.gameId, req.body.taskId);
+    const command = MoveTask(req.params.gameId, req.params.taskId);
     application.execute(command)
     res.send({...req.params, ...req.body, command: JSON.stringify(command)});
   });

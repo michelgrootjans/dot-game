@@ -1,5 +1,5 @@
 http -f POST :3000/games/ gameId=1
-http -f POST :3000/games/1/iterations iterationId='i1' duration=5000
+http -f POST :3000/games/1/iterations duration=10000
 
 http -f POST :3000/games/1/tasks taskId='t1'
 http -f POST :3000/games/1/tasks taskId='t2'
@@ -8,21 +8,25 @@ http -f POST :3000/games/1/tasks taskId='t4'
 http -f POST :3000/games/1/tasks taskId='t5'
 http -f POST :3000/games/1/tasks taskId='t6'
 http -f POST :3000/games/1/tasks taskId='t7'
-http -f POST :3000/games/1/tasks taskId='t8'
-http -f POST :3000/games/1/tasks taskId='t9'
 
 
 sleep 1
-http -f POST :3000/games/1/tasks/t1/move taskId='t1'
-http -f POST :3000/games/1/tasks/t1/move taskId='t2'
-http -f POST :3000/games/1/tasks/t1/move taskId='t3'
+http -f POST :3000/games/1/tasks/t1/move
 sleep 1
-http -f POST :3000/games/1/tasks/t1/move taskId='t1'
+http -f POST :3000/games/1/tasks/t2/move
 sleep 1
-http -f POST :3000/games/1/tasks/t1/move taskId='t2'
+http -f POST :3000/games/1/tasks/t1/move
+http -f POST :3000/games/1/tasks/t3/move
 sleep 1
-http -f POST :3000/games/1/tasks/t1/move taskId='t3'
+http -f POST :3000/games/1/tasks/t1/move
+http -f POST :3000/games/1/tasks/t2/move
+http -f POST :3000/games/1/tasks/t4/move
 sleep 1
-http -f POST :3000/games/1/tasks/t1/move taskId='t4'
-http -f POST :3000/games/1/tasks/t1/move taskId='t5'
-http -f POST :3000/games/1/tasks/t1/move taskId='t6'
+http -f POST :3000/games/1/tasks/t1/move
+http -f POST :3000/games/1/tasks/t2/move
+http -f POST :3000/games/1/tasks/t3/move
+sleep 1
+http -f POST :3000/games/1/tasks/t1/move
+http -f POST :3000/games/1/tasks/t2/move
+http -f POST :3000/games/1/tasks/t3/move
+http -f POST :3000/games/1/tasks/t4/move
