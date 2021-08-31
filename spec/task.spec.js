@@ -28,7 +28,7 @@ describe('Tasks', () => {
 
   it('moves a task', () => {
     application.execute(CreateTask({gameId: 'g1', taskId: 't1'}))
-    application.execute(MoveTask('g1', 't1'))
+    application.execute(MoveTask({gameId: 'g1', taskId: 't1'}))
     expect(events).toMatchObject([
       TaskCreated('g1', 't1', 'c1'),
       TaskMoved('g1', 't1', 'c2')
@@ -37,8 +37,8 @@ describe('Tasks', () => {
 
   it('moves a task twice', () => {
     application.execute(CreateTask({gameId: 'g1', taskId: 't1'}))
-    application.execute(MoveTask('g1', 't1'))
-    application.execute(MoveTask('g1', 't1'))
+    application.execute(MoveTask({gameId: 'g1', taskId: 't1'}))
+    application.execute(MoveTask({gameId: 'g1', taskId: 't1'}))
     expect(events).toMatchObject([
       TaskCreated('g1', 't1', 'c1'),
       TaskMoved('g1', 't1', 'c2'),
@@ -57,7 +57,7 @@ describe('Tasks', () => {
   it('cannot move a task when iteration is finished', () => {
     application.execute(CreateTask({gameId: 'g1', taskId: 't1'}))
     application.execute(EndIteration({gameId: 'g1'}))
-    application.execute(MoveTask('g1', 't1'))
+    application.execute(MoveTask({gameId: 'g1', taskId: 't1'}))
     expect(events).toMatchObject([
       TaskCreated('g1', 't1', 'c1'),
       IterationFinished('g1')

@@ -2,7 +2,7 @@ const CreateTask = ({gameId, taskId}) => {
   return {type: 'CreateTask', gameId, taskId}
 };
 
-const MoveTask = (gameId, taskId) => {
+const MoveTask = ({gameId, taskId}) => {
   return {type: 'MoveTask', gameId, taskId}
 };
 

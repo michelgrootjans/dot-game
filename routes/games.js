@@ -5,33 +5,34 @@ const {CreateGame} = require("../application/api/commands/game");
 const {CreateTask} = require("../application/api/commands/task");
 const {MoveTask} = require("../application/api/commands/task");
 
+const allParams = request => ({...request.body, ...request.params});
+
 const init = application => {
 
   router.post('/', function (req, res, next) {
-    const command = CreateGame({...req.body, ...req.params});
+    const command = CreateGame(allParams(req));
     application.execute(command);
     res.sendStatus(200);
   });
 
   router.post('/:gameId/iterations', function (req, res, next) {
-    const command = StartIteration({duration: 5 * 60 * 1000, ...req.body, ...req.params});
+    const command = StartIteration({duration: 5 * 60 * 1000, ...allParams(req)});
     application.execute(command)
     res.sendStatus(200);
   });
 
   router.post('/:gameId/tasks', function (req, res, next) {
-    const command = CreateTask({...req.body, ...req.params});
+    const command = CreateTask(allParams(req));
     application.execute(command)
     res.sendStatus(200);
   });
 
   router.post('/:gameId/tasks/:taskId/move', function (req, res, next) {
-    const command = MoveTask(req.params.gameId, req.params.taskId);
+    const command = MoveTask(allParams(req));
     application.execute(command)
     res.sendStatus(200);
   });
 
-  
   return router;
 }
 
