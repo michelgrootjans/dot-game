@@ -2,4 +2,8 @@ const CreateTask = (gameId, taskId) => {
   return {type: 'CreateTask', gameId, taskId}
 };
 
-module.exports = {CreateTask};
+const MoveTask = (gameId, taskId) => {
+  return {type: 'MoveTask', gameId, taskId}
+};
+
+module.exports = {CreateTask, MoveTask};

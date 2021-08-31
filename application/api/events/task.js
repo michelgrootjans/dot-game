@@ -1,7 +1,13 @@
-const TaskCreated = (gameId, taskId) => {
-  return {type: 'TaskCreated', gameId, taskId}
+const TaskCreated = (gameId, taskId, columnId) => {
+  return {type: 'TaskCreated', gameId, taskId, columnId}
 }
 
-module.exports = {
-  TaskCreated
+const TaskMoved = (gameId, taskId, columnId) => {
+  return {type: 'TaskMoved', gameId, taskId, to: columnId}
 }
+
+const TaskFinished = () => {
+  return {type: 'TaskFinished'}
+}
+
+module.exports = {TaskCreated, TaskMoved, TaskFinished}
