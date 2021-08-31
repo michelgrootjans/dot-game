@@ -2,23 +2,23 @@ const {IterationStarted, IterationFinished} = require("../api/events/iteration")
 const {EndIteration} = require("../api/commands/iteration");
 
 const StartIterationHandler = (games, publish) => {
-  const execute = ({gameId, iterationId, duration}) => {
+  const execute = ({gameId, duration}) => {
     const game = games.find(gameId);
     if (game) {
-      game.startIteration(iterationId, duration);
-      publish(IterationStarted(game.gameId, iterationId, duration));
+      game.startIteration(duration);
+      publish(IterationStarted(game.gameId, duration));
     }
   };
   return {execute}
 };
 
 const EndIterationHandler = (games, publish) => {
-  const execute = ({gameId, iterationId}) => {
+  const execute = ({gameId}) => {
     const game = games.find(gameId)
 
     if (game) {
-      game.endIteration(iterationId)
-      publish(IterationFinished(game.gameId, iterationId));
+      game.endIteration()
+      publish(IterationFinished(game.gameId));
     }
   }
 

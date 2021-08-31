@@ -1,8 +1,8 @@
-const StartIteration = (gameId, iterationId, duration = 5000) => {
-  return {type: 'StartIteration', gameId, iterationId, duration}
+const StartIteration = (gameId, duration = 5000) => {
+  return {type: 'StartIteration', gameId, duration}
 }
-const EndIteration = (gameId, iterationId) => {
-  return {type: 'EndIteration', gameId, iterationId}
+const EndIteration = (gameId) => {
+  return {type: 'EndIteration', gameId}
 }
 
 module.exports = {

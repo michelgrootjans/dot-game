@@ -24,11 +24,11 @@ describe('Iteration', () => {
   });
 
   it('can end', function () {
-    application.execute(StartIteration('g1', 'i1'))
-    application.execute(EndIteration('g1', 'i1'))
+    application.execute(StartIteration('g1'))
+    application.execute(EndIteration('g1'))
     expect(events).toMatchObject([
-      IterationStarted('g1', 'i1'),
-      IterationFinished('g1', 'i1')
+      IterationStarted('g1'),
+      IterationFinished('g1')
     ]);
   });
 });

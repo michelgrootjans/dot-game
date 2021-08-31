@@ -13,7 +13,7 @@ const Game = game => {
     game.currentIteration = iterationId;
   }
 
-  const endIteration = iterationId => {
+  const endIteration = () => {
     delete game.currentIteration;
   }
 
