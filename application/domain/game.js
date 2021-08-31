@@ -2,9 +2,9 @@ const {GameCreated} = require('../api/events/game');
 const {initialState} = require("./state");
 
 const CreateGame = (games, publish) => ({
-  execute: command => {
+  execute: ({gameId}) => {
     const newGame = initialState()
-    const game = {...newGame, gameId: command.gameId};
+    const game = {...newGame, gameId};
     games.add(game)
     publish(GameCreated(game));
   }
