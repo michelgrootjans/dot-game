@@ -11,7 +11,7 @@ describe('Iteration', () => {
   beforeEach(function () {
     const database = InMemoryDatabase();
     application = Application(database, () => {});
-    application.execute(CreateGame('g1'))
+    application.execute(CreateGame({gameId: 'g1'}))
     events = [];
     application.subscribe("*", event => events.push(event))
   });

@@ -8,7 +8,7 @@ const {MoveTask} = require("../application/api/commands/task");
 const init = application => {
 
   router.post('/', function (req, res, next) {
-    const command = CreateGame(req.body.gameId);
+    const command = CreateGame({...req.body, ...req.params});
     application.execute(command);
     res.send({...req.params, ...req.body, command: JSON.stringify(command)});
   });

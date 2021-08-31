@@ -1,6 +1,4 @@
-const CreateGame = (gameId) => {
-  return {type: 'CreateGame', gameId}
-}
+const CreateGame = (input) => ({...input, type: 'CreateGame'})
 
 module.exports = {
   CreateGame
