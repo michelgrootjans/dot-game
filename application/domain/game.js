@@ -1,7 +1,7 @@
 const {GameCreated} = require('../api/events/game');
 const {initialState} = require("./state");
 
-const CreateGame = (games, publish) => ({
+const CreateGameHandler = (games, publish) => ({
   execute: ({gameId}) => {
     const newGame = initialState()
     const game = {...newGame, gameId};
@@ -10,4 +10,4 @@ const CreateGame = (games, publish) => ({
   }
 });
 
-module.exports = {CreateGame}
+module.exports = {CreateGameHandler}

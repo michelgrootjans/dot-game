@@ -1,18 +1,18 @@
 const EventBus = require("../application/EventBus");
-const {CreateGame} = require("./domain/game");
-const {StartIteration, EndIterationHandler, IterationProcessManager} = require("./domain/iteration");
-const {CreateWorkItemHandler} = require("./domain/workitem");
+const {CreateGameHandler} = require("./domain/game");
+const {StartIterationHandler, EndIterationHandler, IterationProcessManager} = require("./domain/iteration");
+const {CreateTaskHandler} = require("./domain/task");
 
 const Application = (games, delay) => {
   const {publish, subscribe} = EventBus();
 
   const commandHandlers = {
-    'CreateGame': CreateGame(games, publish),
+    'CreateGame': CreateGameHandler(games, publish),
 
-    'StartIteration': StartIteration(games, publish),
+    'StartIteration': StartIterationHandler(games, publish),
     'EndIteration': EndIterationHandler(games, publish),
 
-    'CreateWorkItem': CreateWorkItemHandler(games, publish)
+    'CreateTask': CreateTaskHandler(games, publish)
   }
 
   const execute = command => {

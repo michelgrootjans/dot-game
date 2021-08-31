@@ -1,7 +1,7 @@
 const {IterationStarted, IterationFinished} = require("../api/events/iteration");
 const {EndIteration} = require("../api/commands/iteration");
 
-const StartIteration = (games, publish) => {
+const StartIterationHandler = (games, publish) => {
   const execute = ({gameId, iterationId, duration}) => {
     const game = games.find(gameId);
     if (game) {
@@ -32,4 +32,4 @@ const IterationProcessManager = () => {
   return {initialize};
 };
 
-module.exports = {StartIteration, EndIterationHandler, IterationProcessManager}
+module.exports = {StartIterationHandler, EndIterationHandler, IterationProcessManager}
