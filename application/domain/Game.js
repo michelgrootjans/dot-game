@@ -22,7 +22,8 @@ const Game = game => {
   }
 
   const moveTask = taskId => {
-    return {taskId, columnId: 'c2'}
+    if(game.currentIteration)
+      return {taskId, columnId: 'c2'}
   }
 
   return {

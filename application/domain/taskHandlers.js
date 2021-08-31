@@ -13,7 +13,8 @@ const MoveTaskHandler = (games, publish) => {
   const execute = ({gameId, taskId}) => {
     const game = games.find(gameId);
     const task = game.moveTask(taskId)
-    publish(TaskMoved(gameId, task.taskId, task.columnId))
+    if(task)
+      publish(TaskMoved(gameId, task.taskId, task.columnId))
   };
   return {execute}
 };

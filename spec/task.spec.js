@@ -1,9 +1,10 @@
 const Application = require("../application/Application");
 const {CreateGame} = require("../application/api/commands/game");
-const {StartIteration} = require("../application/api/commands/iteration");
+const {StartIteration, EndIteration} = require("../application/api/commands/iteration");
 const InMemoryDatabase = require("../application/InMemoryDatabase");
 const {CreateTask, MoveTask} = require("../application/api/commands/task");
 const {TaskCreated, TaskMoved} = require("../application/api/events/task");
+const {IterationFinished} = require("../application/api/events/iteration");
 
 describe('Tasks', () => {
   let application = undefined;
@@ -31,6 +32,16 @@ describe('Tasks', () => {
     expect(events).toMatchObject([
       TaskCreated('g1', 't1', 'c1'),
       TaskMoved('g1', 't1', 'c2')
+    ]);
+  });
+
+  it('cannot move a task when iteration is finished', () => {
+    application.execute(CreateTask('g1', 't1'))
+    application.execute(EndIteration('g1', 'i1'))
+    application.execute(MoveTask('g1', 't1'))
+    expect(events).toMatchObject([
+      TaskCreated('g1', 't1', 'c1'),
+      IterationFinished('g1', 'i1')
     ]);
   });
 
