@@ -5,11 +5,15 @@
 <script>
     var socket = io();
 
-    socket.on('message', function(event) {
-        console.log(event)
-        const p = document.createElement("p")
-        p.innerHTML = JSON.stringify(event);
-        document.body.appendChild(p)
+    socket.on('message', function (event) {
+        console.log(event);
+        if (event.type === 'UserJoined') {
+            document.body.innerHTML = ''
+        } else {
+            const p = document.createElement("p");
+            p.innerHTML = JSON.stringify(event);
+            document.body.appendChild(p)
+        }
     });
 
 </script>

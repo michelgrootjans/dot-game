@@ -2,7 +2,7 @@ const Application = require("../application/Application");
 const {CreateGame} = require("../application/api/commands/game");
 const {StartIteration} = require("../application/api/commands/iteration");
 const InMemoryDatabase = require("../application/InMemoryDatabase");
-const {CreateTask} = require("../application/api/commands/task");
+const {CreateTask, MoveTask} = require("../application/api/commands/task");
 const {TaskCreated, TaskMoved} = require("../application/api/events/task");
 
 describe('Tasks', () => {
@@ -18,10 +18,19 @@ describe('Tasks', () => {
     application.subscribe("*", event => events.push(event))
   });
 
-  it('creates a workitem', () => {
+  it('creates a task', () => {
     application.execute(CreateTask('g1', 't1'))
     expect(events).toMatchObject([
       TaskCreated('g1', 't1', 'c1')
+    ]);
+  });
+
+  it('moves a task', () => {
+    application.execute(CreateTask('g1', 't1'))
+    application.execute(MoveTask('g1', 't1'))
+    expect(events).toMatchObject([
+      TaskCreated('g1', 't1', 'c1'),
+      TaskMoved('g1', 't1', 'c2')
     ]);
   });
 

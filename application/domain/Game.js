@@ -1,7 +1,36 @@
-const Game = data => {
+const Iteration = iteration => {
 
   return {
-    ...data
+
+  }
+}
+
+const Game = game => {
+  const todo = game.columns[0];
+
+  const startIteration = iterationId => {
+    game.iterations.push(iterationId);
+    game.currentIteration = iterationId;
+  }
+
+  const endIteration = iterationId => {
+    delete game.currentIteration;
+  }
+
+  const createTask = taskId => {
+    return {taskId, columnId: todo.columnId}
+  }
+
+  const moveTask = taskId => {
+    return {taskId, columnId: 'c2'}
+  }
+
+  return {
+    ...game,
+    startIteration,
+    endIteration,
+    createTask,
+    moveTask,
   }
 }
 module.exports = Game;

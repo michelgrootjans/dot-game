@@ -3,14 +3,17 @@ const {TaskCreated, TaskMoved} = require("../api/events/task");
 const CreateTaskHandler = (games, publish) => {
   const execute = ({gameId, taskId}) => {
     const game = games.find(gameId);
-    publish(TaskCreated(gameId, taskId, 'c1'))
+    const task = game.createTask(taskId)
+    publish(TaskCreated(gameId, task.taskId, task.columnId))
   };
   return {execute}
 };
 
 const MoveTaskHandler = (games, publish) => {
   const execute = ({gameId, taskId}) => {
-    publish(TaskMoved(gameId, taskId, 'c1'))
+    const game = games.find(gameId);
+    const task = game.moveTask(taskId)
+    publish(TaskMoved(gameId, task.taskId, task.columnId))
   };
   return {execute}
 };
