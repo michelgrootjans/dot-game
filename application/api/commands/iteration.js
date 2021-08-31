@@ -1,9 +1,5 @@
-const StartIteration = (input) => {
-  return {...input, type: 'StartIteration'}
-}
-const EndIteration = (input) => {
-  return {...input, type: 'EndIteration'}
-}
+const StartIteration = (input) => ({...input, type: 'StartIteration'})
+const EndIteration = (input) => ({...input, type: 'EndIteration'})
 
 module.exports = {
   StartIteration,
