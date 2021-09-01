@@ -10,7 +10,6 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const Application = require("./application/Application");
 
-const gamesRouter = require('./routes/games')
 const InMemoryDatabase = require("./application/InMemoryDatabase");
 
 const application = Application(InMemoryDatabase(), setTimeout);
@@ -29,7 +28,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/games', gamesRouter.init(application))
+app.use('/games', require('./routes/game_web').init(application))
+app.use('/api/games', require('./routes/game_api').init(application))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
