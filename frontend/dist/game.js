@@ -1,1 +1,0 @@
-alert('setup webpack to generate a game.js in dist for the frontend')
