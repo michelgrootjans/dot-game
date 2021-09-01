@@ -15,8 +15,10 @@ http -f POST :3000/api/games/1/tasks/t2/move
 http -f POST :3000/api/games/1/tasks/t1/move
 http -f POST :3000/api/games/1/tasks/t1/move
 http -f POST :3000/api/games/1/tasks/t1/move
-sleep 1
 http -f POST :3000/api/games/1/tasks/t1/move
+http -f POST :3000/api/games/1/tasks/t1/move
+http -f POST :3000/api/games/1/tasks/t3/move
+sleep 1
 http -f POST :3000/api/games/1/tasks/t1/move
 http -f POST :3000/api/games/1/tasks/t1/move
 http -f POST :3000/api/games/1/tasks/t1/move

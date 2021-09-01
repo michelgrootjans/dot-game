@@ -4,15 +4,19 @@ This is an online simulation of the agile dot game
 This is not a finished project. These are the rough sketches of an online dot-game.
 
 # Run it locally
-run the following commands:
-
-`npm run serverstart`
+run the following commands in two separate terminals:
+ - `npm run serverstart`
+ - `npm run webpack:start`
 
 `open localhost:3000`
 
-`http -f POST :3000/games gameId=g1`
+`./scripts/simple_scenario.sh`
 
-`http -f POST :3000/games/g1/iteration iterationId='i1' duration=5000`
+# Run the tests
+`npm run test`
+
+`npm run test:watch`
+
 
 # ToDo
 - join as a worker
