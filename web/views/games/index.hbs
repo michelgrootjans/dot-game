@@ -1,24 +1,5 @@
 <h1>{{gameId}} - {{title}}</h1>
+<input id="gameId" type="hidden" value="{{gameId}}"/>
 <div id="events"></div>
 
-
-<script src="/socket.io/socket.io.js"></script>
 <script src="/game.js"></script>
-<script>
-    const socket = io();
-
-    socket.on('message', function (event) {
-        console.log(event);
-        if(event.gameId && event.gameId !== '{{gameId}}') return;
-
-        const $events = document.getElementById('events');
-        if (event.type === 'UserJoined') {
-            $events.innerHTML = ''
-        } else {
-            const p = document.createElement("p");
-            p.innerHTML = JSON.stringify(event);
-            $events.appendChild(p)
-        }
-    });
-
-</script>
