@@ -7,7 +7,9 @@
     "test:watch": "jest --watchAll",
     "start": "node ./bin/www",
     "devstart": "nodemon ./bin/www",
-    "serverstart": "DEBUG=dot-game:* npm run devstart"
+    "serverstart": "DEBUG=dot-game:* npm run devstart",
+    "webpack": "webpack",
+    "webpack:watch": "webpack --watch"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

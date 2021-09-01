@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 const currentGameId = document.getElementById('gameId').value
 
 const component = (text) => {
-  const element = document.createElement('p');
+  const element = document.createElement('li');
   element.innerHTML = text;
   return element;
 };
