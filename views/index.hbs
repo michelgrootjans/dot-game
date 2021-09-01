@@ -1,5 +1,7 @@
 <h1>{{title}}</h1>
 <p>Welcome to {{title}}</p>
+<div id="events"></div>
+
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
@@ -7,12 +9,13 @@
 
     socket.on('message', function (event) {
         console.log(event);
+        const $events = document.getElementById('events');
         if (event.type === 'UserJoined') {
-            document.body.innerHTML = ''
+            $events.innerHTML = ''
         } else {
             const p = document.createElement("p");
             p.innerHTML = JSON.stringify(event);
-            document.body.appendChild(p)
+            $events.appendChild(p)
         }
     });
 
