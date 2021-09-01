@@ -28,7 +28,8 @@ const Application = (games, delay) => {
 
   return {
     execute,
-    subscribe
+    subscribe,
+    getGame: games.find
   }
 };
 
