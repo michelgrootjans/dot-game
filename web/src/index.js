@@ -11,7 +11,6 @@ const component = (text) => {
 };
 
 const socket = io();
-const $events = document.getElementById('events');
 const $startIterationButton = document.getElementById('start-iteration');
 const $createTaskButton = document.getElementById('create-task');
 
