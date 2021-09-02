@@ -3,6 +3,7 @@
 <button id="create-task" disabled="disabled">Create Task</button>
 
 <input id="gameId" type="hidden" value="{{game.gameId}}"/>
+<progress value="" max="" id="progressbar"></progress>
 <div id="board">
     {{#each game.columns}}
         {{>column column=this}}

@@ -1,15 +1,33 @@
 const $startIterationButton = document.getElementById('start-iteration');
 const $createTaskButton = document.getElementById('create-task');
 
+const Timer = (duration) => {
+  const startTime = new Date();
+  const progressBar = document.getElementById("progressbar");
+  progressBar.max = `${duration}`;
+
+  return {
+    start: () => {
+      const downloadTimer = setInterval(function () {
+        const timeleft = new Date() - startTime;
+        if (duration <= timeleft) clearInterval(downloadTimer);
+        progressBar.value = timeleft;
+      }, 1000);
+
+    }
+  }
+};
+
 const StartIteration = event => {
   return {
-    handle: () => {
+    handle: ({duration}) => {
       $startIterationButton.disabled = true;
       $createTaskButton.disabled = false;
       const cards = document.getElementsByClassName('card');
       while (cards.length > 0) {
         cards[0].parentNode.removeChild(cards[0]);
       }
+      Timer(duration).start();
     }
   }
 };
