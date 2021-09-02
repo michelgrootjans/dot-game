@@ -1,5 +1,6 @@
 import {io} from "socket.io-client";
 import {FinishIteration, StartIteration} from "./iteration";
+import {TaskCreated} from "./task";
 
 const currentGameId = document.getElementById('gameId').value
 
@@ -17,6 +18,7 @@ const $createTaskButton = document.getElementById('create-task');
 const handlerForEvent = event => {
   switch (event.type) {
     case 'IterationStarted': return StartIteration(event);
+    case 'TaskCreated': return TaskCreated(event);
     case 'IterationFinished': return FinishIteration(event);
   }
   return {
