@@ -1,9 +1,12 @@
 <h1>The Dot Game</h1>
+<div>
+    <progress value="" max="" id="progressbar"></progress>
+</div>
+
 <button id="start-iteration">Start Iteration</button>
 <button id="create-task" disabled="disabled">Create Task</button>
 
 <input id="gameId" type="hidden" value="{{game.gameId}}"/>
-<progress value="" max="" id="progressbar"></progress>
 <div id="board">
     {{#each game.columns}}
         {{>column column=this}}

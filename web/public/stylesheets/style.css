@@ -12,7 +12,7 @@ a {
   grid-auto-columns: 150px;
   grid-auto-flow: column;
   grid-gap: 8px;
-  height: 50vh;
+  height: 100vh;
   overflow: auto;
 }
 
