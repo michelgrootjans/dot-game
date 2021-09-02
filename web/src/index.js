@@ -1,4 +1,5 @@
 import {io} from "socket.io-client";
+import {FinishIteration, StartIteration} from "./iteration";
 
 const currentGameId = document.getElementById('gameId').value
 
@@ -12,22 +13,10 @@ const socket = io();
 const $events = document.getElementById('events');
 const $startIterationButton = document.getElementById('start-iteration');
 
-const StartIteration = event => {
-  return {
-    handle: () => $startIterationButton.disabled = true
-  }
-};
-
-const FinishIteration = event => {
-  return {
-    handle: () => $startIterationButton.disabled = false
-  }
-};
-
 const handlerForEvent = event => {
   switch (event.type) {
-    case 'IterationStarted':return StartIteration(event);
-    case 'IterationFinished':return FinishIteration(event);
+    case 'IterationStarted': return StartIteration(event);
+    case 'IterationFinished': return FinishIteration(event);
   }
   return {
     handle: () => {
