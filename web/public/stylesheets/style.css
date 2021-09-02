@@ -6,3 +6,33 @@ body {
 a {
   color: #00B7FF;
 }
+
+#board {
+  display: grid;
+  grid-auto-columns: 150px;
+  grid-auto-flow: column;
+  grid-gap: 8px;
+  height: 50vh;
+  overflow: auto;
+}
+
+.column {
+  background: #EBECF0;
+  border-radius: 3px;
+  display: grid;
+  grid-auto-rows: max-content;
+  grid-gap: 10px;
+  padding: 10px;
+}
+
+.column h2 {
+  font-size: 16px;
+  margin: 0 0 12px 0;
+}
+
+.card {
+  background: #feff9c;
+  box-shadow: 1px 1px 0 rgba(9,30,66,.25);
+  border-radius: 3px;
+  padding: 10px;
+}

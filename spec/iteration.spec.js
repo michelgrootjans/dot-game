@@ -17,7 +17,7 @@ describe('Iteration', () => {
   });
 
 
-  it('cannot start a game again', function () {
+  it('cannot start a games again', function () {
     application.execute(CreateGame({gameId: 'g1'}))
     expect(events).toMatchObject([]);
   });

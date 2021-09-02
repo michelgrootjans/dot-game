@@ -11,14 +11,16 @@ const usersRouter = require('./routes/users');
 const Application = require("./application/Application");
 
 const InMemoryDatabase = require("./application/InMemoryDatabase");
+const exphbs = require("express-handlebars");
 
 const application = Application(InMemoryDatabase(), setTimeout);
 
 const app = express();
 
 // view engine setup
+app.engine('handlebars', exphbs())
 app.set('views', path.join(__dirname, 'web', 'views'));
-app.set('view engine', 'hbs');
+app.set('view engine', 'handlebars');
 
 app.use(logger('dev'));
 app.use(express.json());

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var {server, port} = require('../app');
-var debug = require('debug')('dot-game-js:server');
+var debug = require('debug')('dot-games-js:server');
 
 server.listen(port);
 server.on('error', onError);

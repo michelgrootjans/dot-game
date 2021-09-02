@@ -13,7 +13,7 @@ describe('Iteration', () => {
     application.execute(CreateGame({gameId: 'g1'}))
   });
 
-  it('cannot start a game again', function () {
+  it('cannot start a games again', function () {
     expect(application.getGame('g1')).toMatchObject(initialState())
   });
 

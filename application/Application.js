@@ -26,6 +26,8 @@ const Application = (games, delay) => {
 
   IterationProcessManager().initialize(subscribe, execute, delay);
 
+  execute({type: 'CreateGame', gameId: 'default'})
+
   return {
     execute,
     subscribe,

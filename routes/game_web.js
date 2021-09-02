@@ -17,7 +17,7 @@ const init = application => {
     if (game) {
       res.render('games/index', {game});
     } else {
-      res.status(404).send('game not found')
+      res.status(404).send('games not found')
     }
   });
 
