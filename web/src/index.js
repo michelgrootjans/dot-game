@@ -1,6 +1,6 @@
 import {io} from "socket.io-client";
 import {FinishIteration, StartIteration} from "./iteration";
-import {TaskCreated} from "./task";
+import {TaskCreated, TaskMoved} from "./task";
 
 const currentGameId = document.getElementById('gameId').value
 
@@ -16,40 +16,39 @@ const $startIterationButton = document.getElementById('start-iteration');
 const $createTaskButton = document.getElementById('create-task');
 
 const handlerForEvent = event => {
+  console.log(event);
+
   switch (event.type) {
     case 'IterationStarted': return StartIteration(event);
     case 'TaskCreated': return TaskCreated(event);
+    case 'TaskMoved': return TaskMoved(event);
     case 'IterationFinished': return FinishIteration(event);
   }
-  return {
-    handle: () => {
-    }
-  }
+  return {handle: () => {}}
 };
 
 socket.on('message', function (event) {
   if (event.gameId && event.gameId !== currentGameId) return;
 
-  console.log(event);
-  if (event.type === 'UserJoined') {
-    $events.innerHTML = ''
-  } else {
-    $events.appendChild(component(JSON.stringify(event)))
-  }
   handlerForEvent(event).handle(event)
-
 });
+
+let taskCounter = 1;
+const nextTaskId = () => `${taskCounter++}`;
 
 const initializeGame = gameId => {
   $startIterationButton.addEventListener('click', () => {
-    fetch(`/api/games/${gameId}/iterations`, {method: 'POST'})
+    fetch(`/api/games/${gameId}/iterations`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({duration: 60 * 1000})
+    })
   });
   $createTaskButton.addEventListener('click', () => {
-    const data = {taskId: 1};
     fetch(`/api/games/${gameId}/tasks`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(data)
+      body: JSON.stringify({taskId: nextTaskId()})
     })
   });
 };
