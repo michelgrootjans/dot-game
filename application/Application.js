@@ -17,6 +17,7 @@ const Application = (games, delay) => {
   }
 
   const execute = command => {
+    console.log({command})
     if (commandHandlers.hasOwnProperty(command.type)) {
       commandHandlers[command.type].execute(command);
     } else {

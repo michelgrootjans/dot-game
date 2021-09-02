@@ -43,9 +43,11 @@ const initializeGame = gameId => {
     fetch(`/api/games/${gameId}/iterations`, {method: 'POST'})
   });
   $createTaskButton.addEventListener('click', () => {
+    const data = {taskId: 1};
     fetch(`/api/games/${gameId}/tasks`, {
       method: 'POST',
-      body: JSON.stringify({taskId: 1})
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
     })
   });
 };

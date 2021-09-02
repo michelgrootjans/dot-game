@@ -4,6 +4,7 @@ const {StartIteration} = require("../application/api/commands/iteration");
 const {CreateGame} = require("../application/api/commands/game");
 const {CreateTask} = require("../application/api/commands/task");
 const {MoveTask} = require("../application/api/commands/task");
+const path = require("path");
 
 const allParams = request => ({...request.body, ...request.params});
 
@@ -17,8 +18,7 @@ const init = application => {
   });
 
   router.post('/:gameId/iterations', function (req, res, next) {
-    const params = allParams(req);
-    const command = StartIteration({...params});
+    const command = StartIteration(allParams(req));
     application.execute(command)
     res.sendStatus(200);
   });
