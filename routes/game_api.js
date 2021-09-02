@@ -10,13 +10,15 @@ const allParams = request => ({...request.body, ...request.params});
 const init = application => {
 
   router.post('/', function (req, res, next) {
-    const command = CreateGame(allParams(req));
+    const gameId = allParams(req).gameId;
+    const command = CreateGame(gameId);
     application.execute(command);
     res.sendStatus(200);
   });
 
   router.post('/:gameId/iterations', function (req, res, next) {
-    const command = StartIteration({duration: 5 * 60 * 1000, ...allParams(req)});
+    const params = allParams(req);
+    const command = StartIteration({...params});
     application.execute(command)
     res.sendStatus(200);
   });

@@ -23,9 +23,16 @@ describe('Iteration', () => {
   });
 
   it('can start', function () {
+    application.execute(StartIteration({gameId: 'g1', duration: 1000}))
+    expect(events).toMatchObject([
+      IterationStarted({gameId: 'g1', duration: 1000})
+    ]);
+  });
+
+  it('can start with default duration', function () {
     application.execute(StartIteration({gameId: 'g1'}))
     expect(events).toMatchObject([
-      IterationStarted({gameId: 'g1'})
+      IterationStarted({gameId: 'g1', duration: 5000})
     ]);
   });
 

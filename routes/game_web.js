@@ -12,8 +12,13 @@ const init = application => {
   });
 
   router.get('/:gameId', function (req, res, next) {
-    const game = application.getGame(req.path.gameId)
-    res.render('games/index', {title: 'The Dot Game', ...allParams(req), ...game});
+    const gameId = allParams(req).gameId;
+    const game = application.getGame(gameId)
+    if (game) {
+      res.render('games/index', {game});
+    } else {
+      res.status(404).send('game not found')
+    }
   });
 
   return router;
