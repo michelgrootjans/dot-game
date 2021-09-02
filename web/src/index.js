@@ -40,10 +40,10 @@ socket.on('message', function (event) {
 
 const initializeGame = gameId => {
   $startIterationButton.addEventListener('click', () => {
-    fetch(`http://localhost:3000/api/games/${gameId}/iterations`, {method: 'POST'})
+    fetch(`/api/games/${gameId}/iterations`, {method: 'POST'})
   });
   $createTaskButton.addEventListener('click', () => {
-    fetch(`http://localhost:3000/api/games/${gameId}/tasks`, {
+    fetch(`/api/games/${gameId}/tasks`, {
       method: 'POST',
       body: JSON.stringify({taskId: 1})
     })
