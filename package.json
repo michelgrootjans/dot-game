@@ -5,7 +5,7 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "start": "node ./bin/www",
+    "start": "npm run webpack && node ./bin/www",
     "devstart": "nodemon ./bin/www",
     "serverstart": "DEBUG=dot-game:* npm run devstart",
     "webpack": "webpack",
