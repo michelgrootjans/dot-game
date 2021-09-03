@@ -1,7 +1,7 @@
 # todo
-- extract setTimeout for faking in tests
+- when someone logs in later, let them have all the data (server-side rendering of first view)
+- add a graph
+  - plain api call every second to update the graph
+  - rough idea: setTimeout(() => fetch(graphUrl).then(data => updateGraph(data)), 1000)
+- publish on heroku
 - manage state (maybe try https://github.com/typicode/lowdb)
-- experiment with tests saying
-  - given(event, event, ...)
-  - when(command)
-  - then(event, event, ...)
