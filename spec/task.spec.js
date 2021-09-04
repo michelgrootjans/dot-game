@@ -1,7 +1,7 @@
 const Application = require("../application/Application");
 const {CreateGame} = require("../application/api/commands/game");
 const {StartIteration, EndIteration} = require("../application/api/commands/iteration");
-const InMemoryDatabase = require("../application/InMemoryDatabase");
+const InMemoryDatabase = require("../application/GameRepository");
 const {CreateTask, MoveTask} = require("../application/api/commands/task");
 const {TaskCreated, TaskMoved, TaskFinished} = require("../application/api/events/task");
 const {IterationFinished} = require("../application/api/events/iteration");

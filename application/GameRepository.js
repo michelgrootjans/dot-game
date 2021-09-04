@@ -1,6 +1,6 @@
 const Game = require("./domain/Game");
 
-const InMemoryDatabase = () => {
+const GameRepository = () => {
   let games = [];
 
   const add = game => games = [...games, game];
@@ -16,4 +16,4 @@ const InMemoryDatabase = () => {
   }
 };
 
-module.exports = InMemoryDatabase
+module.exports = GameRepository

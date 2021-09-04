@@ -10,7 +10,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const Application = require("./application/Application");
 
-const InMemoryDatabase = require("./application/InMemoryDatabase");
+const InMemoryDatabase = require("./application/GameRepository");
 const exphbs = require("express-handlebars");
 const EventBus = require("./application/EventBus");
 

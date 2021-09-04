@@ -1,6 +1,6 @@
 const Application = require("../application/Application");
 const {CreateGame} = require("../application/api/commands/game");
-const InMemoryDatabase = require("../application/InMemoryDatabase");
+const InMemoryDatabase = require("../application/GameRepository");
 const initialState = require("../application/domain/initial-state");
 const EventBus = require("../application/EventBus");
 
