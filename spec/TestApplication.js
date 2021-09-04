@@ -13,10 +13,12 @@ const TestApplication = () => {
   const application = Application({games, stats, publish, subscribe, delay, currentTime: timer.currentTime});
 
   return {
-    ...application,
     publish,
+    execute: application.execute,
+    subscribe: application.subscribe,
     currentTime: timer.currentTime,
     advanceTime: timer.advance,
+    findGame: games.find,
     findStats: stats.findStats
   };
 };
