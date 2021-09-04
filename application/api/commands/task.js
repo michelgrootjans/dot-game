@@ -1,4 +1,4 @@
-const CreateTask = ({gameId, taskId}) => ({type: 'CreateTask', gameId, taskId});
-const MoveTask = ({gameId, taskId}) => ({type: 'MoveTask', gameId, taskId});
+const CreateTask = (options) => ({...options, type: 'CreateTask'});
+const MoveTask = (options) => ({...options, type: 'MoveTask'});
 
 module.exports = {CreateTask, MoveTask};

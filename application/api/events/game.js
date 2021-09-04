@@ -1,4 +1,4 @@
-const GameCreated = ({gameId}) => ({type: 'GameCreated', gameId})
+const GameCreated = (options) => ({...options, type: 'GameCreated'})
 
 module.exports = {
   GameCreated

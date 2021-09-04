@@ -1,5 +1,5 @@
-const IterationStarted = ({gameId, duration = 5000}) => ({type: 'IterationStarted', gameId, duration})
-const IterationFinished = ({gameId}) => ({type: 'IterationFinished', gameId})
+const IterationStarted = (options) => ({...options, type: 'IterationStarted'})
+const IterationFinished = (options) => ({...options, type: 'IterationFinished'})
 
 module.exports = {
   IterationStarted,

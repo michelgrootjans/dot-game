@@ -1,5 +1,5 @@
-const TaskCreated = ({gameId, taskId, columnId}) => ({type: 'TaskCreated', gameId, taskId, columnId})
-const TaskMoved = ({gameId, taskId, columnId}) => ({type: 'TaskMoved', gameId, taskId, to: columnId})
-const TaskFinished = ({gameId, taskId}) => ({type: 'TaskFinished', gameId, taskId})
+const TaskCreated = (options) => ({...options, type: 'TaskCreated'})
+const TaskMoved = (options) => ({...options, type: 'TaskMoved'})
+const TaskFinished = (options) => ({...options, type: 'TaskFinished'})
 
 module.exports = {TaskCreated, TaskMoved, TaskFinished}

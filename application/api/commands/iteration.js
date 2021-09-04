@@ -1,5 +1,5 @@
-const StartIteration = ({gameId, duration}) => ({type: 'StartIteration', gameId, duration})
-const EndIteration = ({gameId}) => ({type: 'EndIteration', gameId})
+const StartIteration = (options) => ({...options, type: 'StartIteration'})
+const EndIteration = (options) => ({...options, type: 'EndIteration'})
 
 module.exports = {
   StartIteration,

@@ -19,4 +19,4 @@ const StatsProcessManager = () => {
   }
 }
 
-module.exports = StatsProcessManager;
+module.exports = {StatsProcessManager};

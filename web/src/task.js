@@ -1,21 +1,20 @@
-const {anyCardColor} = require("./Colors");
 const move = (gameId, taskId) => fetch(`/api/games/${gameId}/tasks/${taskId}/move`, {method: 'POST'});
 const getColumn = id => document.getElementById("column-" + id);
 const getCard = id => document.getElementById("task-" + id);
 
 
-const createCard = taskId => {
+const createCard = (taskId, color) => {
   const card = document.createElement('div');
   card.className = 'card';
   card.setAttribute('id', `task-${taskId}`)
-  card.setAttribute('style', 'background:' + anyCardColor())
+  card.setAttribute('style', 'background:' + color)
   return card;
 };
 
 const TaskCreated = event => {
   return {
-    handle: ({gameId, columnId, taskId}) => {
-      const card = createCard(taskId);
+    handle: ({gameId, columnId, taskId, color}) => {
+      const card = createCard(taskId, color);
       getColumn(columnId).append(card);
       card.addEventListener('click', () => move(gameId, taskId))
     }

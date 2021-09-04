@@ -4,7 +4,7 @@ const {CreateGame} = require("../application/api/commands/game");
 const {StartIterationHandler} = require("../application/domain/iterationHandlers");
 const {StartIteration} = require("../application/api/commands/iteration");
 const EventBus = require("../application/EventBus");
-const StatsProcessManager = require("../application/domain/StatsProcessManager");
+const {StatsProcessManager} = require("../application/domain/StatsProcessManager");
 const {TaskCreated, TaskFinished} = require("../application/api/events/task");
 const Application = require("../application/Application");
 

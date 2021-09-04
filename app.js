@@ -59,7 +59,7 @@ app.set('port', port);
 
 var server = http.createServer(app);
 const socket = socketApi.init(server)
-application.subscribe('*', socket.publish);
+subscribe('*', socket.publish);
 
 
 module.exports = {server, port};
