@@ -1,4 +1,3 @@
-const EventBus = require("../application/EventBus");
 const {CreateGameHandler} = require("./domain/gameHandlers");
 const {StartIterationHandler, EndIterationHandler, IterationProcessManager} = require("./domain/iterationHandlers");
 const {CreateTaskHandler, MoveTaskHandler} = require("./domain/taskHandlers");
@@ -33,13 +32,13 @@ const intializeGames = ({games, delay, publish, subscribe}) => {
   }
 };
 
-const initializeStats = ({stats, subscribe}) => {
-  StatsProcessManager().initialize(stats, subscribe);
+const initializeStats = ({stats, subscribe, currentTime}) => {
+  StatsProcessManager().initialize(stats, subscribe, currentTime);
 };
 
-const Application = ({games, stats = [], delay, publish, subscribe}) => {
+const Application = ({games, stats = [], delay, publish, subscribe, currentTime = () => Date.now()}) => {
   const {execute} = intializeGames({games, delay, publish, subscribe});
-  initializeStats({stats, subscribe})
+  initializeStats({stats, subscribe, currentTime})
 
   return {execute, subscribe, findGame: games.find};
 };
