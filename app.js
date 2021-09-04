@@ -10,14 +10,16 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const Application = require("./application/Application");
 
-const InMemoryDatabase = require("./application/GameRepository");
+const GamesRepository = require("./application/GameRepository");
 const exphbs = require("express-handlebars");
 const EventBus = require("./application/EventBus");
+const StatsRepository = require("./application/StatsRepository");
 
-const games = InMemoryDatabase();
+const games = GamesRepository();
+const stats = StatsRepository();
 const delay = (handler, timeout) => setTimeout(handler, timeout);
 const {publish, subscribe} = EventBus();
-const application = Application({games, publish, subscribe, delay});
+const application = Application({games, stats, publish, subscribe, delay});
 
 const app = express();
 

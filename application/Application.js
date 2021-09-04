@@ -36,7 +36,7 @@ const initializeStats = ({stats, subscribe, currentTime}) => {
   StatsProcessManager().initialize(stats, subscribe, currentTime);
 };
 
-const Application = ({games, stats = [], delay, publish, subscribe, currentTime = () => Date.now()}) => {
+const Application = ({games, stats, delay, publish, subscribe, currentTime = () => Date.now()}) => {
   const findStats = gameId => (stats.find(stat => stat.gameId === gameId ));
   const {execute} = intializeGames({games, delay, publish, subscribe});
   initializeStats({stats, subscribe, currentTime})

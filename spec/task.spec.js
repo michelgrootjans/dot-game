@@ -1,20 +1,22 @@
 const Application = require("../application/Application");
 const {CreateGame} = require("../application/api/commands/game");
 const {StartIteration, EndIteration} = require("../application/api/commands/iteration");
-const InMemoryDatabase = require("../application/GameRepository");
+const GamesRepository = require("../application/GameRepository");
 const {CreateTask, MoveTask} = require("../application/api/commands/task");
 const {TaskCreated, TaskMoved, TaskFinished} = require("../application/api/events/task");
 const {IterationFinished} = require("../application/api/events/iteration");
 const EventBus = require("../application/EventBus");
+const StatsRepository = require("../application/StatsRepository");
 
 describe('Tasks', () => {
   let application = undefined;
   let events = undefined;
 
   beforeEach(() => {
-    const games = InMemoryDatabase();
+    const games = GamesRepository();
+    const stats = StatsRepository();
     const {publish, subscribe} = EventBus();
-    application = Application({games, publish, subscribe, delay: () => {}});
+    application = Application({games, stats, publish, subscribe, delay: () => {}});
     application.execute(CreateGame({gameId: 'g1'}))
     application.execute(StartIteration({gameId: 'g1'}))
     events = [];

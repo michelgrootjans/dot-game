@@ -5,13 +5,14 @@ const EventBus = require("../application/EventBus");
 const {TaskCreated, TaskFinished} = require("../application/api/events/task");
 const Application = require("../application/Application");
 const FakeTimer = require("./FakeTimer");
+const StatsRepository = require("../application/StatsRepository");
 
 describe('stats end-to-end', () => {
 
   it("keeps history", () => {
     const games = GameRepository();
+    const stats = StatsRepository();
     const {publish, subscribe} = EventBus();
-    let stats = [];
     const timer = FakeTimer()
     const {execute, findStats} = Application({
       games, stats, publish, subscribe,
