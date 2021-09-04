@@ -2,6 +2,11 @@ const {CreateGame} = require("../application/api/commands/game");
 const {StartIteration} = require("../application/api/commands/iteration");
 const {TaskCreated, TaskFinished} = require("../application/api/events/task");
 const TestApplication = require("./TestApplication");
+const {StatsProcessManager} = require("../application/domain/StatsProcessManager");
+const StatsRepository = require("../application/StatsRepository");
+const EventBus = require("../application/EventBus");
+const FakeTimer = require("./FakeTimer");
+const {IterationStarted} = require("../application/api/events/iteration");
 
 describe('stats end-to-end', () => {
 
@@ -19,6 +24,22 @@ describe('stats end-to-end', () => {
 
     expect(application.findStats('g1')).toMatchObject({
       history: [{time: 0, wip: 0}, {time: 1, wip: 1}, {time: 2, wip: 0}],
+    })
+  });
+});
+
+describe('Stats Process Manager', () => {
+
+  it("keeps history", () => {
+    const stats = StatsRepository();
+    const {publish, subscribe} = EventBus();
+    const timer = FakeTimer();
+    StatsProcessManager().initialize(stats, subscribe, timer.currentTime);
+
+    publish(IterationStarted({gameId: 'g1'}))
+
+    expect(stats.findStats('g1')).toMatchObject({
+      history: [{time: 0, wip: 0}],
     })
   });
 });
