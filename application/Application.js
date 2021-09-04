@@ -17,9 +17,8 @@ const intializeGames = ({games, delay, publish, subscribe}) => {
   const handlerFor = commandName => {
     if (commandHandlers.hasOwnProperty(commandName)) {
       return commandHandlers[commandName];
-    } else {
-      throw `Unknown command: ${JSON.stringify(commandName)}`;
     }
+    throw `Unknown command: ${JSON.stringify(commandName)}`;
   };
 
   const execute = command => handlerFor(command.type).execute(command);
@@ -38,10 +37,10 @@ const initializeStats = ({games, subscribe}) => {
 
 const Application = (games, delay) => {
   const {publish, subscribe} = EventBus();
-  const gameModule = intializeGames({games, delay, publish, subscribe});
+  const {execute} = intializeGames({games, delay, publish, subscribe});
   const statsModule = initializeStats({games, subscribe})
 
-  return {...gameModule, subscribe, findGame: games.find};
+  return {execute, subscribe, findGame: games.find};
 };
 
 module.exports = Application
