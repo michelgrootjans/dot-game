@@ -1,11 +1,6 @@
-const GameRepository = require("../application/GameRepository");
 const {CreateGame} = require("../application/api/commands/game");
 const {StartIteration} = require("../application/api/commands/iteration");
-const EventBus = require("../application/EventBus");
 const {TaskCreated, TaskFinished} = require("../application/api/events/task");
-const Application = require("../application/Application");
-const FakeTimer = require("./FakeTimer");
-const StatsRepository = require("../application/StatsRepository");
 const TestApplication = require("./TestApplication");
 
 describe('stats end-to-end', () => {
