@@ -39,7 +39,7 @@ describe('Stats Process Manager', () => {
     publish(IterationStarted({gameId: 'g1'}))
 
     expect(stats.findStats('g1')).toMatchObject({
-      history: [{time: 0, wip: 0}],
+      history: [{time: 0, wip: 0, done: 0}],
     })
   });
 });

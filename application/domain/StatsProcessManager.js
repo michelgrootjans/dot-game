@@ -1,6 +1,6 @@
 const Stats = (gameId, startTime) => {
-  let wip = 0;
-  const history = [{time: 0, wip}]
+  let currentStats = {wip: 0, done: 0}
+  const history = [{time: 0, ...currentStats}]
 
   const getTime = time => (time - startTime)/1000;
 
@@ -8,9 +8,14 @@ const Stats = (gameId, startTime) => {
     gameId,
     history,
     addTask: (time, task) => {
-      return history.push({time: getTime(time), wip: ++wip});
+      currentStats.wip++;
+      return history.push({time: getTime(time), ...currentStats});
     },
-    removeTask: (time, task) => history.push({time: getTime(time), wip: --wip}),
+    removeTask: (time, task) => {
+      currentStats.wip--;
+      currentStats.done++;
+      return history.push({time: getTime(time), ...currentStats});
+    },
   };
 };
 
