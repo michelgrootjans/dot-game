@@ -23,9 +23,9 @@ const TaskCreated = event => {
 
 const TaskMoved = event => {
   return {
-    handle: ({to, taskId}) => {
+    handle: ({columnId, taskId}) => {
       const card = getCard(taskId);
-      const column = getColumn(to);
+      const column = getColumn(columnId);
 
       if(card && column) column.append(card);
     }
