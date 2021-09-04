@@ -3,17 +3,19 @@ const {CreateGame} = require("../application/api/commands/game");
 const {StartIteration, EndIteration} = require("../application/api/commands/iteration");
 const {IterationStarted, IterationFinished} = require("../application/api/events/iteration");
 const InMemoryDatabase = require("../application/InMemoryDatabase");
+const EventBus = require("../application/EventBus");
 
 describe('Iteration', () => {
   let application = undefined;
   let events = undefined;
 
   beforeEach(function () {
-    const database = InMemoryDatabase();
-    application = Application(database, () => {});
+    const games = InMemoryDatabase();
+    const {publish, subscribe} = EventBus();
+    application = Application({games, publish, subscribe, delay: () => {}});
     application.execute(CreateGame({gameId: 'g1'}))
     events = [];
-    application.subscribe("*", event => events.push(event))
+    subscribe("*", event => events.push(event))
   });
 
 

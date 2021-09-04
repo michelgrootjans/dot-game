@@ -5,14 +5,16 @@ const InMemoryDatabase = require("../application/InMemoryDatabase");
 const {CreateTask, MoveTask} = require("../application/api/commands/task");
 const {TaskCreated, TaskMoved, TaskFinished} = require("../application/api/events/task");
 const {IterationFinished} = require("../application/api/events/iteration");
+const EventBus = require("../application/EventBus");
 
 describe('Tasks', () => {
   let application = undefined;
   let events = undefined;
 
   beforeEach(() => {
-    const database = InMemoryDatabase();
-    application = Application(database, () => {});
+    const games = InMemoryDatabase();
+    const {publish, subscribe} = EventBus();
+    application = Application({games, publish, subscribe, delay: () => {}});
     application.execute(CreateGame({gameId: 'g1'}))
     application.execute(StartIteration({gameId: 'g1'}))
     events = [];

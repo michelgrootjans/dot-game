@@ -8,24 +8,23 @@ const StatsProcessManager = require("../application/domain/StatsProcessManager")
 const {TaskCreated} = require("../application/api/events/task");
 const Application = require("../application/Application");
 
-xdescribe('stats', () => {
+describe('stats', () => {
   let given = undefined;
   let stats = undefined;
 
   beforeEach(() => {
     const games = InMemoryDatabase();
-    const application = Application(games, () => {});
-    CreateGameHandler(games, () => {}).execute(CreateGame({gameId: 'g1'}))
-    StartIterationHandler(games, () => {}).execute(StartIteration({gameId: 'g1', duration: 0}))
-
+    const {publish, subscribe} = EventBus();
     stats = []
-    StatsProcessManager().initialize(stats, subscribe);
+    const {execute} = Application({games, stats, publish, subscribe, delay: () => {}});
+    execute(CreateGame({gameId: 'g1'}));
+    execute(StartIteration({gameId: 'g1', duration: 0}));
 
     given = publish;
   });
 
   it('should work', () => {
-    given(TaskCreated({gameId: 'g1', taskId: 't1', columnId: 'c1'}))
+    // given(TaskCreated({gameId: 'g1', taskId: 't1', columnId: 'c1'}))
     expect(stats).toMatchObject([
       {gameId: 'g1'}
     ])

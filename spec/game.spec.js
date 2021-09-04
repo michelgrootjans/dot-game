@@ -2,14 +2,16 @@ const Application = require("../application/Application");
 const {CreateGame} = require("../application/api/commands/game");
 const InMemoryDatabase = require("../application/InMemoryDatabase");
 const initialState = require("../application/domain/initial-state");
+const EventBus = require("../application/EventBus");
 
 describe('Iteration', () => {
   let application = undefined;
   let events = undefined;
 
   beforeEach(() => {
-    const database = InMemoryDatabase();
-    application = Application(database, () => {});
+    const games = InMemoryDatabase();
+    const {publish, subscribe} = EventBus();
+    application = Application({games, publish, subscribe, delay: () => {}});
     application.execute(CreateGame({gameId: 'g1'}))
   });
 

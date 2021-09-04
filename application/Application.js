@@ -37,9 +37,7 @@ const initializeStats = ({stats, subscribe}) => {
   StatsProcessManager().initialize(stats, subscribe);
 };
 
-const Application = (games, delay) => {
-  const stats = [];
-  const {publish, subscribe} = EventBus();
+const Application = ({games, stats = [], delay, publish, subscribe}) => {
   const {execute} = intializeGames({games, delay, publish, subscribe});
   initializeStats({stats, subscribe})
 
