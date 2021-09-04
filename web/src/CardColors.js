@@ -18,8 +18,8 @@ function any(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
-function anyColor() {
+function anyCardColor() {
   return any(cardColors);
 }
 
-module.exports = {anyColor};
+module.exports = {anyCardColor};
