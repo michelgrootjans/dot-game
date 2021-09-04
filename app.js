@@ -12,10 +12,10 @@ const Application = require("./application/Application");
 
 const InMemoryDatabase = require("./application/InMemoryDatabase");
 const exphbs = require("express-handlebars");
-const EventBus = require("../application/EventBus");
+const EventBus = require("./application/EventBus");
 
 const games = InMemoryDatabase();
-const delay = setTimeout;
+const delay = (handler, timeout) => setTimeout(handler, timeout);
 const {publish, subscribe} = EventBus();
 const application = Application({games, publish, subscribe, delay});
 

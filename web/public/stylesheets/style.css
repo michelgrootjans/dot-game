@@ -23,9 +23,6 @@ progress {
 .column {
   background: #EBECF0;
   border-radius: 3px;
-  display: grid;
-  grid-auto-rows: max-content;
-  grid-gap: 10px;
   padding: 10px;
 }
 
@@ -37,9 +34,15 @@ progress {
 
 .card {
   background: #feff9c;
-  box-shadow: 1px 1px 0 rgba(9,30,66,.25);
+  box-shadow: 1px 1px 2px 1px rgba(9, 30, 66, .25);
   border-radius: 3px;
-  width: 4em;
-  height: 4em;
+  width: 60px;
+  height: 60px;
   padding: 10px;
+  margin: 10px;
 }
+
+.card:nth-child(n+7) {
+  margin-top: -85px;
+}
+
