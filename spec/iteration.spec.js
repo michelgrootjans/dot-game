@@ -2,22 +2,17 @@ const Application = require("../application/Application");
 const {CreateGame} = require("../application/api/commands/game");
 const {StartIteration, EndIteration} = require("../application/api/commands/iteration");
 const {IterationStarted, IterationFinished} = require("../application/api/events/iteration");
-const GamesRepository = require("../application/GameRepository");
-const EventBus = require("../application/EventBus");
-const StatsRepository = require("../application/StatsRepository");
+const TestApplication = require("./TestApplication");
 
 describe('Iteration', () => {
   let application = undefined;
   let events = undefined;
 
   beforeEach(function () {
-    const games = GamesRepository();
-    const stats = StatsRepository();
-    const {publish, subscribe} = EventBus();
-    application = Application({games, stats, publish, subscribe, delay: () => {}});
+    application = TestApplication();
     application.execute(CreateGame({gameId: 'g1'}))
     events = [];
-    subscribe("*", event => events.push(event))
+    application.subscribe("*", event => events.push(event))
   });
 
 
