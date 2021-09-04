@@ -36,3 +36,10 @@ http -f POST :3000/api/games/default/tasks/t1/move
 http -f POST :3000/api/games/default/tasks/t2/move
 
 sleep 1
+http -f POST :3000/api/games/default/tasks/t3/move
+http -f POST :3000/api/games/default/tasks/t4/move
+http -f POST :3000/api/games/default/tasks/t5/move
+http -f POST :3000/api/games/default/tasks/t6/move
+http -f POST :3000/api/games/default/tasks/t1/move
+http -f POST :3000/api/games/default/tasks/t1/move
+http -f POST :3000/api/games/default/tasks/t2/move
