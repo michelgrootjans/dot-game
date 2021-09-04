@@ -1,16 +1,14 @@
+const {anyColor} = require("./CardColors");
 const move = (gameId, taskId) => fetch(`/api/games/${gameId}/tasks/${taskId}/move`, {method: 'POST'});
 const getColumn = id => document.getElementById("column-" + id);
 const getCard = id => document.getElementById("task-" + id);
 
-const any = array => array[Math.floor(Math.random() * array.length)]
-const cardColors = ['#FF7EB9', '#FF65A3', '#7AFCFF', '#FEFF9C', '#FFF740'] // from https://www.color-hex.com/color-palette/29241
 
 const createCard = taskId => {
   const card = document.createElement('div');
   card.className = 'card';
   card.setAttribute('id', `task-${taskId}`)
-  card.setAttribute('style', 'background:' + any(cardColors))
-  card.setAttribute('background', any(cardColors))
+  card.setAttribute('style', 'background:' + anyColor())
   return card;
 };
 
