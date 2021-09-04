@@ -3,7 +3,9 @@ const {TaskCreated, TaskMoved, TaskFinished} = require("../api/events/task");
 
 const Game = game => {
   const columns = game.columns;
-  const todo = columns[0];
+  const todoColumn = columns[0];
+  const doneColumn = columns[columns.length - 1];
+  const gameId = game.gameId;
 
 
   const findTask = taskId => game.tasks.find(t => t.taskId === taskId);
@@ -23,7 +25,7 @@ const Game = game => {
   const createTask = (taskId, publish) => {
     if (!game.currentIteration) return;
 
-    const task = {taskId, columnId: todo.columnId};
+    const task = {taskId, columnId: todoColumn.columnId};
     game.tasks.push(task);
     publish(TaskCreated({...task, gameId: game.gameId}))
   }
@@ -32,12 +34,15 @@ const Game = game => {
     if (!game.currentIteration) return;
 
     const task = findTask(taskId);
-    const column = findColumn(task.columnId)
+    const column = findColumn(task.columnId);
+
+    if(!column.nextColumnId) return;
+
     task.columnId = column.nextColumnId;
 
-    publish(TaskMoved({...task, gameId: game.gameId}));
-    if (task.columnId === 'c9') {
-      publish(TaskFinished({...task, gameId: game.gameId}));
+    publish(TaskMoved({...task, gameId}));
+    if (task.columnId === doneColumn.columnId) {
+      publish(TaskFinished({...task, gameId}));
     }
   }
 

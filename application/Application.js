@@ -38,7 +38,7 @@ const initializeStats = ({games, subscribe}) => {
 const Application = (games, delay) => {
   const {publish, subscribe} = EventBus();
   const {execute} = intializeGames({games, delay, publish, subscribe});
-  const statsModule = initializeStats({games, subscribe})
+  initializeStats({games, subscribe})
 
   return {execute, subscribe, findGame: games.find};
 };
