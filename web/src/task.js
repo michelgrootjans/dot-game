@@ -1,4 +1,4 @@
-const {anyCardColor} = require("./CardColors");
+const {anyCardColor} = require("./Colors");
 const move = (gameId, taskId) => fetch(`/api/games/${gameId}/tasks/${taskId}/move`, {method: 'POST'});
 const getColumn = id => document.getElementById("column-" + id);
 const getCard = id => document.getElementById("task-" + id);
