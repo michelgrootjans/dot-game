@@ -5,15 +5,23 @@ const initialState = require("../application/domain/initial-state");
 const EventBus = require("../application/EventBus");
 const StatsRepository = require("../application/StatsRepository");
 
+const TestApplication = () => {
+  const games = GamesRepository();
+  const stats = StatsRepository();
+  const {publish, subscribe} = EventBus();
+  const delay = () => {};
+  const application = Application({games, stats, publish, subscribe, delay});
+  return {
+    ...application
+  };
+};
+
 describe('Iteration', () => {
   let application = undefined;
   let events = undefined;
 
   beforeEach(() => {
-    const games = GamesRepository();
-    const stats = StatsRepository();
-    const {publish, subscribe} = EventBus();
-    application = Application({games, stats, publish, subscribe, delay: () => {}});
+    application = TestApplication();
     application.execute(CreateGame({gameId: 'g1'}))
   });
 
