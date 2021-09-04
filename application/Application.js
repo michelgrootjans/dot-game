@@ -37,11 +37,10 @@ const initializeStats = ({stats, subscribe, currentTime}) => {
 };
 
 const Application = ({games, stats, delay, publish, subscribe, currentTime = () => Date.now()}) => {
-  const findStats = gameId => (stats.find(stat => stat.gameId === gameId ));
   const {execute} = intializeGames({games, delay, publish, subscribe});
   initializeStats({stats, subscribe, currentTime})
 
-  return {execute, subscribe, findGame: games.find, findStats};
+  return {execute, subscribe, findGame: games.find, findStats: stats.find};
 };
 
 module.exports = Application

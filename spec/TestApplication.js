@@ -19,7 +19,7 @@ const TestApplication = () => {
     currentTime: timer.currentTime,
     advanceTime: timer.advance,
     findGame: games.find,
-    findStats: stats.findStats
+    findStats: stats.find
   };
 };
 
