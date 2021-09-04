@@ -18,15 +18,19 @@ const Timer = (duration) => {
   }
 };
 
+const clearBoard = () => {
+  const cards = document.getElementsByClassName('card');
+  while (cards.length > 0) {
+    cards[0].parentNode.removeChild(cards[0]);
+  }
+};
+
 const StartIteration = event => {
   return {
     handle: ({duration}) => {
       $startIterationButton.disabled = true;
       $createTaskButton.disabled = false;
-      const cards = document.getElementsByClassName('card');
-      while (cards.length > 0) {
-        cards[0].parentNode.removeChild(cards[0]);
-      }
+      clearBoard();
       Timer(duration).start();
     }
   }

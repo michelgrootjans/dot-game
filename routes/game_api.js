@@ -17,6 +17,13 @@ const init = application => {
     res.sendStatus(200);
   });
 
+  router.get('/:gameId/stats', function (req, res, next) {
+    const gameId = req.params.gameId;
+    const stats = application.findStats(gameId);
+    console.log({gameId, stats})
+    res.send(stats);
+  });
+
   router.post('/:gameId/iterations', function (req, res, next) {
     const command = StartIteration(allParams(req));
     application.execute(command)
