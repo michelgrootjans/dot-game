@@ -16,17 +16,15 @@ const Stats = (gameId, startTime) => {
 
 const StatsProcessManager = () => {
   const initialize = (stats, subscribe, currentTime) => {
-    const findStats = gameId => stats.find(s => s.gameId === gameId);
-
     subscribe('IterationStarted', ({gameId}) => {
       stats.push(Stats(gameId, currentTime()))
     })
     subscribe('TaskCreated', ({gameId}) => {
-      const current = findStats(gameId);
+      const current = stats.findStats(gameId);
       current && current.addTask(currentTime(), {});
     })
     subscribe('TaskFinished', ({gameId}) => {
-      const current = findStats(gameId);
+      const current = stats.findStats(gameId);
       current && current.removeTask(currentTime(), {});
     })
   };

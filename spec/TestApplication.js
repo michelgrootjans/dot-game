@@ -16,7 +16,8 @@ const TestApplication = () => {
     ...application,
     publish,
     currentTime: timer.currentTime,
-    advanceTime: timer.advance
+    advanceTime: timer.advance,
+    findStats: stats.findStats
   };
 };
 
