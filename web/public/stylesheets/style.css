@@ -33,6 +33,7 @@ progress {
 }
 
 .card {
+  position: relative;
   background: #feff9c;
   box-shadow: 1px 1px 2px 1px rgba(9, 30, 66, .25);
   border-radius: 3px;
@@ -42,7 +43,27 @@ progress {
   margin: 10px;
 }
 
-.card:nth-child(n+7) {
+.card:nth-child(5n+2) {
+  z-index: 10;
+}
+.card:nth-child(5n+3) {
+  transform: rotate(1deg);
   margin-top: -85px;
+  z-index: 9;
+}
+.card:nth-child(5n+4) {
+  transform: rotate(2deg);
+  margin-top: -85px;
+  z-index: 8;
+}
+.card:nth-child(5n) {
+  transform: rotate(3deg);
+  margin-top: -85px;
+  z-index: 7;
+}
+.card:nth-child(5n+1) {
+  transform: rotate(4deg);
+  margin-top: -85px;
+  z-index: 6;
 }
 
