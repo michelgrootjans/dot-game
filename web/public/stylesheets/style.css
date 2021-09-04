@@ -1,69 +1,49 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
+    color: #00B7FF;
 }
 
 progress {
-  width: 1410px;
+    width: 1410px;
 }
 
 #board {
-  display: grid;
-  grid-auto-columns: 150px;
-  grid-auto-flow: column;
-  grid-gap: 8px;
-  height: 100vh;
-  overflow: auto;
+    display: grid;
+    grid-auto-columns: 150px;
+    grid-auto-flow: column;
+    grid-gap: 8px;
+    height: 100vh;
+    overflow: auto;
 }
 
 .column {
-  background: #EBECF0;
-  border-radius: 3px;
-  padding: 10px;
+    background: #EBECF0;
+    border-radius: 3px;
+    padding: 10px;
 }
 
 .column h2 {
-  font-size: 16px;
-  margin: 0 0 12px 0;
-  height: 2em;
+    font-size: 16px;
+    margin: 0 0 12px 0;
+    height: 2em;
 }
 
 .card {
-  position: relative;
-  background: #feff9c;
-  box-shadow: 1px 1px 2px 1px rgba(9, 30, 66, .25);
-  border-radius: 3px;
-  width: 60px;
-  height: 60px;
-  padding: 10px;
-  margin: 10px;
+    position: relative;
+    background: #feff9c;
+    box-shadow: 1px 1px 2px 1px rgba(9, 30, 66, .25);
+    border-radius: 3px;
+    width: 60px;
+    height: 60px;
+    padding: 10px;
+    margin: 10px;
 }
 
-.card:nth-child(5n+2) {
-  z-index: 10;
-}
-.card:nth-child(5n+3) {
-  transform: rotate(1deg);
-  margin-top: -85px;
-  z-index: 9;
-}
-.card:nth-child(5n+4) {
-  transform: rotate(2deg);
-  margin-top: -85px;
-  z-index: 8;
-}
-.card:nth-child(5n) {
-  transform: rotate(3deg);
-  margin-top: -85px;
-  z-index: 7;
-}
-.card:nth-child(5n+1) {
-  transform: rotate(4deg);
-  margin-top: -85px;
-  z-index: 6;
+.card:nth-child(n+2) {
+    margin-top: -70px;
 }
 

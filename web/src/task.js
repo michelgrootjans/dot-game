@@ -1,13 +1,13 @@
 const move = (gameId, taskId) => fetch(`/api/games/${gameId}/tasks/${taskId}/move`, {method: 'POST'});
-const getColumn = id => document.getElementById("column-" + id);
+const getColumn = id => document.getElementById("column-" + id).querySelector(".tasks");
 const getCard = id => document.getElementById("task-" + id);
 
-
+let taskCounter = 10000
 const createCard = (taskId, color) => {
   const card = document.createElement('div');
   card.className = 'card';
   card.setAttribute('id', `task-${taskId}`)
-  card.setAttribute('style', 'background:' + color)
+  card.setAttribute('style', `background: ${color};z-index: ${taskCounter--}`)
   return card;
 };
 
