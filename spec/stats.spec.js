@@ -5,7 +5,7 @@ const {StartIterationHandler} = require("../application/domain/iterationHandlers
 const {StartIteration} = require("../application/api/commands/iteration");
 const EventBus = require("../application/EventBus");
 const StatsProcessManager = require("../application/domain/StatsProcessManager");
-const {TaskCreated} = require("../application/api/events/task");
+const {TaskCreated, TaskFinished} = require("../application/api/events/task");
 const Application = require("../application/Application");
 
 describe('stats', () => {
@@ -23,10 +23,33 @@ describe('stats', () => {
     given = publish;
   });
 
-  it('should work', () => {
-    // given(TaskCreated({gameId: 'g1', taskId: 't1', columnId: 'c1'}))
+  it('are empty in the beginning', () => {
     expect(stats).toMatchObject([
-      {gameId: 'g1'}
+      {
+        gameId: 'g1',
+        wip: 0
+      }
+    ])
+  });
+
+  it('when 1 task has been created', () => {
+    given(TaskCreated({gameId: 'g1', taskId: 't1', columnId: 'c1'}))
+    expect(stats).toMatchObject([
+      {
+        gameId: 'g1',
+        wip: 1
+      }
+    ])
+  });
+
+  it('when 1 task is done', () => {
+    given(TaskCreated({gameId: 'g1', taskId: 't1', columnId: 'c1'}))
+    given(TaskFinished({gameId: 'g1', taskId: 't1'}))
+    expect(stats).toMatchObject([
+      {
+        gameId: 'g1',
+        wip: 0
+      }
     ])
   });
 });
