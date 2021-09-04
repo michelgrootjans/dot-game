@@ -7,6 +7,10 @@ a {
   color: #00B7FF;
 }
 
+progress {
+  width: 1410px;
+}
+
 #board {
   display: grid;
   grid-auto-columns: 150px;
