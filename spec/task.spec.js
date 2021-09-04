@@ -71,7 +71,7 @@ describe('Tasks', () => {
     application.execute(EndIteration({gameId: 'g1'}))
     application.execute(CreateTask({gameId: 'g1', taskId: 't1'}))
     expect(events).toMatchObject([
-      IterationFinished('g1')
+      IterationFinished({gameId: 'g1'})
     ]);
   });
 
@@ -81,7 +81,7 @@ describe('Tasks', () => {
     application.execute(MoveTask({gameId: 'g1', taskId: 't1'}))
     expect(events).toMatchObject([
       TaskCreated({gameId: 'g1', taskId:'t1', columnId: 'c1'}),
-      IterationFinished('g1')
+      IterationFinished({gameId: 'g1'})
     ]);
   });
 

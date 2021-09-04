@@ -43,7 +43,7 @@ describe('Iteration', () => {
     application.execute(EndIteration({gameId: 'g1'}))
     expect(events).toMatchObject([
       IterationStarted({gameId: 'g1'}),
-      IterationFinished('g1')
+      IterationFinished({gameId: 'g1'})
     ]);
   });
 });

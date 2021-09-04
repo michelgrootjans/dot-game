@@ -1,5 +1,6 @@
 const {IterationStarted, IterationFinished} = require("../api/events/iteration");
 const {TaskCreated, TaskMoved, TaskFinished} = require("../api/events/task");
+const {anyCardColor} = require("./Colors");
 
 const Game = game => {
   const columns = game.columns;
@@ -19,15 +20,15 @@ const Game = game => {
 
   const endIteration = (publish) => {
     delete game.currentIteration;
-    publish(IterationFinished(game.gameId));
+    publish(IterationFinished({gameId}));
   }
 
   const createTask = (taskId, publish) => {
     if (!game.currentIteration) return;
 
-    const task = {taskId, columnId: todoColumn.columnId};
+    const task = {taskId, columnId: todoColumn.columnId, color: anyCardColor()};
     game.tasks.push(task);
-    publish(TaskCreated({...task, gameId: game.gameId}))
+    publish(TaskCreated({...task, gameId}))
   }
 
   const moveTask = (taskId, publish) => {
