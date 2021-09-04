@@ -13,7 +13,7 @@ const init = application => {
 
   router.get('/:gameId', function (req, res, next) {
     const gameId = allParams(req).gameId;
-    const game = application.getGame(gameId)
+    const game = application.findGame(gameId)
     if (game) {
       res.render('games/index', {game});
     } else {

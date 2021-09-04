@@ -3,9 +3,7 @@ const {CreateGameHandler} = require("./domain/gameHandlers");
 const {StartIterationHandler, EndIterationHandler, IterationProcessManager} = require("./domain/iterationHandlers");
 const {CreateTaskHandler, MoveTaskHandler} = require("./domain/taskHandlers");
 
-const Application = (games, delay) => {
-  const {publish, subscribe} = EventBus();
-
+const intializeGames = ({games, delay, publish, subscribe}) => {
   const commandHandlers = {
     'CreateGame': CreateGameHandler(games, publish),
 
@@ -16,23 +14,34 @@ const Application = (games, delay) => {
     'MoveTask': MoveTaskHandler(games, publish),
   }
 
-  const execute = command => {
-    if (commandHandlers.hasOwnProperty(command.type)) {
-      commandHandlers[command.type].execute(command);
+  const handlerFor = commandName => {
+    if (commandHandlers.hasOwnProperty(commandName)) {
+      return commandHandlers[commandName];
     } else {
-      throw `Unknown command: ${JSON.stringify(command)}`;
+      throw `Unknown command: ${JSON.stringify(commandName)}`;
     }
   };
+
+  const execute = command => handlerFor(command.type).execute(command);
 
   IterationProcessManager().initialize(subscribe, execute, delay);
 
   execute({type: 'CreateGame', gameId: 'default'})
 
   return {
-    execute,
-    subscribe,
-    getGame: games.find
+    execute
   }
+};
+
+const initializeStats = ({games, subscribe}) => {
+};
+
+const Application = (games, delay) => {
+  const {publish, subscribe} = EventBus();
+  const gameModule = intializeGames({games, delay, publish, subscribe});
+  const statsModule = initializeStats({games, subscribe})
+
+  return {...gameModule, subscribe, findGame: games.find};
 };
 
 module.exports = Application

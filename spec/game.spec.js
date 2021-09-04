@@ -14,7 +14,7 @@ describe('Iteration', () => {
   });
 
   it('cannot start a games again', function () {
-    expect(application.getGame('g1')).toMatchObject(initialState())
+    expect(application.findGame('g1')).toMatchObject(initialState())
   });
 
 });
