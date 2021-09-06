@@ -4,12 +4,6 @@ import {TaskCreated, TaskMoved} from "./task";
 
 const currentGameId = document.getElementById('gameId').value
 
-const component = (text) => {
-  const element = document.createElement('li');
-  element.innerHTML = text;
-  return element;
-};
-
 const socket = io();
 const $startIterationButton = document.getElementById('start-iteration');
 const $createTaskButton = document.getElementById('create-task');
