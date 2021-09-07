@@ -1,8 +1,8 @@
-const move = (gameId, taskId) => fetch(`/api/games/${gameId}/tasks/${taskId}/move`, {method: 'POST'});
-const getColumn = id => document.getElementById("column-" + id).querySelector(".tasks");
-const getCard = id => document.getElementById("task-" + id);
+const move = ({gameId, taskId}) => fetch(`/api/games/${gameId}/tasks/${taskId}/move`, {method: 'POST'});
+const getColumn = ({columnId}) => document.getElementById("column-" + columnId).querySelector(".tasks");
+const getCard = ({taskId}) => document.getElementById("task-" + taskId);
 
-const createCard = (taskId, color) => {
+const createCard = ({taskId, color}) => {
   const card = document.createElement('div');
   card.className = 'card';
   card.setAttribute('id', `task-${taskId}`)
@@ -10,21 +10,21 @@ const createCard = (taskId, color) => {
   return card;
 };
 
-const TaskCreated = event => {
+const TaskCreated = () => {
   return {
-    handle: ({gameId, columnId, taskId, color}) => {
-      const card = createCard(taskId, color);
-      getColumn(columnId).append(card);
-      card.addEventListener('click', () => move(gameId, taskId))
+    handle: (event) => {
+      const card = createCard(event);
+      getColumn(event).append(card);
+      card.addEventListener('click', () => move(event))
     }
   }
 };
 
-const TaskMoved = event => {
+const TaskMoved = () => {
   return {
-    handle: ({columnId, taskId}) => {
-      const card = getCard(taskId);
-      const column = getColumn(columnId);
+    handle: (event) => {
+      const card = getCard(event) || createCard(event);
+      const column = getColumn(event);
 
       if(card && column) column.append(card);
     }
