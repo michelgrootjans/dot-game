@@ -16,7 +16,7 @@ progress {
   grid-auto-columns: 150px;
   grid-auto-flow: column;
   grid-gap: 8px;
-  height: 100vh;
+  height: 60vh;
   overflow: auto;
 }
 
