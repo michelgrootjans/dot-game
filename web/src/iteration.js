@@ -10,9 +10,9 @@ const Timer = (duration, progressBar) => {
   return {
     start: () => {
       const graph = Graph();
-      const timer = setInterval(() => {
+      const timer = setInterval(async () => {
         const timeleft = new Date() - startTime;
-        graph.update();
+        await graph.update();
         if (duration <= timeleft) clearInterval(timer);
         progressBar.value = timeleft;
       }, 1000);

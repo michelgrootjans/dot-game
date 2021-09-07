@@ -31,7 +31,7 @@ const initializeGame = gameId => {
     fetch(`/api/games/${gameId}/iterations`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({duration: 60 * 1000})
+      body: JSON.stringify({duration: 30 * 1000})
     })
   });
   $createTaskButton.addEventListener('click', () => {
