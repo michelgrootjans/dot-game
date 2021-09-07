@@ -1,6 +1,7 @@
 import {io} from "socket.io-client";
 import {FinishIteration, StartIteration} from "./iteration";
 import {TaskCreated, TaskMoved} from "./task";
+import {v4 as uuidv4} from 'uuid';
 
 const currentGameId = document.getElementById('gameId').value
 
@@ -26,9 +27,6 @@ socket.on('message', function (event) {
   handlerForEvent(event).handle(event)
 });
 
-let taskCounter = 1;
-const nextTaskId = () => `${taskCounter++}`;
-
 const initializeGame = gameId => {
   $startIterationButton.addEventListener('click', () => {
     fetch(`/api/games/${gameId}/iterations`, {
@@ -41,7 +39,7 @@ const initializeGame = gameId => {
     fetch(`/api/games/${gameId}/tasks`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({taskId: nextTaskId()})
+      body: JSON.stringify({taskId: uuidv4()})
     })
   });
 };
