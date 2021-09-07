@@ -6,21 +6,26 @@ const ctx = document.getElementById('myChart');
 
 const randomize = (from, to) => from + Math.random() * to;
 
+const subdata = [{
+  time: 0,
+  wip: randomize(0, 10)
+}, {
+  time: 5,
+  wip: randomize(0, 10)
+}, {
+  time: 7,
+  wip: randomize(0, 10)
+}, {
+  time: 15,
+  wip: randomize(0, 10)
+}];
 const data = {
   datasets: [{
-    data: [{
-      x: 0,
-      y: randomize(0, 100)
-    }, {
-      x: 5,
-      y: randomize(0, 100)
-    }, {
-      x: 7,
-      y: randomize(0, 100)
-    }, {
-      x: 15,
-      y: randomize(0, 100)
-    }],
+    data: subdata,
+    parsing: {
+      xAxisKey: 'time',
+      yAxisKey: 'wip',
+    }
   }]
 };
 
