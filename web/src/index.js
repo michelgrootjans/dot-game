@@ -13,10 +13,10 @@ const handlerForEvent = event => {
   console.log(event);
 
   switch (event.type) {
-    case 'IterationStarted': return StartIteration(event);
-    case 'TaskCreated': return TaskCreated(event);
-    case 'TaskMoved': return TaskMoved(event);
-    case 'IterationFinished': return FinishIteration(event);
+    case 'IterationStarted': return StartIteration();
+    case 'TaskCreated': return TaskCreated();
+    case 'TaskMoved': return TaskMoved();
+    case 'IterationFinished': return FinishIteration();
   }
   return {handle: () => {}}
 };
