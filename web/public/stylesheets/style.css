@@ -43,25 +43,25 @@ progress {
   margin: 10px;
 }
 
-.card:nth-child(5n+1) {
+.queue-column .card:nth-child(5n+1) {
   z-index: 10;
 }
-.card:nth-child(5n+2) {
+.queue-column .card:nth-child(5n+2) {
   transform: rotate(1deg);
   margin-top: -85px;
   z-index: 9;
 }
-.card:nth-child(5n+3) {
+.queue-column .card:nth-child(5n+3) {
   transform: rotate(2deg);
   margin-top: -85px;
   z-index: 8;
 }
-.card:nth-child(5n+4) {
+.queue-column .card:nth-child(5n+4) {
   transform: rotate(3deg);
   margin-top: -85px;
   z-index: 7;
 }
-.card:nth-child(5n+5) {
+.queue-column .card:nth-child(5n+5) {
   transform: rotate(4deg);
   margin-top: -85px;
   z-index: 6;

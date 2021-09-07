@@ -8,7 +8,7 @@ const Timer = (duration) => {
 
   return {
     start: () => {
-      const downloadTimer = setInterval(function () {
+      const downloadTimer = setInterval(() => {
         const timeleft = new Date() - startTime;
         if (duration <= timeleft) clearInterval(downloadTimer);
         progressBar.value = timeleft;
