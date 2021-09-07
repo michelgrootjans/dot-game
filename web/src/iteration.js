@@ -1,16 +1,19 @@
+const Graph = require("./graph");
+
 const $startIterationButton = document.getElementById('start-iteration');
 const $createTaskButton = document.getElementById('create-task');
 
-const Timer = (duration) => {
+const Timer = (duration, progressBar) => {
   const startTime = new Date();
-  const progressBar = document.getElementById("progressbar");
   progressBar.max = `${duration}`;
 
   return {
     start: () => {
-      const downloadTimer = setInterval(() => {
+      const graph = Graph();
+      const handle = setInterval(async () => {
         const timeleft = new Date() - startTime;
-        if (duration <= timeleft) clearInterval(downloadTimer);
+        await graph.update();
+        if (duration <= timeleft) clearInterval(handle);
         progressBar.value = timeleft;
       }, 1000);
 
@@ -31,7 +34,7 @@ const StartIteration = event => {
       $startIterationButton.disabled = true;
       $createTaskButton.disabled = false;
       clearBoard();
-      Timer(duration).start();
+      Timer(duration, document.getElementById("progressbar")).start();
     }
   }
 };

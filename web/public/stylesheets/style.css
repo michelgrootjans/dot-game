@@ -67,3 +67,7 @@ progress {
   z-index: 6;
 }
 
+.chart-container {
+  width: 400px;
+  height: 200px;
+}

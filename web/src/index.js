@@ -4,10 +4,9 @@ import {TaskCreated, TaskMoved} from "./task";
 import {v4 as uuidv4} from 'uuid';
 
 const currentGameId = document.getElementById('gameId').value
-
-const socket = io();
 const $startIterationButton = document.getElementById('start-iteration');
 const $createTaskButton = document.getElementById('create-task');
+const socket = io();
 
 const handlerForEvent = event => {
   console.log(event);
