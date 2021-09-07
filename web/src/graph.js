@@ -6,19 +6,8 @@ const ctx = document.getElementById('myChart');
 
 const randomize = (from, to) => from + Math.random() * to;
 
-const subdata = [{
-  time: 0,
-  wip: randomize(0, 10)
-}, {
-  time: 5,
-  wip: randomize(0, 10)
-}, {
-  time: 7,
-  wip: randomize(0, 10)
-}, {
-  time: 15,
-  wip: randomize(0, 10)
-}];
+const subdata = [];
+
 const data = {
   datasets: [{
     data: subdata,
@@ -51,9 +40,13 @@ var myChart = new Chart(ctx, config);
 
 myChart.update();
 
+let t = 0;
 const Graph = () => {
   const update = () => {
-  }
+    t += randomize(0, 1);
+    subdata.push({time: t, wip: randomize(0, 10)});
+    myChart.update()
+  };
   return {
     update
   }

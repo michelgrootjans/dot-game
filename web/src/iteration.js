@@ -3,15 +3,16 @@ const Graph = require("./graph");
 const $startIterationButton = document.getElementById('start-iteration');
 const $createTaskButton = document.getElementById('create-task');
 
-const graph = Graph();
 const Timer = (duration, progressBar) => {
   const startTime = new Date();
   progressBar.max = `${duration}`;
 
   return {
     start: () => {
+      const graph = Graph();
       const timer = setInterval(() => {
         const timeleft = new Date() - startTime;
+        graph.update();
         if (duration <= timeleft) clearInterval(timer);
         progressBar.value = timeleft;
       }, 1000);
