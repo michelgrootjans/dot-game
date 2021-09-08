@@ -3,31 +3,28 @@ Chart.register(ArcElement, LineElement, BarElement, PointElement, BarController,
 
 const ctx = document.getElementById('myChart');
 
-const wip = {
-  label: 'wip',
+const createDataset = (label, color) => ({
+  label: label,
   type: 'line',
   data: [],
   fill: true,
   stepped: true,
   pointRadius: 0,
-  backgroundColor: 'rgba(255, 206, 86, 0.1)',
-  borderColor: 'rgba(255, 206, 86, 1)',
-};
-const done = {
-  label: 'done',
-  type: 'line',
-  data: [],
-  fill: true,
-  stepped: true,
-  pointRadius: 0,
-  backgroundColor: 'rgba(54, 162, 235, 0.1)',
-  borderColor: 'rgba(54, 162, 235, 1)',
-};
+  backgroundColor: `rgba(${color}, 0.1)`,
+  borderColor: `rgba(${color}, 1)`,
+});
+
+const todo = createDataset('todo', '255, 99, 132');
+const analysis = createDataset('analysis', '255, 159, 64');
+const design = createDataset('design', '255, 205, 86');
+const development = createDataset('development', '75, 192, 192');
+const qa = createDataset('qa', '54, 162, 235');
+const done = createDataset('done', '153, 102, 255');
 
 const config = {
   type: 'line',
   data: {
-    datasets: [done, wip]
+    datasets: [done, qa, development, design, analysis, todo]
   },
   options: {
     animation: false,
@@ -61,13 +58,17 @@ const fetchHistory = () => fetch(`/api/games/default/stats`, {method: 'GET'})
 const Graph = () => {
   const update = async () => {
     const newHistory = await fetchHistory();
-    wip.data = newHistory.map(record => ({x: record.time, y: record.wip}))
+    todo.data = newHistory.map(record => ({x: record.time, y: record.todo}))
+    analysis.data = newHistory.map(record => ({x: record.time, y: record.analysis}))
+    design.data = newHistory.map(record => ({x: record.time, y: record.design}))
+    development.data = newHistory.map(record => ({x: record.time, y: record.development}))
+    qa.data = newHistory.map(record => ({x: record.time, y: record.qa}))
     done.data = newHistory.map(record => ({x: record.time, y: record.done}))
     myChart.update()
   };
 
   const clear = () => {
-    wip.data = [];
+    todo.data = [];
     done.data = [];
     myChart.clear();
   }
