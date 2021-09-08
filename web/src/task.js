@@ -14,7 +14,7 @@ const TaskCreated = () => {
   return {
     handle: (event) => {
       const card = createCard(event);
-      getColumn(event).append(card);
+      getColumn(event.column).append(card);
       card.addEventListener('click', () => move(event))
     }
   }
@@ -24,7 +24,7 @@ const TaskMoved = () => {
   return {
     handle: (event) => {
       const card = getCard(event) || createCard(event);
-      const column = getColumn(event);
+      const column = getColumn(event.to);
 
       if(card && column) column.append(card);
     }

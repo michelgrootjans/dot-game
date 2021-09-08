@@ -25,9 +25,9 @@ const Game = game => {
   const createTask = (taskId, publish) => {
     if (!game.currentIteration) return;
 
-    const task = {taskId, columnId: todoColumn.columnId, color: anyCardColor(), taskName: todoColumn.taskName};
+    const task = {taskId, color: anyCardColor(), columnId: todoColumn.columnId};
     game.tasks.push(task);
-    publish(TaskCreated({...task, gameId}))
+    publish(TaskCreated({...task, column: todoColumn, gameId}))
   }
 
   const moveTask = (taskId, publish) => {
@@ -35,14 +35,13 @@ const Game = game => {
 
     const task = findTask(taskId);
     const column = findColumn(task.columnId);
+
+    if(!column.nextColumnId) return;
+
     const nextColumn = findColumn(column.nextColumnId);
-
-    if(!nextColumn) return;
-
     task.columnId = nextColumn.columnId;
-    task.taskName = nextColumn.taskName;
 
-    publish(TaskMoved({...task, gameId}));
+    publish(TaskMoved({...task, from: column, to: nextColumn, gameId}));
     if (task.columnId === doneColumn.columnId) {
       publish(TaskFinished({...task, gameId}));
     }
