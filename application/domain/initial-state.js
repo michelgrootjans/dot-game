@@ -1,14 +1,14 @@
 const initialState = () => ({
     columns: [
-      {columnId: "c1", nextColumnId: "c2", columnType: "queue-column", title: "To do"},
-      {columnId: "c2", nextColumnId: "c3", columnType: "work-column", title: "Analysis"},
-      {columnId: "c3", nextColumnId: "c4", columnType: "queue-column", title: "Ready for design"},
-      {columnId: "c4", nextColumnId: "c5", columnType: "work-column", title: "Design"},
-      {columnId: "c5", nextColumnId: "c6", columnType: "queue-column", title: "Ready for development"},
-      {columnId: "c6", nextColumnId: "c7", columnType: "work-column", title: "Development"},
-      {columnId: "c7", nextColumnId: "c8", columnType: "queue-column", title: "Ready for QA"},
-      {columnId: "c8", nextColumnId: "c9", columnType: "work-column", title: "QA"},
-      {columnId: "c9", columnType: "queue-column", title: "Done"}
+      {columnId: "c1", columnType: "queue-column", nextColumnId: "c2", title: "To do", taskName: "todo"},
+      {columnId: "c2", columnType: "work-column", nextColumnId: "c3", title: "Analysis", taskName: "analysis"},
+      {columnId: "c3", columnType: "queue-column", nextColumnId: "c4", title: "Ready for design", taskName: "analysis"},
+      {columnId: "c4", columnType: "work-column", nextColumnId: "c5", title: "Design", taskName: "design"},
+      {columnId: "c5", columnType: "queue-column", nextColumnId: "c6", title: "Ready for development", taskName: "design"},
+      {columnId: "c6", columnType: "work-column", nextColumnId: "c7", title: "Development", taskName: "development"},
+      {columnId: "c7", columnType: "queue-column", nextColumnId: "c8", title: "Ready for QA", taskName: "development"},
+      {columnId: "c8", columnType: "work-column", nextColumnId: "c9", title: "QA", taskName: "qa"},
+      {columnId: "c9", columnType: "queue-column", title: "Done", taskName: "done"}
     ]
   }
 )

@@ -20,7 +20,7 @@ describe('Tasks', () => {
   it('creates a task', () => {
     application.execute(CreateTask({gameId: 'g1', taskId: 't1'}))
     expect(events).toMatchObject([
-      TaskCreated({gameId: 'g1', taskId:'t1', columnId: 'c1'})
+      TaskCreated({gameId: 'g1', taskId:'t1', columnId: 'c1', taskName: 'todo'})
     ]);
   });
 

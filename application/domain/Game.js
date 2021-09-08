@@ -25,7 +25,7 @@ const Game = game => {
   const createTask = (taskId, publish) => {
     if (!game.currentIteration) return;
 
-    const task = {taskId, columnId: todoColumn.columnId, color: anyCardColor()};
+    const task = {taskId, columnId: todoColumn.columnId, color: anyCardColor(), taskName: todoColumn.taskName};
     game.tasks.push(task);
     publish(TaskCreated({...task, gameId}))
   }
