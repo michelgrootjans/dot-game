@@ -40,7 +40,7 @@ const config = {
       },
     },
     plugins: {
-      legend: {display: true},
+      legend: {display: true, position: 'left', align: 'start', reverse: true},
       title: { display: true, text: 'Cumulative Flow Diagram', position: 'bottom'}
     }
   },
