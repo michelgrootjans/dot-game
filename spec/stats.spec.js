@@ -1,6 +1,6 @@
 const {CreateGame} = require("../application/api/commands/game");
 const {StartIteration} = require("../application/api/commands/iteration");
-const {TaskCreated, TaskFinished} = require("../application/api/events/task");
+const {TaskCreated, TaskFinished, TaskMoved} = require("../application/api/events/task");
 const TestApplication = require("./TestApplication");
 const {StatsProcessManager} = require("../application/domain/StatsProcessManager");
 const StatsRepository = require("../application/StatsRepository");
@@ -17,13 +17,13 @@ describe('stats end-to-end', () => {
     application.execute(StartIteration({gameId: 'g1', duration: 0}));
 
     application.advanceTime(1);
-    application.publish(TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1'}}))
+    application.publish(TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1', taskName: 'todo'}}))
 
     application.advanceTime(1);
-    application.publish(TaskFinished({gameId: 'g1', taskId: 't1', column: {columnId: 'c9'}}))
+    application.publish(TaskMoved({gameId: 'g1', taskId: 't1', from: {columnId: 'c1', taskName: 'todo'}, to: {columnId: 'c9', taskName: 'done'}}))
 
     expect(application.findStats('g1').history()).toMatchObject(
-      [{time: 0, wip: 0}, {time: 1, wip: 1}, {time: 2, wip: 0}],
+      [{time: 1, todo: 1}, {time: 2, todo: 0, done: 1}],
     )
   });
 });
@@ -43,57 +43,64 @@ describe('Stats Process Manager', () => {
     publish(IterationStarted({gameId: 'g1'}))
 
     expect(stats.findStats('g1').history()).toMatchObject(
-      [{time: 0, wip: 0, done: 0}],
+      [],
     )
   });
 
-  it("adds one intem", () => {
+  it("adds one item", () => {
     publish(IterationStarted({gameId: 'g1'}));
     timer.advance(1);
-    publish(TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1'}}))
+    publish(TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1', taskName: 'todo'}}))
 
     expect(stats.findStats('g1').history()).toMatchObject(
-      [{time: 0, wip: 0, done: 0}, {time: 1, wip: 1, done: 0}],
+      [{time: 1, todo: 1}],
     )
   });
 
-  it("finish one intem", () => {
+  it("moves one item", () => {
     publish(IterationStarted({gameId: 'g1'}));
     timer.advance(1);
-    publish(TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1'}}))
+    publish(TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1', taskName: 'todo'}}))
     timer.advance(1);
-    publish(TaskFinished({gameId: 'g1', taskId: 't1', column: {columnId: 'c9'}}))
+    publish(TaskMoved({gameId: 'g1', taskId: 't1', from: {columnId: 'c1', taskName: 'todo'}, to: {columnId: 'c2', taskName: 'dev'}}))
 
     expect(stats.findStats('g1').history()).toMatchObject(
-      [{time: 0, wip: 0, done: 0}, {time: 1, wip: 1, done: 0}, {time: 2, wip: 0, done: 1}],
+      [{time: 1, todo: 1}, {time: 2, todo: 0, dev: 1}],
     )
   });
 
-  it("start a new iteration resets the stats", () => {
+  it("moves multiple items", () => {
     publish(IterationStarted({gameId: 'g1'}));
     timer.advance(1);
-    publish(TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1'}}))
+    publish(TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1', taskName: 'todo'}}))
+    publish(TaskCreated({gameId: 'g1', taskId: 't2', column: {columnId: 'c1', taskName: 'todo'}}))
+    publish(TaskCreated({gameId: 'g1', taskId: 't3', column: {columnId: 'c1', taskName: 'todo'}}))
     timer.advance(1);
-    publish(TaskFinished({gameId: 'g1', taskId: 't1', column: {columnId: 'c9'}}))
-    timer.advance(1)
-    publish(IterationStarted({gameId: 'g1'}));
+    publish(TaskMoved({gameId: 'g1', taskId: 't1', from: {columnId: 'c1', taskName: 'todo'}, to: {columnId: 'c2', taskName: 'dev'}}))
+    publish(TaskMoved({gameId: 'g1', taskId: 't2', from: {columnId: 'c1', taskName: 'todo'}, to: {columnId: 'c2', taskName: 'dev'}}))
+    timer.advance(1);
+    publish(TaskMoved({gameId: 'g1', taskId: 't1', from: {columnId: 'c2', taskName: 'dev'}, to: {columnId: 'c3', taskName: 'qa'}}))
 
     expect(stats.findStats('g1').history()).toMatchObject(
-      [{time: 0, wip: 0, done: 0}],
+      [
+        {time: 1, todo: 1}, {time: 1, todo: 2}, {time: 1, todo: 3},
+        {time: 2, todo: 2, dev: 1}, {time: 2, todo: 1, dev: 2},
+        {time: 3, todo: 1, dev: 1, qa: 1},
+      ],
     )
   });
 
   it("creating an item on a new iteration", () => {
     publish(IterationStarted({gameId: 'g1'}));
     timer.advance(1);
-    publish(TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1'}}))
+    publish(TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1', taskName: 'todo'}}))
     timer.advance(1)
     publish(IterationStarted({gameId: 'g1'}));
     timer.advance(1)
-    publish(TaskCreated({gameId: 'g1', taskId: 't2', column: {columnId: 'c1'}}))
+    publish(TaskCreated({gameId: 'g1', taskId: 't2', column: {columnId: 'c1', taskName: 'todo'}}))
 
     expect(stats.findStats('g1').history()).toMatchObject(
-      [{time: 0, wip: 0, done: 0}, {time: 1, wip: 1, done: 0}],
+      [{time: 1, todo: 1}],
     )
   });
 });

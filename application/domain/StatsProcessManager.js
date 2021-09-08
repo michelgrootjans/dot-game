@@ -1,16 +1,28 @@
 const IterationStats = (startTime) => {
-  let currentStats = {wip: 0, done: 0}
-  let history = [{time: 0, ...currentStats}]
+  let currentStats = {}
+  let history = []
 
   const getTime = time => (time - startTime) / 1000;
+
+  const increment = taskName => {
+    if (!currentStats[taskName]) currentStats[taskName] = 1
+    else currentStats[taskName]++;
+  };
+
+  function decrement(taskName) {
+    if (!currentStats[taskName]) currentStats[taskName] = 0
+    else currentStats[taskName]--;
+  }
+
   return {
-    addTask: (time) => {
-      currentStats.wip++;
+    addTask: (time, event) => {
+      increment(event.column.taskName);
       return history.push({time: getTime(time), ...currentStats});
     },
-    removeTask: (time) => {
-      currentStats.wip--;
-      currentStats.done++;
+    moveTask: (time, event) => {
+      decrement(event.from.taskName);
+      increment(event.to.taskName)
+
       return history.push({time: getTime(time), ...currentStats});
     },
     history: () => history
@@ -25,8 +37,8 @@ const GameStats = (gameId, startTime) => {
   return {
     gameId,
     history: () => currentIteration.history(),
-    addTask: time => currentIteration.addTask(time),
-    removeTask: time => currentIteration.removeTask(time),
+    addTask: (time, event) => currentIteration.addTask(time, event),
+    moveTask: (time, event) => currentIteration.moveTask(time, event),
     restart
   };
 };
@@ -41,13 +53,13 @@ const StatsProcessManager = () => {
         stats.add(GameStats(gameId, currentTime()));
       }
     })
-    subscribe('TaskCreated', ({gameId}) => {
-      const current = stats.find(gameId);
-      current && current.addTask(currentTime());
+    subscribe('TaskCreated', (event) => {
+      const current = stats.find(event.gameId);
+      current && current.addTask(currentTime(), event);
     })
-    subscribe('TaskFinished', ({gameId}) => {
-      const current = stats.find(gameId);
-      current && current.removeTask(currentTime());
+    subscribe('TaskMoved', (event) => {
+      const current = stats.find(event.gameId);
+      current && current.moveTask(currentTime(), event);
     })
   };
   return {
