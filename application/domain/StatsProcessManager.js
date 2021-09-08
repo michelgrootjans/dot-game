@@ -1,17 +1,9 @@
-const Stats = (gameId, startTime) => {
+const IterationStats = (startTime) => {
   let currentStats = {wip: 0, done: 0}
   let history = [{time: 0, ...currentStats}]
 
-  const getTime = time => (time - startTime)/1000;
-
-  const restart = time => {
-    currentStats = {wip: 0, done: 0};
-    history = [{time: 0, ...currentStats}]
-  }
-
+  const getTime = time => (time - startTime) / 1000;
   return {
-    gameId,
-    history: () => history,
     addTask: (time) => {
       currentStats.wip++;
       return history.push({time: getTime(time), ...currentStats});
@@ -21,6 +13,20 @@ const Stats = (gameId, startTime) => {
       currentStats.done++;
       return history.push({time: getTime(time), ...currentStats});
     },
+    history: () => history
+  }
+};
+
+const GameStats = (gameId, startTime) => {
+  let currentIteration = IterationStats(startTime);
+
+  const restart = time => currentIteration = IterationStats(time)
+
+  return {
+    gameId,
+    history: () => currentIteration.history(),
+    addTask: time => currentIteration.addTask(time),
+    removeTask: time => currentIteration.removeTask(time),
     restart
   };
 };
@@ -32,7 +38,7 @@ const StatsProcessManager = () => {
       if (current) {
         current.restart(currentTime())
       } else {
-        stats.add(Stats(gameId, currentTime()));
+        stats.add(GameStats(gameId, currentTime()));
       }
     })
     subscribe('TaskCreated', ({gameId}) => {

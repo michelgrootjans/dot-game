@@ -82,4 +82,18 @@ describe('Stats Process Manager', () => {
       [{time: 0, wip: 0, done: 0}],
     )
   });
+
+  it("creating an item on a new iteration", () => {
+    publish(IterationStarted({gameId: 'g1'}));
+    timer.advance(1);
+    publish(TaskCreated({gameId: 'g1', taskId: 't1', columnId: 'c1'}))
+    timer.advance(1)
+    publish(IterationStarted({gameId: 'g1'}));
+    timer.advance(1)
+    publish(TaskCreated({gameId: 'g1', taskId: 't2', columnId: 'c1'}))
+
+    expect(stats.findStats('g1').history()).toMatchObject(
+      [{time: 0, wip: 0, done: 0}, {time: 1, wip: 1, done: 0}],
+    )
+  });
 });
