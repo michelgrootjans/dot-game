@@ -8,7 +8,6 @@ const Game = game => {
   const doneColumn = columns[columns.length - 1];
   const gameId = game.gameId;
 
-
   const findTask = taskId => game.tasks.find(t => t.taskId === taskId);
   const findColumn = columnId => columns.find(c => c.columnId === columnId);
 
@@ -36,10 +35,11 @@ const Game = game => {
 
     const task = findTask(taskId);
     const column = findColumn(task.columnId);
+    const nextColumn = findColumn(column.nextColumnId);
 
-    if(!column.nextColumnId) return;
+    if(!nextColumn) return;
 
-    task.columnId = column.nextColumnId;
+    task.columnId = nextColumn.columnId;
 
     publish(TaskMoved({...task, gameId}));
     if (task.columnId === doneColumn.columnId) {
