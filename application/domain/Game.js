@@ -40,6 +40,7 @@ const Game = game => {
     if(!nextColumn) return;
 
     task.columnId = nextColumn.columnId;
+    task.taskName = nextColumn.taskName;
 
     publish(TaskMoved({...task, gameId}));
     if (task.columnId === doneColumn.columnId) {
