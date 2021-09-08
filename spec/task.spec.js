@@ -38,9 +38,9 @@ describe('Tasks', () => {
     application.execute(MoveTask({gameId: 'g1', taskId: 't1'}))
     application.execute(MoveTask({gameId: 'g1', taskId: 't1'}))
     expect(events).toMatchObject([
-      TaskCreated({gameId: 'g1', taskId:'t1', columnId: 'c1'}),
-      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c2'}),
-      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c3'})
+      TaskCreated({gameId: 'g1', taskId:'t1', columnId: 'c1', taskName: 'todo'}),
+      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c2', taskName: 'analysis'}),
+      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c3', taskName: 'analysis'})
     ]);
   });
 
@@ -50,15 +50,15 @@ describe('Tasks', () => {
       application.execute(MoveTask({gameId: 'g1', taskId: 't1'}))
     }
     expect(events).toMatchObject([
-      TaskCreated({gameId: 'g1', taskId:'t1', columnId: 'c1'}),
-      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c2'}),
-      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c3'}),
-      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c4'}),
-      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c5'}),
-      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c6'}),
-      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c7'}),
-      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c8'}),
-      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c9'}),
+      TaskCreated({gameId: 'g1', taskId:'t1', columnId: 'c1', taskName: 'todo'}),
+      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c2', taskName: 'analysis'}),
+      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c3', taskName: 'analysis'}),
+      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c4', taskName: 'design'}),
+      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c5', taskName: 'design'}),
+      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c6', taskName: 'development'}),
+      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c7', taskName: 'development'}),
+      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c8', taskName: 'qa'}),
+      TaskMoved({gameId: 'g1', taskId:'t1', columnId: 'c9', taskName: 'done'}),
       TaskFinished({gameId: 'g1', taskId:'t1'}),
     ]);
   });
