@@ -3,18 +3,19 @@ const Graph = require("./graph");
 const $startIterationButton = document.getElementById('start-iteration');
 const $createTaskButton = document.getElementById('create-task');
 
+const graph = Graph();
+
 const Timer = (duration, progressBar) => {
   const startTime = new Date();
   progressBar.max = `${duration}`;
 
   return {
     start: () => {
-      const graph = Graph();
-      const handle = setInterval(async () => {
-        const timeleft = new Date() - startTime;
+      const timerHandle = setInterval(async () => {
+        const timeLeft = new Date() - startTime;
         await graph.update();
-        if (duration <= timeleft) clearInterval(handle);
-        progressBar.value = timeleft;
+        if (duration <= timeLeft) clearInterval(timerHandle);
+        progressBar.value = timeLeft;
       }, 1000);
 
     }
@@ -22,6 +23,7 @@ const Timer = (duration, progressBar) => {
 };
 
 const clearBoard = () => {
+  graph.clear()
   const cards = document.getElementsByClassName('card');
   while (cards.length > 0) {
     cards[0].parentNode.removeChild(cards[0]);

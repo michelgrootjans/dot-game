@@ -29,17 +29,31 @@ describe('stats end-to-end', () => {
 });
 
 describe('Stats Process Manager', () => {
+  let stats, publish, timer;
 
-  it("keeps history", () => {
-    const stats = StatsRepository();
-    const {publish, subscribe} = EventBus();
-    const timer = FakeTimer();
-    StatsProcessManager().initialize(stats, subscribe, timer.currentTime);
+  beforeEach(() => {
+    stats = StatsRepository();
+    const eventBus = EventBus();
+    publish = eventBus.publish;
+    timer = FakeTimer();
+    StatsProcessManager().initialize(stats, eventBus.subscribe, timer.currentTime);
+  });
 
+  it("starts with a clean history", () => {
     publish(IterationStarted({gameId: 'g1'}))
 
     expect(stats.findStats('g1')).toMatchObject({
       history: [{time: 0, wip: 0, done: 0}],
+    })
+  });
+
+  it("adds one intem", () => {
+    publish(IterationStarted({gameId: 'g1'}));
+    timer.advance(1);
+    publish(TaskCreated({gameId: 'g1', taskId: 't1', columnId: 'c1'}))
+
+    expect(stats.findStats('g1')).toMatchObject({
+      history: [{time: 0, wip: 0, done: 0}, {time: 1, wip: 1, done: 0}],
     })
   });
 });

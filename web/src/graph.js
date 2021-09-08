@@ -48,22 +48,27 @@ myChart.update();
 
 let t = 0;
 
-function deltaBetween(currentHistory, newHistory) {
-  return newHistory.slice(currentHistory.length);
+const deltaBetween = (smallArray, bigArray) => bigArray.slice(smallArray.length);
+
+function fetchHistory() {
+  return (fetch(`/api/games/default/stats`, {method: 'GET'})).then(response => response.json().then(response => response.history));
 }
 
 const Graph = () => {
   const update = async () => {
-    const response = await fetch(`/api/games/default/stats`, {method: 'GET'});
-    const jsonResponse = await response.json();
-    // const currentHistory = data.datasets[0].data;
-    const newHistory = jsonResponse.history;
+    const newHistory = await fetchHistory();
     deltaBetween(currentHistory, newHistory).forEach(point => currentHistory.push(point));
     myChart.update()
   };
 
+  const clear = () => {
+    currentHistory.length = 0;
+    myChart.clear();
+  }
+
   return {
-    update
+    update,
+    clear
   }
 }
 

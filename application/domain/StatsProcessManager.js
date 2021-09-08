@@ -7,11 +7,11 @@ const Stats = (gameId, startTime) => {
   return {
     gameId,
     history,
-    addTask: (time, task) => {
+    addTask: (time) => {
       currentStats.wip++;
       return history.push({time: getTime(time), ...currentStats});
     },
-    removeTask: (time, task) => {
+    removeTask: (time) => {
       currentStats.wip--;
       currentStats.done++;
       return history.push({time: getTime(time), ...currentStats});
@@ -26,11 +26,11 @@ const StatsProcessManager = () => {
     })
     subscribe('TaskCreated', ({gameId}) => {
       const current = stats.findStats(gameId);
-      current && current.addTask(currentTime(), {});
+      current && current.addTask(currentTime());
     })
     subscribe('TaskFinished', ({gameId}) => {
       const current = stats.findStats(gameId);
-      current && current.removeTask(currentTime(), {});
+      current && current.removeTask(currentTime());
     })
   };
   return {
