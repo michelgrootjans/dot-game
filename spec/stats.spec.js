@@ -22,9 +22,9 @@ describe('stats end-to-end', () => {
     application.advanceTime(1);
     application.publish(TaskFinished({gameId: 'g1', taskId: 't1'}))
 
-    expect(application.findStats('g1')).toMatchObject({
-      history: [{time: 0, wip: 0}, {time: 1, wip: 1}, {time: 2, wip: 0}],
-    })
+    expect(application.findStats('g1').history()).toMatchObject(
+      [{time: 0, wip: 0}, {time: 1, wip: 1}, {time: 2, wip: 0}],
+    )
   });
 });
 
@@ -42,9 +42,9 @@ describe('Stats Process Manager', () => {
   it("starts with a clean history", () => {
     publish(IterationStarted({gameId: 'g1'}))
 
-    expect(stats.findStats('g1')).toMatchObject({
-      history: [{time: 0, wip: 0, done: 0}],
-    })
+    expect(stats.findStats('g1').history()).toMatchObject(
+      [{time: 0, wip: 0, done: 0}],
+    )
   });
 
   it("adds one intem", () => {
@@ -52,11 +52,34 @@ describe('Stats Process Manager', () => {
     timer.advance(1);
     publish(TaskCreated({gameId: 'g1', taskId: 't1', columnId: 'c1'}))
 
-    expect(stats.findStats('g1')).toMatchObject({
-      history: [{time: 0, wip: 0, done: 0}, {time: 1, wip: 1, done: 0}],
-    })
+    expect(stats.findStats('g1').history()).toMatchObject(
+      [{time: 0, wip: 0, done: 0}, {time: 1, wip: 1, done: 0}],
+    )
+  });
+
+  it("finish one intem", () => {
+    publish(IterationStarted({gameId: 'g1'}));
+    timer.advance(1);
+    publish(TaskCreated({gameId: 'g1', taskId: 't1', columnId: 'c1'}))
+    timer.advance(1);
+    publish(TaskFinished({gameId: 'g1', taskId: 't1', columnId: 'c1'}))
+
+    expect(stats.findStats('g1').history()).toMatchObject(
+      [{time: 0, wip: 0, done: 0}, {time: 1, wip: 1, done: 0}, {time: 2, wip: 0, done: 1}],
+    )
+  });
+
+  it("start a new iteration resets the stats", () => {
+    publish(IterationStarted({gameId: 'g1'}));
+    timer.advance(1);
+    publish(TaskCreated({gameId: 'g1', taskId: 't1', columnId: 'c1'}))
+    timer.advance(1);
+    publish(TaskFinished({gameId: 'g1', taskId: 't1', columnId: 'c1'}))
+    timer.advance(1)
+    publish(IterationStarted({gameId: 'g1'}));
+
+    expect(stats.findStats('g1').history()).toMatchObject(
+      [{time: 0, wip: 0, done: 0}],
+    )
   });
 });
-
-// when command
-// then stats with timing

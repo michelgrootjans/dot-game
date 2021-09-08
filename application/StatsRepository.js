@@ -1,10 +1,14 @@
 const StatsRepository = () => {
   const stats = [];
 
+  const add =       item   => stats.push(item);
+  const find =      gameId => stats.find(s => s.gameId === gameId);
+  const findStats = gameId => stats.find(s => s.gameId === gameId);
+
   return {
-    push: item => stats.push(item),
-    find: gameId => stats.find(s => s.gameId === gameId),
-    findStats: gameId => stats.find(s => s.gameId === gameId)
+    add,
+    find,
+    findStats
   };
 };
 

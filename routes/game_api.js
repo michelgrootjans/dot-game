@@ -20,8 +20,7 @@ const init = application => {
   router.get('/:gameId/stats', function (req, res, next) {
     const gameId = req.params.gameId;
     const stats = application.findStats(gameId);
-    console.log({gameId, stats})
-    res.send(stats);
+    res.send({...stats, history: stats.history()});
   });
 
   router.post('/:gameId/iterations', function (req, res, next) {
