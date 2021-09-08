@@ -17,10 +17,10 @@ describe('stats end-to-end', () => {
     application.execute(StartIteration({gameId: 'g1', duration: 0}));
 
     application.advanceTime(1);
-    application.publish(TaskCreated({gameId: 'g1', taskId: 't1', columnId: 'c1'}))
+    application.publish(TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1'}}))
 
     application.advanceTime(1);
-    application.publish(TaskFinished({gameId: 'g1', taskId: 't1'}))
+    application.publish(TaskFinished({gameId: 'g1', taskId: 't1', column: {columnId: 'c9'}}))
 
     expect(application.findStats('g1').history()).toMatchObject(
       [{time: 0, wip: 0}, {time: 1, wip: 1}, {time: 2, wip: 0}],
@@ -50,7 +50,7 @@ describe('Stats Process Manager', () => {
   it("adds one intem", () => {
     publish(IterationStarted({gameId: 'g1'}));
     timer.advance(1);
-    publish(TaskCreated({gameId: 'g1', taskId: 't1', columnId: 'c1'}))
+    publish(TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1'}}))
 
     expect(stats.findStats('g1').history()).toMatchObject(
       [{time: 0, wip: 0, done: 0}, {time: 1, wip: 1, done: 0}],
@@ -60,9 +60,9 @@ describe('Stats Process Manager', () => {
   it("finish one intem", () => {
     publish(IterationStarted({gameId: 'g1'}));
     timer.advance(1);
-    publish(TaskCreated({gameId: 'g1', taskId: 't1', columnId: 'c1'}))
+    publish(TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1'}}))
     timer.advance(1);
-    publish(TaskFinished({gameId: 'g1', taskId: 't1', columnId: 'c1'}))
+    publish(TaskFinished({gameId: 'g1', taskId: 't1', column: {columnId: 'c9'}}))
 
     expect(stats.findStats('g1').history()).toMatchObject(
       [{time: 0, wip: 0, done: 0}, {time: 1, wip: 1, done: 0}, {time: 2, wip: 0, done: 1}],
@@ -72,9 +72,9 @@ describe('Stats Process Manager', () => {
   it("start a new iteration resets the stats", () => {
     publish(IterationStarted({gameId: 'g1'}));
     timer.advance(1);
-    publish(TaskCreated({gameId: 'g1', taskId: 't1', columnId: 'c1'}))
+    publish(TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1'}}))
     timer.advance(1);
-    publish(TaskFinished({gameId: 'g1', taskId: 't1', columnId: 'c1'}))
+    publish(TaskFinished({gameId: 'g1', taskId: 't1', column: {columnId: 'c9'}}))
     timer.advance(1)
     publish(IterationStarted({gameId: 'g1'}));
 
@@ -86,11 +86,11 @@ describe('Stats Process Manager', () => {
   it("creating an item on a new iteration", () => {
     publish(IterationStarted({gameId: 'g1'}));
     timer.advance(1);
-    publish(TaskCreated({gameId: 'g1', taskId: 't1', columnId: 'c1'}))
+    publish(TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1'}}))
     timer.advance(1)
     publish(IterationStarted({gameId: 'g1'}));
     timer.advance(1)
-    publish(TaskCreated({gameId: 'g1', taskId: 't2', columnId: 'c1'}))
+    publish(TaskCreated({gameId: 'g1', taskId: 't2', column: {columnId: 'c1'}}))
 
     expect(stats.findStats('g1').history()).toMatchObject(
       [{time: 0, wip: 0, done: 0}, {time: 1, wip: 1, done: 0}],

@@ -43,7 +43,7 @@ const Game = game => {
 
     publish(TaskMoved({...task, from: column, to: nextColumn, gameId}));
     if (task.columnId === doneColumn.columnId) {
-      publish(TaskFinished({...task, gameId}));
+      publish(TaskFinished({...task, gameId, column: doneColumn}));
     }
   }
 
