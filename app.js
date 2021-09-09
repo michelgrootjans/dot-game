@@ -4,6 +4,8 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const exphbs = require("express-handlebars");
+
 const socketApi = require('./socketapi')
 
 const indexRouter = require('./routes/index');
@@ -11,7 +13,6 @@ const usersRouter = require('./routes/users');
 const Application = require("./application/Application");
 
 const GamesRepository = require("./application/GameRepository");
-const exphbs = require("express-handlebars");
 const EventBus = require("./application/EventBus");
 const StatsRepository = require("./application/StatsRepository");
 

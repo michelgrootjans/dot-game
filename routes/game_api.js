@@ -4,7 +4,6 @@ const {StartIteration} = require("../application/api/commands/iteration");
 const {CreateGame} = require("../application/api/commands/game");
 const {CreateTask} = require("../application/api/commands/task");
 const {MoveTask} = require("../application/api/commands/task");
-const path = require("path");
 
 const allParams = request => ({...request.body, ...request.params});
 
