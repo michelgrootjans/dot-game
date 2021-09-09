@@ -15,21 +15,48 @@ progress {
   display: grid;
   grid-auto-columns: 150px;
   grid-auto-flow: column;
-  grid-gap: 8px;
   height: 60vh;
   overflow: auto;
 }
 
 .column {
   background: #EBECF0;
-  border-radius: 3px;
   padding: 10px;
+}
+
+.column.start-column {
+  border-left: 1px solid black;
+}
+.column.queue-column {
+  border-left: 1px dashed grey;
+}
+.column.work-column {
+  border-left: 1px solid black;
+}
+.column.end-column {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
 }
 
 .column h2 {
   font-size: 16px;
   margin: 0 0 12px 0;
   height: 2em;
+  text-align: center;
+}
+
+.column h4 {
+  height: 1em;
+  color: darkgrey;
+  text-align: center;
+  width: 100%;
+}
+
+.column.work-column h4:before{
+  content: 'ongoing';
+}
+.column.queue-column h4:before{
+  content: 'done';
 }
 
 .card {
@@ -43,25 +70,35 @@ progress {
   margin: 10px;
 }
 
-.queue-column .card:nth-child(5n+1) {
+.start-column .card:nth-child(5n+1),
+.queue-column .card:nth-child(5n+1),
+.end-column .card:nth-child(5n+1){
   z-index: 10;
 }
-.queue-column .card:nth-child(5n+2) {
+.start-column .card:nth-child(5n+2),
+.queue-column .card:nth-child(5n+2),
+.end-column .card:nth-child(5n+2){
   transform: rotate(1deg);
   margin-top: -85px;
   z-index: 9;
 }
-.queue-column .card:nth-child(5n+3) {
+.start-column .card:nth-child(5n+3),
+.queue-column .card:nth-child(5n+3),
+.end-column .card:nth-child(5n+3){
   transform: rotate(2deg);
   margin-top: -85px;
   z-index: 8;
 }
-.queue-column .card:nth-child(5n+4) {
+.start-column .card:nth-child(5n+4),
+.queue-column .card:nth-child(5n+4),
+.end-column .card:nth-child(5n+4){
   transform: rotate(3deg);
   margin-top: -85px;
   z-index: 7;
 }
-.queue-column .card:nth-child(5n+5) {
+.start-column .card:nth-child(5n+5),
+.queue-column .card:nth-child(5n+5),
+.end-column .card:nth-child(5n+5){
   transform: rotate(4deg);
   margin-top: -85px;
   z-index: 6;
