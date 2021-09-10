@@ -1,5 +1,6 @@
 const express = require('express');
 const {CreateGame} = require("../application/api/commands/game");
+const {FindWork} = require("../application/api/commands/iteration");
 const router = express.Router();
 
 const allParams = request => ({...request.body, ...request.params});
@@ -22,9 +23,8 @@ const init = application => {
   });
 
   router.get('/:gameId/:columnId', function (req, res, next) {
-    const params = allParams(req);
-    const column = application.findColumn(params.gameId, params.columnId)
-    res.render('games/work', {column});
+    const work = application.execute(FindWork(allParams(req)))
+    res.render('games/work', {work});
   });
 
   return router;

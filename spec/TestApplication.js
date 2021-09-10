@@ -16,7 +16,6 @@ const TestApplication = () => {
     publish,
     execute: application.execute,
     subscribe: application.subscribe,
-    findColumn: application.findColumn,
     currentTime: timer.currentTime,
     advanceTime: timer.advance,
     findGame: games.find,

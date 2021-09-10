@@ -31,15 +31,11 @@ const intializeGames = ({games, delay, publish, subscribe}) => {
 
   IterationProcessManager().initialize(subscribe, execute, delay);
 
+  // todo: remove this once this project is stable
   execute({type: 'CreateGame', gameId: 'default'})
 
-  findColumn = () => ({
-
-  }
-)
   return {
-    execute,
-    findColumn,
+    execute
   }
 };
 
@@ -48,10 +44,10 @@ const initializeStats = ({stats, subscribe, currentTime}) => {
 };
 
 const Application = ({games, stats, delay, publish, subscribe, currentTime = () => Date.now()}) => {
-  const {execute, findColumn} = intializeGames({games, delay, publish, subscribe});
+  const {execute} = intializeGames({games, delay, publish, subscribe});
   initializeStats({stats, subscribe, currentTime})
 
-  return {execute, subscribe, findGame: games.find, findColumn, findStats: stats.find};
+  return {execute, subscribe, findGame: games.find, findStats: stats.find};
 };
 
 module.exports = Application
