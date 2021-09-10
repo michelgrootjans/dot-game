@@ -21,6 +21,12 @@ const init = application => {
     }
   });
 
+  router.get('/:gameId/:columnId', function (req, res, next) {
+    const params = allParams(req);
+    const column = application.findColumn(params.gameId, params.columnId)
+    res.render('games/work', {column});
+  });
+
   return router;
 }
 

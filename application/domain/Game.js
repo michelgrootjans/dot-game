@@ -47,12 +47,24 @@ const Game = game => {
     }
   }
 
+  const findWork = (columnId) => {
+    const work = columns.find(c => c.columnId === columnId);
+    const inbox = columns.find(c => c.nextColumnId === columnId);
+    const outbox = columns.find(c => c.columnId === work.nextColumnId);
+    return {
+      inbox,
+      work,
+      outbox
+    }
+  };
+
   return {
     ...game,
     startIteration,
     endIteration,
     createTask,
     moveTask,
+    findWork
   }
 };
 module.exports = Game;

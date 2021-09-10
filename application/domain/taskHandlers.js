@@ -8,4 +8,9 @@ const MoveTaskHandler = (games, publish) => {
   return {execute}
 };
 
-module.exports = {CreateTaskHandler, MoveTaskHandler};
+const FindWorkHandler = (games) => {
+  const execute = ({gameId, columnId}) => games.find(gameId).findWork(columnId);
+  return {execute}
+};
+
+module.exports = {CreateTaskHandler, MoveTaskHandler, FindWorkHandler};

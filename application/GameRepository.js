@@ -10,9 +10,11 @@ const GameRepository = () => {
       return Game(game);
     }
   };
+  const findColumn = (a, b) => console.log(a, b);
   return {
     add,
-    find
+    find,
+    findColumn
   }
 };
 
