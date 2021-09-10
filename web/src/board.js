@@ -3,7 +3,7 @@ import {FinishIteration, StartIteration} from "./iteration";
 import {TaskCreated, TaskMoved} from "./task";
 import {v4 as uuidv4} from 'uuid';
 
-const currentGameId = document.getElementById('gameId').value
+const currentGameId = document.querySelector('[data-game-id]').dataset.gameId;
 const $startIterationButton = document.getElementById('start-iteration');
 const $createTaskButton = document.getElementById('create-task');
 const socket = io();

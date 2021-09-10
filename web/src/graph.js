@@ -47,15 +47,16 @@ const config = {
 };
 
 
-var myChart = new Chart(ctx, config);
-
-myChart.update();
-
-const fetchHistory = () => fetch(`/api/games/default/stats`, {method: 'GET'})
-                            .then(response => response.json())
-                            .then(response => response.history);
 
 const Graph = () => {
+  if(!ctx) return;
+
+  const myChart = new Chart(ctx, config);
+
+  const fetchHistory = () => fetch(`/api/games/default/stats`, {method: 'GET'})
+    .then(response => response.json())
+    .then(response => response.history);
+
   const update = async () => {
     const newHistory = await fetchHistory();
     todo.data = newHistory.map(record => ({x: record.time, y: record.todo}))

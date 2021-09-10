@@ -52,6 +52,7 @@ const Game = game => {
     const inbox = columns.find(c => c.nextColumnId === columnId);
     const outbox = columns.find(c => c.columnId === work.nextColumnId);
     return {
+      gameId,
       inbox,
       work,
       outbox

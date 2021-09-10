@@ -1,26 +1,31 @@
-<h1>The Dot Game</h1>
-
-<div class="chart-container">
-    <canvas id="myChart"></canvas>
-</div>
-
-<div>
-    <progress value="" max="" id="progressbar"></progress>
-</div>
-
-<button id="start-iteration">Start Iteration</button>
-<button id="create-task" disabled="disabled">Create Task</button>
-
 <input id="gameId" type="hidden" value="{{game.gameId}}"/>
-<div id="board">
-    {{#each game.columns}}
-        {{>column column=this}}
-    {{/each}}
+
+<div id="board-container" data-game-id="{{game.gameId}}">
+    <h1>The Dot Game</h1>
+
+    <div class="chart-container">
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <div>
+        <progress value="" max="" id="progressbar"></progress>
+    </div>
+
+    <button id="start-iteration">Start Iteration</button>
+    <button id="create-task" disabled="disabled">Create Task</button>
+
+
+    <div id="board">
+        {{#each game.columns}}
+            {{>column column=this}}
+        {{/each}}
+    </div>
+
 </div>
 
-<ul id="events"></ul>
-<script src="/dot-game-board.js"></script>
 
 <script id="card-template" type="text/x-handlebars-template">
   <div id="{{taskId}}" class="card"></div>
 </script>
+
+<script src="/dot-game-board.js"></script>

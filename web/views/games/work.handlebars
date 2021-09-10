@@ -1,7 +1,15 @@
-<h1>The Dot Game</h1>
+<input id="gameId" type="hidden" value="{{work.gameId}}"/>
 
-<div id="inbox" data-column-id="{{work.inbox.columnId}}"></div>
-<div id="work" data-column-id="{{work.work.columnId}}"></div>
-<div id="outbox" data-column-id="{{work.outbox.columnId}}"></div>
+<div class="work-container" data-game-id="{{work.gameId}}">
+    <h1>Work</h1>
+
+    <div id="board">
+        {{>column column=work.inbox}}
+        {{>column column=work.work}}
+        {{>column column=work.outbox}}
+    </div>
+
+
+</div>
 
 <script src="/dot-game-work.js"></script>

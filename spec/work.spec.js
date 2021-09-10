@@ -10,12 +10,22 @@ describe('Iteration', () => {
     application.execute(CreateGame({gameId: 'g1'}))
   });
 
-  it('should work', function () {
+  it('get the first work column', function () {
 
     expect(application.execute(FindWork({gameId: 'g1', columnId: 'c2'}))).toMatchObject({
-      inbox: {columnId: "c1"},
-      work: {columnId: "c2"},
-      outbox: {columnId: "c3"}
+      gameId: 'g1',
+      inbox: {columnId: 'c1'},
+      work: {columnId: 'c2'},
+      outbox: {columnId: 'c3'}
+    });
+  });
+
+  it('get the second work column', function () {
+    expect(application.execute(FindWork({gameId: 'g1', columnId: 'c4'}))).toMatchObject({
+      gameId: 'g1',
+      inbox: {columnId: 'c3', columnType: 'queue-column'},
+      work: {columnId: 'c4', columnType: 'work-column'},
+      outbox: {columnId: 'c5', columnType: 'queue-column'}
     });
   });
 

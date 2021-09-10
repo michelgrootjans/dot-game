@@ -1,5 +1,5 @@
 const move = ({gameId, taskId}) => fetch(`/api/games/${gameId}/tasks/${taskId}/move`, {method: 'POST'});
-const getColumn = ({columnId}) => document.getElementById("column-" + columnId).querySelector(".tasks");
+const getColumn = ({columnId}) => document.getElementById("column-" + columnId)?.querySelector(".tasks");
 const getCard = ({taskId}) => document.getElementById("task-" + taskId);
 
 const createCard = ({taskId, color}) => {
@@ -24,9 +24,13 @@ const TaskMoved = () => {
   return {
     handle: (event) => {
       const card = getCard(event) || createCard(event);
-      const column = getColumn(event.to);
+      if(!card) return;
 
-      if(card && column) column.append(card);
+      const column = getColumn(event.to);
+      if(!column)
+        card.remove()
+      else
+        column.append(card);
     }
   }
 };

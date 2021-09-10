@@ -1,42 +1,39 @@
 const Graph = require("./graph");
+const Timer = require("./Timer");
 
 const $startIterationButton = document.getElementById('start-iteration');
 const $createTaskButton = document.getElementById('create-task');
 
-const graph = Graph();
 
-const Timer = (duration, progressBar) => {
-  const startTime = new Date();
-  progressBar.max = `${duration}`;
-
-  return {
-    start: () => {
-      const timerHandle = setInterval(async () => {
-        const timeLeft = new Date() - startTime;
-        await graph.update();
-        if (duration <= timeLeft) clearInterval(timerHandle);
-        progressBar.value = timeLeft;
-      }, 1000);
-
-    }
-  }
-};
 
 const clearBoard = () => {
-  graph.clear()
   const cards = document.getElementsByClassName('card');
   while (cards.length > 0) {
     cards[0].parentNode.removeChild(cards[0]);
   }
 };
 
-const StartIteration = event => {
+function initProgressbar(duration) {
+  const progressBar = document.getElementById("progressbar");
+  progressBar.max = `${duration}`;
+  Timer(duration).start(time => progressBar.value = time);
+}
+
+const graph = Graph();
+function initGraph(duration) {
+  if(!graph) return;
+  graph.clear()
+  Timer(duration).start(graph.update);
+}
+
+const StartIteration = () => {
   return {
     handle: ({duration}) => {
-      $startIterationButton.disabled = true;
-      $createTaskButton.disabled = false;
+      if($startIterationButton) $startIterationButton.disabled = true;
+      if($createTaskButton) $createTaskButton.disabled = false;
       clearBoard();
-      Timer(duration, document.getElementById("progressbar")).start();
+      initProgressbar(duration);
+      initGraph(duration);
     }
   }
 };
