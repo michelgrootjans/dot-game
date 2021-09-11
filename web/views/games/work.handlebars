@@ -3,6 +3,10 @@
 <div class="work-container" data-game-id="{{work.gameId}}">
     <h1>Work</h1>
 
+    <div>
+        <progress value="" max="" id="progressbar"></progress>
+    </div>
+
     <div id="board">
         {{>column column=work.inbox}}
         {{>column column=work.work}}
