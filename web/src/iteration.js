@@ -26,7 +26,6 @@ function initGraph(duration) {
 const StartIteration = () => {
   return {
     handle: ({duration}) => {
-      if($startIterationButton) $startIterationButton.disabled = true;
       clearBoard();
       initProgressbar(duration);
       initGraph(duration);
@@ -37,7 +36,6 @@ const StartIteration = () => {
 const FinishIteration = event => {
   return {
     handle: () => {
-      $startIterationButton.disabled = false;
     }
   }
 };

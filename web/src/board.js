@@ -2,6 +2,7 @@ import {io} from "socket.io-client";
 import {FinishIteration, StartIteration} from "./iteration";
 import {TaskCreated, TaskMoved} from "./task";
 import CreateTask from "./CreateTask";
+import StartIterationModule from "./StartIteration";
 
 const currentGameId = document.querySelector('[data-game-id]').dataset.gameId;
 const $startIterationButton = document.getElementById('start-iteration');
@@ -27,13 +28,7 @@ socket.on('message', function (event) {
 });
 
 const initializeGame = gameId => {
-  $startIterationButton.addEventListener('click', () => {
-    fetch(`/api/games/${gameId}/iterations`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({duration: 60 * 1000})
-    })
-  });
+  StartIterationModule.initialize(gameId);
   CreateTask.initialize(gameId);
 };
 
