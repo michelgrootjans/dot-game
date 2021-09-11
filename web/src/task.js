@@ -25,14 +25,14 @@ const TaskCreated = () => {
 const TaskMoved = () => {
   return {
     handle: (event) => {
-      const card = getCard(event) || createCard(event);
-      if(!card) return;
-
+      const card = getCard(event);
       const column = getColumn(event.to);
-      if(!column)
-        card.remove()
-      else
-        column.append(card);
+      
+      if (column) {
+        column.append(card || createCard(event));
+      } else {
+        if(card) card.remove()
+      }
     }
   }
 };
