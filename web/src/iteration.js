@@ -33,11 +33,4 @@ const StartIteration = () => {
   }
 };
 
-const FinishIteration = event => {
-  return {
-    handle: () => {
-    }
-  }
-};
-
-module.exports = {StartIteration, FinishIteration}
+module.exports = {StartIteration}

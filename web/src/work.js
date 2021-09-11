@@ -1,5 +1,5 @@
 import {io} from "socket.io-client";
-import {FinishIteration, StartIteration} from "./iteration";
+import {StartIteration} from "./iteration";
 import {TaskCreated, TaskMoved} from "./task";
 
 const currentGameId = document.querySelector('[data-game-id]').dataset.gameId;
@@ -12,7 +12,6 @@ const handlerForEvent = event => {
     case 'IterationStarted': return StartIteration();
     case 'TaskCreated': return TaskCreated();
     case 'TaskMoved': return TaskMoved();
-    case 'IterationFinished': return FinishIteration();
   }
   return {handle: () => {}}
 };
