@@ -14,11 +14,8 @@ const initialize = gameId => {
       body: JSON.stringify({taskId: uuid()})
     })
   });
-
-
 };
-const CreateTask = {
+
+module.exports = {
   initialize
 };
-
-module.exports = CreateTask;

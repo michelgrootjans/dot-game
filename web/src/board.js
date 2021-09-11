@@ -3,6 +3,7 @@ import {StartIteration} from "./iteration";
 import {TaskCreated, TaskMoved} from "./task";
 import CreateTask from "./CreateTask";
 import StartIterationModule from "./StartIteration";
+import ProgressBar from "./ProgressBar";
 
 const currentGameId = document.querySelector('[data-game-id]').dataset.gameId;
 const $startIterationButton = document.getElementById('start-iteration');
@@ -29,6 +30,7 @@ socket.on('message', function (event) {
 const initializeGame = gameId => {
   StartIterationModule.initialize(gameId);
   CreateTask.initialize(gameId);
+  ProgressBar.initialize(gameId);
 };
 
 initializeGame(currentGameId);

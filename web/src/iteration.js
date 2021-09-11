@@ -1,8 +1,6 @@
 const Graph = require("./graph");
 const Timer = require("./Timer");
 
-const $startIterationButton = document.getElementById('start-iteration');
-
 const clearBoard = () => {
   const cards = document.getElementsByClassName('card');
   while (cards.length > 0) {
@@ -10,11 +8,6 @@ const clearBoard = () => {
   }
 };
 
-function initProgressbar(duration) {
-  const progressBar = document.getElementById("progressbar");
-  progressBar.max = `${duration}`;
-  Timer(duration).start(time => progressBar.value = time);
-}
 
 const graph = Graph();
 function initGraph(duration) {
@@ -27,7 +20,6 @@ const StartIteration = () => {
   return {
     handle: ({duration}) => {
       clearBoard();
-      initProgressbar(duration);
       initGraph(duration);
     }
   }

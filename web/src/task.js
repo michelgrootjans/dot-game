@@ -13,8 +13,10 @@ const createCard = ({taskId, color}) => {
 const TaskCreated = () => {
   return {
     handle: (event) => {
+      const column = getColumn(event.column);
+      if(!column) return;
       const card = createCard(event);
-      getColumn(event.column).append(card);
+      column.append(card);
       card.addEventListener('click', () => move(event))
     }
   }

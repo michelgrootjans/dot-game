@@ -3,7 +3,7 @@ const Timer = (duration, timeout = 1000) => {
 
   return {
     start: (handler) => {
-      const timerHandle = setInterval(async () => {
+      const timerHandle = setInterval(() => {
         const timeLeft = new Date() - startTime;
         if (duration <= timeLeft) clearInterval(timerHandle);
         handler(timeLeft)
