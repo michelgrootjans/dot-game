@@ -1,11 +1,10 @@
 import {io} from "socket.io-client";
 import {FinishIteration, StartIteration} from "./iteration";
 import {TaskCreated, TaskMoved} from "./task";
-import {v4 as uuidv4} from 'uuid';
+import CreateTask from "./CreateTask";
 
 const currentGameId = document.querySelector('[data-game-id]').dataset.gameId;
 const $startIterationButton = document.getElementById('start-iteration');
-const $createTaskButton = document.getElementById('create-task');
 const socket = io();
 
 const handlerForEvent = event => {
@@ -23,6 +22,7 @@ const handlerForEvent = event => {
 socket.on('message', function (event) {
   if (event.gameId && event.gameId !== currentGameId) return;
 
+  document.dispatchEvent(new CustomEvent(event.type, { detail: event }))
   handlerForEvent(event).handle(event)
 });
 
@@ -34,13 +34,7 @@ const initializeGame = gameId => {
       body: JSON.stringify({duration: 60 * 1000})
     })
   });
-  $createTaskButton.addEventListener('click', () => {
-    fetch(`/api/games/${gameId}/tasks`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({taskId: uuidv4()})
-    })
-  });
+  CreateTask.initialize(gameId);
 };
 
 initializeGame(currentGameId);

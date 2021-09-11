@@ -2,9 +2,6 @@ const Graph = require("./graph");
 const Timer = require("./Timer");
 
 const $startIterationButton = document.getElementById('start-iteration');
-const $createTaskButton = document.getElementById('create-task');
-
-
 
 const clearBoard = () => {
   const cards = document.getElementsByClassName('card');
@@ -30,7 +27,6 @@ const StartIteration = () => {
   return {
     handle: ({duration}) => {
       if($startIterationButton) $startIterationButton.disabled = true;
-      if($createTaskButton) $createTaskButton.disabled = false;
       clearBoard();
       initProgressbar(duration);
       initGraph(duration);
@@ -42,7 +38,6 @@ const FinishIteration = event => {
   return {
     handle: () => {
       $startIterationButton.disabled = false;
-      $createTaskButton.disabled = true;
     }
   }
 };
