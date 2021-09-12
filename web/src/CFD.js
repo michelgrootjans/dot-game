@@ -1,8 +1,6 @@
 const {Chart, ArcElement, LineElement, BarElement, PointElement, BarController, BubbleController, DoughnutController, LineController, PieController, PolarAreaController, RadarController, ScatterController, CategoryScale, LinearScale, LogarithmicScale, RadialLinearScale, TimeScale, TimeSeriesScale, Decimation, Filler, Legend, Title, Tooltip, SubTitle} = require('chart.js');
 Chart.register(ArcElement, LineElement, BarElement, PointElement, BarController, BubbleController, DoughnutController, LineController, PieController, PolarAreaController, RadarController, ScatterController, CategoryScale, LinearScale, LogarithmicScale, RadialLinearScale, TimeScale, TimeSeriesScale, Decimation, Filler, Legend, Title, Tooltip, SubTitle);
 
-const ctx = document.getElementById('myChart');
-
 const createDataset = (label, color) => ({
   label: label,
   type: 'line',
@@ -48,10 +46,8 @@ const config = {
 
 
 
-const Graph = () => {
-  if(!ctx) return;
-
-  const myChart = new Chart(ctx, config);
+const Cfd = context => {
+  const chart = new Chart(context, config);
 
   const fetchHistory = () => fetch(`/api/games/default/stats`, {method: 'GET'})
     .then(response => response.json())
@@ -59,19 +55,22 @@ const Graph = () => {
 
   const update = async () => {
     const newHistory = await fetchHistory();
-    todo.data = newHistory.map(record => ({x: record.time, y: record.todo}))
-    analysis.data = newHistory.map(record => ({x: record.time, y: record.analysis}))
-    design.data = newHistory.map(record => ({x: record.time, y: record.design}))
-    development.data = newHistory.map(record => ({x: record.time, y: record.development}))
-    qa.data = newHistory.map(record => ({x: record.time, y: record.qa}))
-    done.data = newHistory.map(record => ({x: record.time, y: record.done}))
-    myChart.update()
+
+    const getSeries = name => newHistory.map(record => ({x: record.time, y: record[name]}));
+
+    todo.data = getSeries('todo');
+    analysis.data = getSeries('analysis');
+    design.data = getSeries('design');
+    development.data = getSeries('development');
+    qa.data = getSeries('qa');
+    done.data = getSeries('done');
+    chart.update()
   };
 
   const clear = () => {
     todo.data = [];
     done.data = [];
-    myChart.clear();
+    chart.clear();
   }
 
   return {
@@ -80,4 +79,4 @@ const Graph = () => {
   }
 }
 
-module.exports = Graph;
+module.exports = Cfd;

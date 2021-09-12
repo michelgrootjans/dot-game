@@ -1,19 +1,19 @@
-const Graph = require("./graph");
+const Cfd = require("./CFD");
 const Timer = require("./Timer");
 
-const graph = Graph();
-function initGraph(duration) {
-  if(!graph) return;
-  graph.clear()
-  Timer(duration).start(graph.update);
+const initialize = () => {
+  const $cfd = document.getElementById('myChart');
+  if(!$cfd) return;
+
+  const cfd = Cfd($cfd);
+
+  document.addEventListener('IterationStarted', ({detail}) => {
+    cfd.clear()
+    cfd.update();
+    Timer(detail.duration).start(cfd.update);
+  });
+
+  document.addEventListener('IterationFinished', cfd.update)
 }
 
-const StartIteration = () => {
-  return {
-    handle: ({duration}) => {
-      initGraph(duration);
-    }
-  }
-};
-
-module.exports = {StartIteration}
+module.exports = {initialize}
