@@ -1,3 +1,11 @@
+const createButton = (text, className, clickHandler) => {
+  const button = document.createElement('button')
+  button.className = className
+  button.innerText = text
+  button.addEventListener('click', clickHandler);
+  return button;
+};
+
 const create = ({gameId, taskId, color}) => {
   const move = (gameId, taskId) => fetch(`/api/games/${gameId}/tasks/${taskId}/move`, {method: 'POST'});
 
@@ -5,18 +13,19 @@ const create = ({gameId, taskId, color}) => {
   card.className = 'card';
   card.setAttribute('id', `task-${taskId}`)
   card.setAttribute('style', `background: ${color};`);
-  card.addEventListener('click', () => move(gameId, taskId));
+  card.append(createButton('Start', 'start-button', () => move(gameId, taskId)));
+  card.append(createButton('Finish', 'finish-button', () => move(gameId, taskId)));
   return card;
 };
 
-const getCard = ({taskId}) => document.getElementById("task-" + taskId);
+const find = ({taskId}) => document.getElementById("task-" + taskId);
 
 const findOrCreate = detail => {
-  return getCard(detail) || create(detail)
+  return find(detail) || create(detail)
 }
 
 const remove = (detail) => {
-  const card = getCard(detail)
+  const card = find(detail)
   if(card) card.remove();
 };
 
@@ -30,4 +39,4 @@ const removeAll = () => {
 document.addEventListener('IterationStarted', removeAll);
 
 
-module.exports = {create, findOrCreate, remove}
+module.exports = {create, find, findOrCreate, remove}

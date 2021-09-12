@@ -4,7 +4,7 @@ import StartIteration from "./StartIteration";
 import ProgressBar from "./ProgressBar";
 import Columns from "./Column";
 import Graphs from './iteration';
-
+import Workspace from "./Workspace";
 
 const socket = io();
 socket.on('message', event => {
@@ -19,6 +19,7 @@ const initializeGame = gameId => {
   StartIteration.initialize(gameId);
   CreateTask.initialize(gameId);
   Columns.initialize()
+  Workspace.initialize()
   Graphs.initialize(gameId);
   ProgressBar.initialize(gameId);
 };

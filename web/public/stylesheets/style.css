@@ -70,6 +70,20 @@ progress {
   margin: 10px;
 }
 
+.start-button {
+  visibility: hidden;
+}
+#inbox .start-button {
+  visibility: visible;
+}
+
+.finish-button {
+  visibility: hidden;
+}
+#workspace-ready .finish-button {
+  visibility: visible;
+}
+
 .start-column .card:nth-child(5n+1),
 .queue-column .card:nth-child(5n+1),
 .end-column .card:nth-child(5n+1){

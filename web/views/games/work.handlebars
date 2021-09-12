@@ -5,23 +5,35 @@
         <progress value="" id="progressbar"></progress>
     </div>
 
-    <div id="inbox" data-column-id="{{work.inbox.columnId}}">
-        <h2>Inbox</h2>
-        <button id="take-work">Take</button>
-        <div class="tasks"></div>
+    <div id="work-container">
+        <div id="inbox" class="queue-column" data-column-id="{{work.inbox.columnId}}">
+            <h2>Inbox</h2>
+            <div class="tasks"></div>
 
-    </div>
+        </div>
 
-    <div id="workspace" data-column-id="{{work.work.columnId}}">
-        <h2>Workspace</h2>
-        <button id="finish-work">Finish</button>
-        <div class="tasks"></div>
-    </div>
+        <div id="workspace" data-column-id="{{work.work.columnId}}">
+            <h2>Workspace</h2>
+            <div id="questions"></div>
+            <div class="tasks"></div>
+        </div>
 
-    <div id="outbox" data-column-id="{{work.outbox.columnId}}">
-        <h2>Outbox</h2>
-        <div class="tasks"></div>
+        <div id="workspace-ready" class="queue-column">
+            <h2>Ready</h2>
+            <div class="tasks"></div>
+        </div>
+
+        <div id="outbox" class="queue-column" data-column-id="{{work.outbox.columnId}}">
+            <h2>Outbox</h2>
+            <div class="tasks"></div>
+        </div>
     </div>
 
 </div>
 
+<template id="question-template">
+    <label>
+        <em class="question"></em>
+        <input class="answer" type="text">
+    </label>
+</template>
