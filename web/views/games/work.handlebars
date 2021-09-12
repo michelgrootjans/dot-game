@@ -1,7 +1,5 @@
-<input id="gameId" type="hidden" value="{{work.gameId}}"/>
-
 <div class="work-container" data-game-id="{{work.gameId}}">
-    <h1>Work</h1>
+    <h1>{{work.work.title}}</h1>
 
     <div>
         <progress value="" id="progressbar"></progress>
@@ -10,10 +8,7 @@
     <div id="board">
         {{>column column=work.inbox}}
         {{>column column=work.work}}
-        {{>column column=work.outbox}}
     </div>
-
 
 </div>
 
-<script src="/dot-game.js"></script>
