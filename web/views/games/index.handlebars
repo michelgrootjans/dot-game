@@ -14,7 +14,7 @@
 
     <div id="board">
         {{#each game.columns}}
-            {{>column column=this}}
+            {{>column column=this game=../game}}
         {{/each}}
     </div>
 
