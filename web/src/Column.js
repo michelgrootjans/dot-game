@@ -8,8 +8,7 @@ const initialize = () => {
     }, {})
 
   document.addEventListener('TaskCreated', ({detail}) => {
-    const card = Card.create(detail);
-    columns[detail.column.columnId].append(card);
+    columns[detail.column.columnId]?.append(Card.create(detail));
   });
 
   document.addEventListener('TaskMoved', ({detail}) => {

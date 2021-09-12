@@ -1,13 +1,26 @@
-<div class="work-container" data-game-id="{{work.gameId}}">
+<div class="container" data-game-id="{{work.gameId}}">
     <h1>{{work.work.title}}</h1>
 
     <div>
         <progress value="" id="progressbar"></progress>
     </div>
 
-    <div id="board">
-        {{>column column=work.inbox}}
-        {{>column column=work.work}}
+    <div id="inbox" data-column-id="{{work.inbox.columnId}}">
+        <h2>Inbox</h2>
+        <button id="take-work">Take</button>
+        <div class="tasks"></div>
+
+    </div>
+
+    <div id="workspace" data-column-id="{{work.work.columnId}}">
+        <h2>Workspace</h2>
+        <button id="finish-work">Finish</button>
+        <div class="tasks"></div>
+    </div>
+
+    <div id="outbox" data-column-id="{{work.outbox.columnId}}">
+        <h2>Outbox</h2>
+        <div class="tasks"></div>
     </div>
 
 </div>
