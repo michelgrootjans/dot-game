@@ -1,9 +1,9 @@
 import {io} from "socket.io-client";
 import {StartIteration} from "./iteration";
-import {TaskCreated, TaskMoved} from "./task";
 import CreateTask from "./CreateTask";
 import StartIterationModule from "./StartIteration";
 import ProgressBar from "./ProgressBar";
+import Columns from "./Column";
 
 const currentGameId = document.querySelector('[data-game-id]').dataset.gameId;
 const $startIterationButton = document.getElementById('start-iteration');
@@ -14,8 +14,6 @@ const handlerForEvent = event => {
 
   switch (event.type) {
     case 'IterationStarted': return StartIteration();
-    case 'TaskCreated': return TaskCreated();
-    case 'TaskMoved': return TaskMoved();
   }
   return {handle: () => {}}
 };
@@ -29,6 +27,7 @@ socket.on('message', function (event) {
 
 const initializeGame = gameId => {
   StartIterationModule.initialize(gameId);
+  Columns.initialize()
   CreateTask.initialize(gameId);
   ProgressBar.initialize(gameId);
 };

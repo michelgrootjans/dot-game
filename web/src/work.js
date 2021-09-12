@@ -1,6 +1,5 @@
 import {io} from "socket.io-client";
 import {StartIteration} from "./iteration";
-import {TaskCreated, TaskMoved} from "./task";
 import StartIterationModule from "./StartIteration";
 import CreateTask from "./CreateTask";
 import ProgressBar from "./ProgressBar";
@@ -13,8 +12,6 @@ const handlerForEvent = event => {
 
   switch (event.type) {
     case 'IterationStarted': return StartIteration();
-    case 'TaskCreated': return TaskCreated();
-    case 'TaskMoved': return TaskMoved();
   }
   return {handle: () => {}}
 };
