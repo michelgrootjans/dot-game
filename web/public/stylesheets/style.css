@@ -52,6 +52,14 @@ progress {
   width: 100%;
 }
 
+#work-container {
+  display: grid;
+  grid-auto-columns: 150px;
+  grid-auto-flow: column;
+  height: 60vh;
+  overflow: auto;
+}
+
 .column.work-column h4:before{
   content: 'ongoing';
 }
