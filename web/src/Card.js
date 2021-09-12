@@ -19,4 +19,15 @@ const remove = (detail) => {
   const card = getCard(detail)
   if(card) card.remove();
 };
+
+const removeAll = () => {
+  const cards = document.getElementsByClassName('card');
+  while (cards.length > 0) {
+    cards[0].parentNode.removeChild(cards[0]);
+  }
+};
+
+document.addEventListener('IterationStarted', removeAll);
+
+
 module.exports = {create, findOrCreate, remove}
