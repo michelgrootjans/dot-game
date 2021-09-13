@@ -6,24 +6,12 @@
     </div>
 
     <div id="work-container">
-        <div id="inbox" class="queue-column" data-column-id="{{work.inbox.columnId}}">
-            <h2>Inbox</h2>
-            <div class="tasks"></div>
-
-        </div>
-
-        <div id="workspace" data-column-id="{{work.work.columnId}}" data-column-difficulty="{{work.work.difficulty}}">
+        <div id="workspace">
             <h2>Workspace</h2>
-            <div id="questions"></div>
-            <div class="tasks"></div>
+            <button id="create-task" disabled="disabled">Create Task</button>
         </div>
 
-        <div id="workspace-ready" class="queue-column">
-            <h2>Ready</h2>
-            <div class="tasks"></div>
-        </div>
-
-        <div id="outbox" class="queue-column" data-column-id="{{work.outbox.columnId}}">
+        <div id="outbox" class="queue-column" data-column-id="{{work.work.columnId}}">
             <h2>Outbox</h2>
             <div class="tasks"></div>
         </div>
