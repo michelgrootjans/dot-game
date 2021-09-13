@@ -21,7 +21,7 @@ const initializeGame = gameId => {
   Columns.initialize()
   Workspace.initialize()
   Charts.initialize(gameId);
-  ProgressBar.initialize(gameId);
+  ProgressBar.initialize();
 };
 
 const currentGameId = document.querySelector('[data-game-id]').dataset.gameId;
