@@ -6,14 +6,16 @@ const initialize = () => {
   if(!$cfd) return;
 
   const cfd = Cfd($cfd);
+  let timer = undefined
 
   document.addEventListener('IterationStarted', ({detail}) => {
     cfd.clear()
     cfd.update();
-    Timer(detail.duration).start(cfd.update);
+
+    timer = Timer(detail.duration).start(cfd.update);
   });
 
-  document.addEventListener('IterationFinished', cfd.update)
+  document.addEventListener('IterationFinished', () => timer.stop());
 }
 
 module.exports = {initialize}

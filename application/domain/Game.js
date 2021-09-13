@@ -12,10 +12,11 @@ const Game = game => {
   const findColumn = columnId => columns.find(c => c.columnId === columnId);
 
   const startIteration = (duration, publish) => {
-    game.currentIteration = {duration};
+    const startTime = Date.now();
+    game.currentIteration = {duration, startTime};
     game.tasks = []
-    publish(IterationStarted({...game, duration}));
-  }
+    publish(IterationStarted({...game, duration, startTime}));
+  };
 
   const endIteration = (publish) => {
     delete game.currentIteration;

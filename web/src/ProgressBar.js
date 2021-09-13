@@ -5,11 +5,16 @@ const initialize = () => {
   const progressBar = document.getElementById("progressbar");
   if(!progressBar) return;
 
+  let timer = undefined;
+
   document.addEventListener('IterationStarted', ({detail}) => {
     const duration = detail.duration;
+    const startTime = detail.startTime;
     progressBar.max = `${duration}`;
-    Timer(duration).start(time => progressBar.value = time);
+    timer = Timer(duration).start(() => progressBar.value = Date.now() - startTime);
   });
+
+  document.addEventListener('IterationFinished', () => timer.stop());
 };
 
 module.exports = {initialize};
