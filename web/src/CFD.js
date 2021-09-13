@@ -44,8 +44,6 @@ const config = {
   },
 };
 
-
-
 const Cfd = (context, gameId) => {
   const chart = new Chart(context, config);
 

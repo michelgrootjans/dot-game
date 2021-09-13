@@ -23,9 +23,16 @@ const init = application => {
   });
 
   router.get('/:gameId/:columnId', function (req, res, next) {
-    const work = application.execute(FindWork(allParams(req)))
-    console.log({columnType: work.work.columnType})
-    res.render('games/work', {work});
+    const params = allParams(req);
+    const work = application.execute(FindWork(params))
+    const columnType = work.work.columnType;
+    if (columnType === 'start-column') {
+      res.render('games/start-work', {work});
+    } else if (columnType === 'work-column') {
+      res.render('games/work', {work});
+    } else {
+      res.redirect(`/games/${params.gameId}/${work.inbox.columnId}`);
+    }
   });
 
   return router;
