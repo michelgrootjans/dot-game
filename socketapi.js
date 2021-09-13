@@ -13,10 +13,7 @@ let init = server => {
   io.on('connection', (socket) => {
 
     publish({type: 'UserJoined'});
-    previousEvents.forEach(e => {
-      console.log({e})
-      socket.emit('message', e);
-    });
+    previousEvents.forEach(e => socket.emit('message', e));
 
     socket.on('disconnect', () => {
       publish({type: 'UserLeft'});
