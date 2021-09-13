@@ -19,6 +19,10 @@ progress {
   overflow: auto;
 }
 
+input#iteration-length{
+  width: 5em;
+}
+
 .column {
   background: #EBECF0;
   padding: 10px;

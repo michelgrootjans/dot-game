@@ -2,6 +2,8 @@ const {IterationStarted, IterationFinished} = require("../api/events/iteration")
 const {TaskCreated, TaskMoved, TaskFinished} = require("../api/events/task");
 const {anyCardColor} = require("./Colors");
 
+const minutes = 60 * 1000;
+
 const Game = game => {
   const columns = game.columns;
   const todoColumn = columns[0];
@@ -11,7 +13,7 @@ const Game = game => {
   const findTask = taskId => game.tasks.find(t => t.taskId === taskId);
   const findColumn = columnId => columns.find(c => c.columnId === columnId);
 
-  const startIteration = (duration, publish) => {
+  const startIteration = (duration = 5 * minutes, publish) => {
     const startTime = Date.now();
     game.currentIteration = {duration, startTime};
     game.tasks = []
