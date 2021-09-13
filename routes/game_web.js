@@ -18,12 +18,13 @@ const init = application => {
     if (game) {
       res.render('games/index', {game});
     } else {
-      res.status(404).send('games not found')
+      res.status(404).send('game not found')
     }
   });
 
   router.get('/:gameId/:columnId', function (req, res, next) {
     const work = application.execute(FindWork(allParams(req)))
+    console.log({columnType: work.work.columnType})
     res.render('games/work', {work});
   });
 

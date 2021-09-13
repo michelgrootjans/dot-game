@@ -1,11 +1,11 @@
 const Cfd = require("./CFD");
 const Timer = require("./Timer");
 
-const initialize = () => {
+const initialize = (gameId) => {
   const $cfd = document.getElementById('cfd');
   if(!$cfd) return;
 
-  const cfd = Cfd($cfd);
+  const cfd = Cfd($cfd, gameId);
   let timer = undefined
 
   document.addEventListener('IterationStarted', ({detail}) => {

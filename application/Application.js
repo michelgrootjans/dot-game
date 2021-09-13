@@ -32,7 +32,7 @@ const intializeGames = ({games, delay, publish, subscribe}) => {
   IterationProcessManager().initialize(subscribe, execute, delay);
 
   // todo: remove this once this project is stable
-  execute({type: 'CreateGame', gameId: 'default'})
+  execute({type: 'CreateGame', gameId: 'dummy'})
 
   return {
     execute

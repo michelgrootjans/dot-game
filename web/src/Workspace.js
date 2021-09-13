@@ -17,7 +17,7 @@ const initialize = () => {
     const clone = template.content.firstElementChild.cloneNode(true);
     const puzzle = Puzzle(difficulty).generate()
     clone.querySelector('.question').innerHTML = puzzle.question;
-    clone.querySelector('.answer').addEventListener('blur', event => {
+    clone.querySelector('.answer').addEventListener('change', event => {
       console.log({event})
       const target = event.target;
       if (target.value === puzzle.answer) {

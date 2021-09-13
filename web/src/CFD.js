@@ -46,10 +46,10 @@ const config = {
 
 
 
-const Cfd = context => {
+const Cfd = (context, gameId) => {
   const chart = new Chart(context, config);
 
-  const fetchHistory = () => fetch(`/api/games/default/stats`, {method: 'GET'})
+  const fetchHistory = () => fetch(`/api/games/${gameId}/stats`, {method: 'GET'})
     .then(response => response.json())
     .then(response => response.history);
 
