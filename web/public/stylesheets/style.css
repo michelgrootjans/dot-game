@@ -85,6 +85,10 @@ progress {
   visibility: visible;
 }
 
+#workspace .card {
+  visibility: hidden;
+}
+
 .finish-button {
   visibility: hidden;
 }
