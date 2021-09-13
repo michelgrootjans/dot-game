@@ -12,8 +12,8 @@ const Puzzle = difficulty => {
       return {question: `${first} + ${second} = `, answer: `${first + second}`}
     }
     if (operator === '-') {
-      const first = 10 * any(numbers) + any(numbers)
-      const second = 5 * any(numbers) + any(numbers)
+      const first = 10 * (difficulty - 1) * any(numbers) + any(numbers)
+      const second = 5 * (difficulty - 1) * any(numbers) + any(numbers)
       return {question: `${Math.max(first, second)} - ${Math.min(first, second)} = `, answer: `${Math.abs(first - second)}`}
     }
     if (operator === 'x') {
