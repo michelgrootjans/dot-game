@@ -3,7 +3,7 @@ import CreateTask from "./CreateTask";
 import StartIteration from "./StartIteration";
 import ProgressBar from "./ProgressBar";
 import Columns from "./Column";
-import Graphs from './iteration';
+import Charts from './Charts';
 import Workspace from "./Workspace";
 
 const socket = io();
@@ -20,7 +20,7 @@ const initializeGame = gameId => {
   CreateTask.initialize(gameId);
   Columns.initialize()
   Workspace.initialize()
-  Graphs.initialize(gameId);
+  Charts.initialize(gameId);
   ProgressBar.initialize(gameId);
 };
 

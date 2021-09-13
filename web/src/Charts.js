@@ -2,7 +2,7 @@ const Cfd = require("./CFD");
 const Timer = require("./Timer");
 
 const initialize = () => {
-  const $cfd = document.getElementById('myChart');
+  const $cfd = document.getElementById('cfd');
   if(!$cfd) return;
 
   const cfd = Cfd($cfd);
