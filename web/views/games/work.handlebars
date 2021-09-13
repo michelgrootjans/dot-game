@@ -12,7 +12,7 @@
 
         </div>
 
-        <div id="workspace" data-column-id="{{work.work.columnId}}">
+        <div id="workspace" data-column-id="{{work.work.columnId}}" data-column-difficulty="{{work.work.difficulty}}">
             <h2>Workspace</h2>
             <div id="questions"></div>
             <div class="tasks"></div>
@@ -32,7 +32,7 @@
 </div>
 
 <template id="question-template">
-    <label>
+    <label class="question-container">
         <em class="question"></em>
         <input class="answer" type="text">
     </label>
