@@ -34,7 +34,7 @@ describe('stats end-to-end', () => {
 describe('Stats Process Manager', () => {
   let stats, publish, timer;
 
-  const lastSat = () => {
+  const lastStat = () => {
     const history = stats.findStats('g1').history();
     return history[history.length - 1];
   };
@@ -51,7 +51,7 @@ describe('Stats Process Manager', () => {
     publish(IterationStarted({gameId: 'g1', columns:[{columnId: 'c1', taskName: 'todo'}]}))
 
     expect(stats.findStats('g1').history()).toMatchObject(
-      [{time: 0, todo: 0}],
+      [{time: 0, todo: 0, wip: 0}],
     )
   });
 
@@ -61,7 +61,7 @@ describe('Stats Process Manager', () => {
     publish(TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1', taskName: 'todo'}}))
 
     expect(stats.findStats('g1').history()).toMatchObject(
-      [{time: 0, todo: 0}, {time: 1, todo: 1}],
+      [{time: 0, todo: 0, wip: 0}, {time: 1, todo: 1, wip: 1}],
     )
   });
 
@@ -69,18 +69,18 @@ describe('Stats Process Manager', () => {
     publish(IterationStarted({
         gameId: 'g1', columns: [
           {columnId: 'c1', taskName: 'todo'},
-          {columnId: 'c2', taskName: 'dev'}
+          {columnId: 'c2', taskName: 'done'}
       ]}
     ));
     timer.advance(1);
     publish(TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1', taskName: 'todo'}}))
     timer.advance(1);
-    publish(TaskMoved({gameId: 'g1', taskId: 't1', from: {columnId: 'c1', taskName: 'todo'}, to: {columnId: 'c2', taskName: 'dev'}}))
+    publish(TaskMoved({gameId: 'g1', taskId: 't1', from: {columnId: 'c1', taskName: 'todo'}, to: {columnId: 'c2', taskName: 'done'}}))
 
     expect(stats.findStats('g1').history()).toMatchObject([
-      {time: 0, todo: 0, dev: 0},
-      {time: 1, todo: 1, dev: 0},
-      {time: 2, todo: 0, dev: 1}],
+      {time: 0, todo: 0, done: 0, wip: 0},
+      {time: 1, todo: 1, done: 0, wip: 1},
+      {time: 2, todo: 0, done: 1, wip: 0}],
     )
   });
 
@@ -89,28 +89,28 @@ describe('Stats Process Manager', () => {
       gameId: 'g1', columns: [
         {columnId: 'c1', taskName: 'todo'},
         {columnId: 'c2', taskName: 'dev'},
-        {columnId: 'c2', taskName: 'qa'},
+        {columnId: 'c2', taskName: 'done'},
       ]}
     ));
-    expect(lastSat()).toMatchObject({time: 0, todo: 0, dev: 0, qa: 0})
+    expect(lastStat()).toMatchObject({time: 0, todo: 0, dev: 0, done: 0, wip: 0})
 
     timer.advance(1);
     publish(TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1', taskName: 'todo'}}))
-    expect(lastSat()).toMatchObject({time: 1, todo: 1, dev: 0, qa: 0})
+    expect(lastStat()).toMatchObject({time: 1, todo: 1, dev: 0, done: 0, wip: 1})
     publish(TaskCreated({gameId: 'g1', taskId: 't2', column: {columnId: 'c1', taskName: 'todo'}}))
-    expect(lastSat()).toMatchObject({time: 1, todo: 2, dev: 0, qa: 0})
+    expect(lastStat()).toMatchObject({time: 1, todo: 2, dev: 0, done: 0, wip: 2})
     publish(TaskCreated({gameId: 'g1', taskId: 't3', column: {columnId: 'c1', taskName: 'todo'}}))
-    expect(lastSat()).toMatchObject({time: 1, todo: 3, dev: 0, qa: 0})
+    expect(lastStat()).toMatchObject({time: 1, todo: 3, dev: 0, done: 0, wip: 3})
 
     timer.advance(1);
     publish(TaskMoved({gameId: 'g1', taskId: 't1', from: {columnId: 'c1', taskName: 'todo'}, to: {columnId: 'c2', taskName: 'dev'}}))
-    expect(lastSat()).toMatchObject({time: 2, todo: 2, dev: 1, qa: 0})
+    expect(lastStat()).toMatchObject({time: 2, todo: 2, dev: 1, done: 0, wip: 3})
     publish(TaskMoved({gameId: 'g1', taskId: 't2', from: {columnId: 'c1', taskName: 'todo'}, to: {columnId: 'c2', taskName: 'dev'}}))
-    expect(lastSat()).toMatchObject({time: 2, todo: 1, dev: 2, qa: 0})
+    expect(lastStat()).toMatchObject({time: 2, todo: 1, dev: 2, done: 0, wip: 3})
 
     timer.advance(1);
-    publish(TaskMoved({gameId: 'g1', taskId: 't1', from: {columnId: 'c2', taskName: 'dev'}, to: {columnId: 'c3', taskName: 'qa'}}))
-    expect(lastSat()).toMatchObject({time: 3, todo: 1, dev: 1, qa: 1})
+    publish(TaskMoved({gameId: 'g1', taskId: 't1', from: {columnId: 'c2', taskName: 'dev'}, to: {columnId: 'c3', taskName: 'done'}}))
+    expect(lastStat()).toMatchObject({time: 3, todo: 1, dev: 1, done: 1, wip: 2})
   });
 
   it("creating an item on a second iteration", () => {

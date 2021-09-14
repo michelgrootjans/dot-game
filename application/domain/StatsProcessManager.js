@@ -1,33 +1,32 @@
 const IterationStats = (iterationStartedEvent, startTime) => {
   const getTime = time => (time - startTime) / 1000;
   const tasks = iterationStartedEvent.columns.map(column => column.taskName)
+  const lastTaskName = tasks[tasks.length-1];
 
-  let currentStats = tasks.reduce((stats, task) => {
-    stats[task] = 0
-    return stats;
-  } , {})
-  let history = [{time: 0, ...currentStats} ]
+  let currentStats = tasks.reduce((stats, task) => ({...stats, [task]: 0}), {time: 0, wip: 0})
+  let history = [{...currentStats}]
 
   const increment = taskName => {
     if (!currentStats[taskName]) currentStats[taskName] = 1
     else currentStats[taskName]++;
   };
 
-  function decrement(taskName) {
+  const decrement = taskName => {
     if (!currentStats[taskName]) currentStats[taskName] = 0
     else currentStats[taskName]--;
-  }
+  };
 
   return {
     addTask: (time, event) => {
       increment(event.column.taskName);
-      return history.push({time: getTime(time), ...currentStats});
+      increment('wip');
+      return history.push({...currentStats, time: getTime(time)});
     },
     moveTask: (time, event) => {
       decrement(event.from.taskName);
       increment(event.to.taskName)
-
-      return history.push({time: getTime(time), ...currentStats});
+      if(event.to.taskName === lastTaskName) decrement('wip')
+      return history.push({...currentStats, time: getTime(time)});
     },
     history: () => history
   }
