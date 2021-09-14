@@ -11,14 +11,14 @@ const create = ({gameId, taskId, color}) => {
 
   const card = document.createElement('div');
   card.className = 'card';
-  card.setAttribute('id', `task-${taskId}`)
+  card.dataset.taskId = taskId;
   card.setAttribute('style', `background: ${color};`);
   card.append(createButton('Start', 'start-button', () => move(gameId, taskId)));
   card.append(createButton('Finish', 'finish-button', () => move(gameId, taskId)));
   return card;
 };
 
-const find = ({taskId}) => document.getElementById("task-" + taskId);
+const find = ({taskId}) => document.querySelector(`[data-task-id="${taskId}"]`);
 
 const findOrCreate = detail => {
   return find(detail) || create(detail)
