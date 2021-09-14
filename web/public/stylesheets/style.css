@@ -82,22 +82,32 @@ input#iteration-length{
   margin: 10px;
 }
 
-.start-button {
-  visibility: hidden;
-}
-#inbox .start-button {
+#inbox .move-button {
   visibility: visible;
 }
+#inbox .move-button:before {
+  content: 'Start';
+}
 
-#workspace .card {
+.question-container {
   visibility: hidden;
 }
 
-.finish-button {
-  visibility: hidden;
+.answer {
+  width: 20px;
 }
-#workspace-ready .finish-button {
+.move-button {
+  visibility: hidden;
+  margin-top: 4px;
+}
+#workspace .question-container {
   visibility: visible;
+}
+#workspace .move-button {
+  visibility: visible;
+}
+#workspace .move-button:before {
+  content: 'OK'
 }
 
 .start-column .card:nth-child(5n+1),

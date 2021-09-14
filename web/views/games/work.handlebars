@@ -9,7 +9,6 @@
         <div id="inbox" class="queue-column" data-column-id="{{work.inbox.columnId}}">
             <h2>Inbox</h2>
             <div class="tasks"></div>
-
         </div>
 
         <div id="workspace" data-column-id="{{work.work.columnId}}" data-column-difficulty="{{work.work.difficulty}}">
@@ -31,9 +30,4 @@
 
 </div>
 
-<template id="question-template">
-    <label class="question-container">
-        <em class="question"></em>
-        <input class="answer" type="text">
-    </label>
-</template>
+{{>cardtemplate }}

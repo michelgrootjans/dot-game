@@ -3,43 +3,28 @@ const Puzzle = require("./Puzzle");
 
 const initialize = () => {
   const $workspace = document.getElementById('workspace')
-  const $ready = document.querySelector('#workspace-ready .tasks')
-  const $questions = document.getElementById('questions')
 
-  if (!($workspace && $ready && $questions)) return;
+  if (!$workspace) return;
 
   const workColumnId = $workspace.dataset.columnId;
   const difficulty = $workspace.dataset.columnDifficulty;
 
-  const createQuestion = taskId => {
-    const template = document.getElementById('question-template');
-
-    const clone = template.content.firstElementChild.cloneNode(true);
+  const generateQuestion = taskId => {
+    const card = Card.find({taskId});
     const puzzle = Puzzle(difficulty).generate()
-    clone.querySelector('.question').innerHTML = puzzle.question;
-    clone.querySelector('.answer').addEventListener('change', event => {
-      console.log({event})
-      const target = event.target;
-      if (target.value === puzzle.answer) {
-        clone.remove();
-        $ready.append(Card.find({taskId}))
-      }
+    card.querySelector('.question').innerHTML = puzzle.question;
+    card.querySelector('.answer').addEventListener('change', event => {
+      const success = (event.target.value === puzzle.answer);
+      card.payload.success = card.payload.success || []
+      card.payload.success.push({workColumnId, success})
     });
-
-    document.addEventListener('TaskMoved', ({detail}) => {
-      if(detail.taskId === taskId)
-        clone.remove();
-    });
-
-
-    return clone;
   };
 
 
   const removeAll = () => {
-    const cards = document.getElementsByClassName('question-container');
-    while (cards.length > 0) {
-      cards[0].parentNode.removeChild(cards[0]);
+    const questions = document.getElementsByClassName('question-container');
+    while (questions.length > 0) {
+      questions[0].parentNode.removeChild(questions[0]);
     }
   };
 
@@ -48,7 +33,7 @@ const initialize = () => {
   document.addEventListener('TaskMoved', ({detail}) => {
     if(detail.to.columnId !== workColumnId) return;
 
-    $questions.append(createQuestion(detail.taskId))
+    generateQuestion(detail.taskId);
   });
 
 };

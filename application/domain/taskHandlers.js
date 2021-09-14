@@ -4,7 +4,7 @@ const CreateTaskHandler = (games, publish) => {
 };
 
 const MoveTaskHandler = (games, publish) => {
-  const execute = ({gameId, taskId}) => games.find(gameId)?.moveTask(taskId, publish);
+  const execute = (command) => games.find(command.gameId)?.moveTask(command, publish);
   return {execute}
 };
 

@@ -1,28 +1,24 @@
-const createButton = (text, className, clickHandler) => {
-  const button = document.createElement('button')
-  button.className = className
-  button.innerText = text
-  button.addEventListener('click', clickHandler);
-  return button;
-};
+const $cardTemplate = document.getElementById('card-template');
 
 const create = ({gameId, taskId, color}) => {
-  const move = (gameId, taskId) => fetch(`/api/games/${gameId}/tasks/${taskId}/move`, {method: 'POST'});
+  const card = $cardTemplate.content.firstElementChild.cloneNode(true);
 
-  const card = document.createElement('div');
-  card.className = 'card';
+  const move = () => fetch(`/api/games/${gameId}/tasks/${taskId}/move`, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({payload: card.payload})
+  });
+
   card.dataset.taskId = taskId;
+  card.payload = {}
   card.setAttribute('style', `background: ${color};`);
-  card.append(createButton('Start', 'start-button', () => move(gameId, taskId)));
-  card.append(createButton('Finish', 'finish-button', () => move(gameId, taskId)));
+  card.querySelector('.move-button').addEventListener('click', move)
   return card;
 };
 
 const find = ({taskId}) => document.querySelector(`[data-task-id="${taskId}"]`);
 
-const findOrCreate = detail => {
-  return find(detail) || create(detail)
-}
+const findOrCreate = detail => find(detail) || create(detail)
 
 const remove = (detail) => {
   const card = find(detail)

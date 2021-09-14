@@ -25,8 +25,7 @@ const intializeGames = ({games, delay, publish, subscribe}) => {
   };
 
   const execute = command => {
-    const handlerFor1 = handlerFor(command.type);
-    return handlerFor1.execute(command);
+    return handlerFor(command.type).execute(command);
   };
 
   IterationProcessManager().initialize(subscribe, execute, delay);
