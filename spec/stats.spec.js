@@ -26,7 +26,8 @@ describe('stats end-to-end', () => {
     expect(application.findStats('g1').history()).toMatchObject([
         {time: 0, todo: 0, analysis: 0, design: 0, development: 0, qa: 0, done: 0},
         {time: 1, todo: 1, analysis: 0, design: 0, development: 0, qa: 0, done: 0},
-        {time: 2, todo: 0, analysis: 1, design: 0, development: 0, qa: 0, done: 0}],
+        {time: 2, todo: 0, analysis: 1, design: 0, development: 0, qa: 0, done: 0}
+      ]
     )
   });
 });
