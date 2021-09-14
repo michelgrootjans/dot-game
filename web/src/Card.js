@@ -3,11 +3,14 @@ const $cardTemplate = document.getElementById('card-template');
 const create = ({gameId, taskId, color}) => {
   const card = $cardTemplate.content.firstElementChild.cloneNode(true);
 
-  const move = () => fetch(`/api/games/${gameId}/tasks/${taskId}/move`, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({payload: card.payload})
-  });
+  const move = (event) => {
+    event.preventDefault()
+    return fetch(`/api/games/${gameId}/tasks/${taskId}/move`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({payload: card.payload})
+    });
+  };
 
   card.dataset.taskId = taskId;
   card.payload = {}

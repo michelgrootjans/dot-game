@@ -100,6 +100,9 @@ input#iteration-length{
   visibility: hidden;
   margin-top: 4px;
 }
+#workspace {
+  width: 300px;
+}
 #workspace .question-container {
   visibility: visible;
 }
