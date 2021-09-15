@@ -1,6 +1,7 @@
-const td = ({iterationId}) => {
+const td = ({id, text}) => {
   const element = document.createElement('td');
-  element.dataset.iterationId = iterationId;
+  element.dataset.iterationId = id;
+  if(text) element.textContent = text;
   return element;
 };
 
@@ -9,23 +10,35 @@ const round = (number, decimalPlaces) => {
   return Math.round(number * factorOfTen) / factorOfTen;
 };
 
+const Task = task => {
+  const taskId = task.taskId;
+  const startTime = task.timestamp;
+  let endTime = undefined;
+
+  const finishAt = timestamp => endTime = timestamp;
+  const done = () => endTime !== undefined
+
+  return {
+    taskId,
+    done,
+    inProgress: () => !done(),
+    finishAt,
+  };
+};
+
 const IterationStats = (iterationId, details) => {
   const startTime = details.timestamp;
   const tasks = [];
 
-  const startTask = (task) => tasks.push({taskId: task.taskId, finished: false, startTime: task.timestamp});
-  const finishTask = (task) => {
-    const taskToFinish = tasks.find(t => t.taskId === task.taskId);
-    taskToFinish.finished = true;
-    taskToFinish.endTime = task.timestamp;
-    taskToFinish.duration = taskToFinish.endTime - taskToFinish.startTime;
-  };
+  const startTask = (details) => tasks.push(Task(details));
+  const finishTask = (details) => tasks.find(t => t.taskId === details.taskId).finishAt(details.timestamp);
+
   const finishIteration = (details) => {}
-  const tasksFinished = () => tasks.filter(task => task.finished);
-  const tasksInProgress = () => tasks.filter(task => !task.finished);
+  const tasksDone = () => tasks.filter(t => t.done());
+  const tasksInProgress = () => tasks.filter(t => t.inProgress());
 
   const wip = () => tasksInProgress().length;
-  const success = () => tasksFinished().length;
+  const success = () => tasksDone().length;
 
   const throughput = (now) => 60 * 1000 * success() / (now - startTime);
   const leadTime = (now) => wip() / throughput(now);
@@ -59,14 +72,13 @@ const initialize = gameId => {
   let currentIteration = undefined;
 
   const renderIteration = () => {
-    $container.querySelector('.iteration-name').append(td({iterationId: currentIteration.iterationId}))
-    $container.querySelector('.total').append(td({iterationId: currentIteration.iterationId}))
-    $container.querySelector('.defects').append(td({iterationId: currentIteration.iterationId}))
-    $container.querySelector('.success').append(td({iterationId: currentIteration.iterationId}))
-    $container.querySelector('.wip').append(td({iterationId: currentIteration.iterationId}))
-    $container.querySelector('.throughput').append(td({iterationId: currentIteration.iterationId}))
-    $container.querySelector('.lead-time').append(td({iterationId: currentIteration.iterationId}))
-    updateIteration();
+    $container.querySelector('.iteration-name').append(td({id: currentIteration.iterationId, text: currentIteration.iterationId}))
+    $container.querySelector('.total').append(td({id: currentIteration.iterationId}))
+    $container.querySelector('.defects').append(td({id: currentIteration.iterationId}))
+    $container.querySelector('.success').append(td({id: currentIteration.iterationId}))
+    $container.querySelector('.wip').append(td({id: currentIteration.iterationId}))
+    $container.querySelector('.throughput').append(td({id: currentIteration.iterationId}))
+    $container.querySelector('.lead-time').append(td({id: currentIteration.iterationId}))
   };
 
   const updateIteration = (detail) => {
