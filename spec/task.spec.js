@@ -4,8 +4,12 @@ const {CreateTask, MoveTask} = require("../application/api/commands/task");
 const {TaskCreated, TaskMoved, TaskFinished} = require("../application/api/events/task");
 const {IterationFinished} = require("../application/api/events/iteration");
 const TestApplication = require("./TestApplication");
+const TestDate = require("./TestDate");
 
 describe('Tasks', () => {
+  beforeEach(TestDate.freeze);
+  afterEach(TestDate.unfreeze);
+
   let application = undefined;
   let events = undefined;
 
@@ -20,7 +24,7 @@ describe('Tasks', () => {
   it('creates a task', () => {
     application.execute(CreateTask({gameId: 'g1', taskId: 't1'}))
     expect(events).toMatchObject([
-      TaskCreated({gameId: 'g1', taskId:'t1', column: {columnId: 'c1'}})
+      TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1'}})
     ]);
   });
 
@@ -28,8 +32,8 @@ describe('Tasks', () => {
     application.execute(CreateTask({gameId: 'g1', taskId: 't1'}))
     application.execute(MoveTask({gameId: 'g1', taskId: 't1'}))
     expect(events).toMatchObject([
-      TaskCreated({gameId: 'g1', taskId:'t1', column: {columnId: 'c1'}}),
-      TaskMoved({gameId: 'g1', taskId:'t1', from: {columnId: 'c1'}, to: {columnId: 'c2'}})
+      TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1'}}),
+      TaskMoved({gameId: 'g1', taskId: 't1', from: {columnId: 'c1'}, to: {columnId: 'c2'}})
     ]);
   });
 
@@ -38,9 +42,9 @@ describe('Tasks', () => {
     application.execute(MoveTask({gameId: 'g1', taskId: 't1'}))
     application.execute(MoveTask({gameId: 'g1', taskId: 't1'}))
     expect(events).toMatchObject([
-      TaskCreated({gameId: 'g1', taskId:'t1', column: {columnId: 'c1'}}),
-      TaskMoved({gameId: 'g1', taskId:'t1', from: {columnId: 'c1'}, to: {columnId: 'c2'}}),
-      TaskMoved({gameId: 'g1', taskId:'t1', from: {columnId: 'c2'}, to: {columnId: 'c3'}})
+      TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1'}}),
+      TaskMoved({gameId: 'g1', taskId: 't1', from: {columnId: 'c1'}, to: {columnId: 'c2'}}),
+      TaskMoved({gameId: 'g1', taskId: 't1', from: {columnId: 'c2'}, to: {columnId: 'c3'}})
     ]);
   });
 
@@ -50,16 +54,16 @@ describe('Tasks', () => {
       application.execute(MoveTask({gameId: 'g1', taskId: 't1'}))
     }
     expect(events).toMatchObject([
-      TaskCreated({gameId: 'g1', taskId:'t1', column: {columnId: 'c1'}}),
-      TaskMoved({gameId: 'g1', taskId:'t1', from: {columnId: 'c1'}, to: {columnId: 'c2'}}),
-      TaskMoved({gameId: 'g1', taskId:'t1', from: {columnId: 'c2'}, to: {columnId: 'c3'}}),
-      TaskMoved({gameId: 'g1', taskId:'t1', from: {columnId: 'c3'}, to: {columnId: 'c4'}}),
-      TaskMoved({gameId: 'g1', taskId:'t1', from: {columnId: 'c4'}, to: {columnId: 'c5'}}),
-      TaskMoved({gameId: 'g1', taskId:'t1', from: {columnId: 'c5'}, to: {columnId: 'c6'}}),
-      TaskMoved({gameId: 'g1', taskId:'t1', from: {columnId: 'c6'}, to: {columnId: 'c7'}}),
-      TaskMoved({gameId: 'g1', taskId:'t1', from: {columnId: 'c7'}, to: {columnId: 'c8'}}),
-      TaskMoved({gameId: 'g1', taskId:'t1', from: {columnId: 'c8'}, to: {columnId: 'c9'}}),
-      TaskFinished({gameId: 'g1', taskId:'t1'}),
+      TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1'}}),
+      TaskMoved({gameId: 'g1', taskId: 't1', from: {columnId: 'c1'}, to: {columnId: 'c2'}}),
+      TaskMoved({gameId: 'g1', taskId: 't1', from: {columnId: 'c2'}, to: {columnId: 'c3'}}),
+      TaskMoved({gameId: 'g1', taskId: 't1', from: {columnId: 'c3'}, to: {columnId: 'c4'}}),
+      TaskMoved({gameId: 'g1', taskId: 't1', from: {columnId: 'c4'}, to: {columnId: 'c5'}}),
+      TaskMoved({gameId: 'g1', taskId: 't1', from: {columnId: 'c5'}, to: {columnId: 'c6'}}),
+      TaskMoved({gameId: 'g1', taskId: 't1', from: {columnId: 'c6'}, to: {columnId: 'c7'}}),
+      TaskMoved({gameId: 'g1', taskId: 't1', from: {columnId: 'c7'}, to: {columnId: 'c8'}}),
+      TaskMoved({gameId: 'g1', taskId: 't1', from: {columnId: 'c8'}, to: {columnId: 'c9'}}),
+      TaskFinished({gameId: 'g1', taskId: 't1'}),
     ]);
   });
 
@@ -76,7 +80,7 @@ describe('Tasks', () => {
     application.execute(EndIteration({gameId: 'g1'}))
     application.execute(MoveTask({gameId: 'g1', taskId: 't1'}))
     expect(events).toMatchObject([
-      TaskCreated({gameId: 'g1', taskId:'t1', column: {columnId: 'c1'}}),
+      TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1'}}),
       IterationFinished({gameId: 'g1'})
     ]);
   });

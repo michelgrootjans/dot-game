@@ -1,4 +1,4 @@
-const GameCreated = (options) => ({...options, type: 'GameCreated'})
+const GameCreated = (options) => ({...options, timestamp: Date.now(), type: 'GameCreated'})
 
 module.exports = {
   GameCreated

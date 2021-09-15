@@ -3,18 +3,21 @@ const {CreateGame} = require("../application/api/commands/game");
 const {StartIteration, EndIteration} = require("../application/api/commands/iteration");
 const {IterationStarted, IterationFinished} = require("../application/api/events/iteration");
 const TestApplication = require("./TestApplication");
+const TestDate = require("./TestDate");
 
 describe('Iteration', () => {
+  beforeEach(TestDate.freeze);
+  afterEach(TestDate.unfreeze);
+
   let application = undefined;
   let events = undefined;
 
-  beforeEach(function () {
+  beforeEach(() => {
     application = TestApplication();
     application.execute(CreateGame({gameId: 'g1'}))
     events = [];
     application.subscribe("*", event => events.push(event))
   });
-
 
   it('cannot start a games again', function () {
     application.execute(CreateGame({gameId: 'g1'}))
@@ -44,4 +47,3 @@ describe('Iteration', () => {
     ]);
   });
 });
-
