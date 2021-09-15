@@ -1,6 +1,5 @@
-const td = ({iterationId, text}) => {
+const td = ({iterationId}) => {
   const element = document.createElement('td');
-  element.textContent = text;
   element.dataset.iterationId = iterationId;
   return element;
 };
@@ -10,29 +9,26 @@ const round = (number, decimalPlaces) => {
   return Math.round(number * factorOfTen) / factorOfTen;
 };
 
-const IterationStats = (iterationId) => {
-  const startTime = Date.now();
+const IterationStats = (iterationId, details) => {
+  const startTime = details.timestamp;
   const tasks = [];
 
-  const startTask = (task) => tasks.push({taskId: task.taskId, finished: false, startTime: Date.now()});
+  const startTask = (task) => tasks.push({taskId: task.taskId, finished: false, startTime: task.timestamp});
   const finishTask = (task) => {
     const taskToFinish = tasks.find(t => t.taskId === task.taskId);
     taskToFinish.finished = true;
-    taskToFinish.endTime = Date.now();
+    taskToFinish.endTime = task.timestamp;
     taskToFinish.duration = taskToFinish.endTime - taskToFinish.startTime;
-    console.log({task, taskToFinish})
   };
+  const finishIteration = (details) => {}
   const tasksFinished = () => tasks.filter(task => task.finished);
   const tasksInProgress = () => tasks.filter(task => !task.finished);
 
   const wip = () => tasksInProgress().length;
   const success = () => tasksFinished().length;
 
-  const throughput = () => {
-
-    return 60 * 1000 * success() / (Date.now() - startTime);
-  };
-  const leadTime = () => wip() / throughput();
+  const throughput = (now) => 60 * 1000 * success() / (now - startTime);
+  const leadTime = (now) => wip() / throughput(now);
 
   return {
     iterationId,
@@ -44,6 +40,7 @@ const IterationStats = (iterationId) => {
     leadTime,
     startTask,
     finishTask,
+    finishIteration,
   };
 };
 
@@ -62,39 +59,42 @@ const initialize = gameId => {
   let currentIteration = undefined;
 
   const renderIteration = () => {
-    $container.querySelector('.iteration-name').append(td({iterationId: currentIteration.iterationId, text: currentIteration.iterationId}))
-    $container.querySelector('.total').append(td({iterationId: currentIteration.iterationId, text: 0}))
-    $container.querySelector('.defects').append(td({iterationId: currentIteration.iterationId, text: 0}))
-    $container.querySelector('.success').append(td({iterationId: currentIteration.iterationId, text: 0}))
-    $container.querySelector('.wip').append(td({iterationId: currentIteration.iterationId, text: currentIteration.wip()}))
-    $container.querySelector('.throughput').append(td({iterationId: currentIteration.iterationId, text: '-'}))
-    $container.querySelector('.lead-time').append(td({iterationId: currentIteration.iterationId, text: '-'}))
+    $container.querySelector('.iteration-name').append(td({iterationId: currentIteration.iterationId}))
+    $container.querySelector('.total').append(td({iterationId: currentIteration.iterationId}))
+    $container.querySelector('.defects').append(td({iterationId: currentIteration.iterationId}))
+    $container.querySelector('.success').append(td({iterationId: currentIteration.iterationId}))
+    $container.querySelector('.wip').append(td({iterationId: currentIteration.iterationId}))
+    $container.querySelector('.throughput').append(td({iterationId: currentIteration.iterationId}))
+    $container.querySelector('.lead-time').append(td({iterationId: currentIteration.iterationId}))
     updateIteration();
   };
 
-  const updateIteration = () => {
+  const updateIteration = (detail) => {
     $container.querySelector(`.total [data-iteration-id="${currentIteration.iterationId}"]`).textContent = currentIteration.total();
     $container.querySelector(`.defects [data-iteration-id="${currentIteration.iterationId}"]`).textContent = currentIteration.defects();
     $container.querySelector(`.success [data-iteration-id="${currentIteration.iterationId}"]`).textContent = currentIteration.success();
     $container.querySelector(`.wip [data-iteration-id="${currentIteration.iterationId}"]`).textContent = currentIteration.wip();
-    $container.querySelector(`.throughput [data-iteration-id="${currentIteration.iterationId}"]`).textContent = round(currentIteration.throughput(), 2);
-    $container.querySelector(`.lead-time [data-iteration-id="${currentIteration.iterationId}"]`).textContent = round(currentIteration.leadTime(), 2);
+    $container.querySelector(`.throughput [data-iteration-id="${currentIteration.iterationId}"]`).textContent = round(currentIteration.throughput(detail.timestamp), 2);
+    $container.querySelector(`.lead-time [data-iteration-id="${currentIteration.iterationId}"]`).textContent = round(currentIteration.leadTime(detail.timestamp), 2);
   };
 
   document.addEventListener('IterationStarted', ({detail}) => {
-    currentIteration = IterationStats(iterations.length + 1)
+    currentIteration = IterationStats(iterations.length + 1, detail)
     iterations.push(currentIteration);
     renderIteration();
   });
   document.addEventListener('TaskCreated', ({detail}) => {
     currentIteration.startTask(detail)
-    updateIteration();
+    updateIteration(detail);
   });
   document.addEventListener('TaskFinished', ({detail}) => {
     currentIteration.finishTask(detail)
-    updateIteration();
+    updateIteration(detail);
   });
-  document.addEventListener('IterationFinished', updateIteration);
+  document.addEventListener('IterationFinished', ({detail}) => {
+    currentIteration.finishIteration(detail)
+    updateIteration(detail);
+  });
 }
 
 module.exports = {
