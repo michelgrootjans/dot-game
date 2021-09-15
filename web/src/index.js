@@ -5,6 +5,7 @@ import ProgressBar from "./ProgressBar";
 import Columns from "./Column";
 import Charts from './Charts';
 import Workspace from "./Workspace";
+import IterationStats from "./IterationStats";
 
 const socket = io();
 socket.on('message', event => {
@@ -22,6 +23,7 @@ const initializeGame = gameId => {
   Workspace.initialize()
   Charts.initialize(gameId);
   ProgressBar.initialize();
+  IterationStats.initialize(gameId);
 };
 
 const currentGameId = document.querySelector('[data-game-id]').dataset.gameId;

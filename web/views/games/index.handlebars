@@ -1,8 +1,12 @@
 <div id="container" data-game-id="{{game.gameId}}">
     <h1>The Dot Game</h1>
 
-    <div class="chart-container">
-        <canvas id="cfd"></canvas>
+    <div class="top-container">
+        <div class="chart-container">
+            <canvas id="cfd"></canvas>
+        </div>
+
+        <div id="iterations-container"></div>
     </div>
 
     <div>
@@ -24,3 +28,4 @@
 </div>
 
 {{>cardtemplate }}
+{{>iteration-stats-template }}

@@ -1,5 +1,5 @@
 body {
-  padding: 50px;
+  padding-left: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -9,6 +9,21 @@ a {
 
 progress {
   width: 1410px;
+}
+
+.top-container > div {
+  display: inline-block;
+  vertical-align: top;
+  margin: 10px;
+}
+
+.iteration-stats {
+  border-collapse: collapse;
+}
+.iteration-stats th,
+.iteration-stats td{
+  border: 1px solid grey;
+  padding: 0.5rem;
 }
 
 #board {
