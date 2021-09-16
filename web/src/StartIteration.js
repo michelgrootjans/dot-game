@@ -11,7 +11,6 @@ const initialize = gameId => {
   $startIterationButton.addEventListener('click', () => {
     let duration = $iterationLength?.value;
     if(duration) duration = duration * 60 * 1000;
-    console.log({duration})
 
     fetch(`/api/games/${gameId}/iterations`, {
       method: 'POST',

@@ -6,7 +6,6 @@ const Timer = (duration, timeout = 1000) => {
       handler()
       const timerHandle = setInterval(() => {
         handler()
-        console.log('tick')
         const currentTime = Date.now();
         if (endTime < currentTime) clearInterval(timerHandle);
       }, timeout);

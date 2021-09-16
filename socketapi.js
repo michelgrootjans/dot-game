@@ -5,7 +5,7 @@ let init = server => {
   const previousEvents = []
 
   const publish = event => {
-    console.log({message: event})
+    console.log({event})
     previousEvents.push(event);
     io.emit('message', event)
   };

@@ -12,7 +12,6 @@ const round = (number, decimalPlaces) => {
 
 const Task = task => {
   const taskId = task.taskId;
-  const startTime = task.timestamp;
   let endTime = undefined;
 
   const finishAt = timestamp => endTime = timestamp;
@@ -57,7 +56,7 @@ const IterationStats = (iterationId, details) => {
   };
 };
 
-const initialize = gameId => {
+const initialize = () => {
   const $container = document.getElementById('iterations-container');
 
   const $template = document.getElementById('iteration-stats-template');
