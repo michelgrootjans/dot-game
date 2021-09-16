@@ -38,13 +38,13 @@ const intializeGames = ({games, delay, publish, subscribe}) => {
   }
 };
 
-const initializeStats = ({stats, subscribe, currentTime}) => {
-  StatsProcessManager().initialize(stats, subscribe, currentTime);
+const initializeStats = ({stats, subscribe}) => {
+  StatsProcessManager().initialize(stats, subscribe);
 };
 
-const Application = ({games, stats, delay, publish, subscribe, currentTime = () => Date.now()}) => {
+const Application = ({games, stats, delay, publish, subscribe}) => {
   const {execute} = intializeGames({games, delay, publish, subscribe});
-  initializeStats({stats, subscribe, currentTime})
+  initializeStats({stats, subscribe})
 
   return {execute, subscribe, findGame: games.find, findStats: stats.find};
 };

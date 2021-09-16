@@ -1,10 +1,12 @@
 let dateNowSpy;
+let currentTime;
 
 const TestDate = {
   freeze: () => {
-    const now = Date.now();
-    dateNowSpy = jest.spyOn(Date, 'now').mockImplementation(() => now)
+    currentTime = Date.now();
+    dateNowSpy = jest.spyOn(Date, 'now').mockImplementation(() => currentTime)
   },
+  advanceTime: seconds => currentTime += seconds*1000,
   unfreeze: () => {
     dateNowSpy.mockRestore()
   },

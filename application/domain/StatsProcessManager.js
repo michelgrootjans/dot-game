@@ -47,22 +47,22 @@ const GameStats = (iterationStartedEvent, startTime) => {
 };
 
 const StatsProcessManager = () => {
-  const initialize = (stats, subscribe, currentTime) => {
+  const initialize = (stats, subscribe) => {
     subscribe('IterationStarted', (event) => {
       const current = stats.find(event.gameId);
       if (current) {
-        current.restart(currentTime())
+        current.restart(Date.now())
       } else {
-        stats.add(GameStats(event, currentTime()));
+        stats.add(GameStats(event, Date.now()));
       }
     })
     subscribe('TaskCreated', (event) => {
       const current = stats.find(event.gameId);
-      current && current.addTask(currentTime(), event);
+      current && current.addTask(Date.now(), event);
     })
     subscribe('TaskMoved', (event) => {
       const current = stats.find(event.gameId);
-      current && current.moveTask(currentTime(), event);
+      current && current.moveTask(Date.now(), event);
     })
   };
   return {
