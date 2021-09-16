@@ -5,16 +5,18 @@ const round = (number, decimalPlaces) => {
 
 const Task = task => {
   const taskId = task.taskId;
-  let endTime = undefined;
+  let state = 'in-progress';
 
-  const finishAt = timestamp => endTime = timestamp;
-  const done = () => endTime !== undefined
+  const finish = () => state = 'done';
+  const reject = () => state = 'rejected';
 
   return {
     taskId,
-    done,
-    inProgress: () => !done(),
-    finishAt,
+    done: () => state === 'done',
+    rejected: () => state === 'rejected',
+    inProgress: () => state === 'in-progress',
+    finish,
+    reject
   };
 };
 
@@ -23,28 +25,33 @@ const IterationStats = (iterationId, details) => {
   const tasks = [];
 
   const startTask = (details) => tasks.push(Task(details));
-  const finishTask = (details) => tasks.find(t => t.taskId === details.taskId).finishAt(details.timestamp);
+  const finishTask = (details) => tasks.find(t => t.taskId === details.taskId).finish();
+  const rejectTask = (details) => tasks.find(t => t.taskId === details.taskId).reject();
 
   const finishIteration = (details) => {}
   const tasksDone = () => tasks.filter(t => t.done());
+  const tasksRejected = () => tasks.filter(t => t.rejected());
   const tasksInProgress = () => tasks.filter(t => t.inProgress());
 
   const wip = () => tasksInProgress().length;
+  const defects = () => tasksRejected().length;
   const success = () => tasksDone().length;
+  const total = () => success() + defects();
 
   const throughput = (now) => 60 * 1000 * success() / (now - startTime);
   const leadTime = (now) => wip() / throughput(now);
 
   return {
     iterationId,
-    total: success,
-    defects: () => 0,
+    defects,
     success,
+    total,
     wip,
     throughput,
     leadTime,
     startTask,
     finishTask,
+    rejectTask,
     finishIteration,
   };
 };
@@ -85,6 +92,10 @@ const initialize = () => {
   });
   document.addEventListener('TaskFinished', ({detail}) => {
     currentIteration.finishTask(detail)
+    updateIteration(detail);
+  });
+  document.addEventListener('TaskRejected', ({detail}) => {
+    currentIteration.rejectTask(detail)
     updateIteration(detail);
   });
   document.addEventListener('IterationFinished', ({detail}) => {
