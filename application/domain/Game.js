@@ -14,6 +14,7 @@ const Game = game => {
   const findColumn = columnId => columns.find(c => c.columnId === columnId);
 
   const startIteration = (duration = 5 * minutes, publish) => {
+    if(game.currentIteration) return;
     const startTime = Date.now();
     game.currentIteration = {duration, startTime};
     game.tasks = []
@@ -21,6 +22,7 @@ const Game = game => {
   };
 
   const endIteration = (publish) => {
+    if(!game.currentIteration) return;
     delete game.currentIteration;
     publish(IterationFinished({gameId}));
   }

@@ -31,6 +31,14 @@ describe('Iteration', () => {
     ]);
   });
 
+  it('cannot run two iterations in parallel', function () {
+    application.execute(StartIteration({gameId: 'g1'}))
+    application.execute(StartIteration({gameId: 'g1'}))
+    expect(events).toMatchObject([
+      IterationStarted({gameId: 'g1'})
+    ]);
+  });
+
   it('can start with default duration', function () {
     application.execute(StartIteration({gameId: 'g1'}))
     expect(events).toMatchObject([
@@ -40,6 +48,16 @@ describe('Iteration', () => {
 
   it('can end', function () {
     application.execute(StartIteration({gameId: 'g1'}))
+    application.execute(EndIteration({gameId: 'g1'}))
+    expect(events).toMatchObject([
+      IterationStarted({gameId: 'g1'}),
+      IterationFinished({gameId: 'g1'})
+    ]);
+  });
+
+  it('an ended iteration cannot be ended again', function () {
+    application.execute(StartIteration({gameId: 'g1'}))
+    application.execute(EndIteration({gameId: 'g1'}))
     application.execute(EndIteration({gameId: 'g1'}))
     expect(events).toMatchObject([
       IterationStarted({gameId: 'g1'}),
