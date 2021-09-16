@@ -1,10 +1,3 @@
-const td = ({id, text}) => {
-  const element = document.createElement('td');
-  element.dataset.iterationId = id;
-  if(text) element.textContent = text;
-  return element;
-};
-
 const round = (number, decimalPlaces) => {
   const factorOfTen = Math.pow(10, decimalPlaces);
   return Math.round(number * factorOfTen) / factorOfTen;
@@ -57,36 +50,28 @@ const IterationStats = (iterationId, details) => {
 };
 
 const initialize = () => {
-  const $container = document.getElementById('iterations-container');
+  const $container = document.getElementById('iterations-stats-container');
 
   const $template = document.getElementById('iteration-stats-template');
   if (!($container && $template)) return;
 
-  const $stats = $template.content.firstElementChild.cloneNode(true);
-  $container.innerHTML = '';
-
-  $container.append($stats)
   const iterations = []
-
   let currentIteration = undefined;
+  let $currentIteration = undefined;
 
   const renderIteration = () => {
-    $container.querySelector('.iteration-name').append(td({id: currentIteration.iterationId, text: currentIteration.iterationId}))
-    $container.querySelector('.total').append(td({id: currentIteration.iterationId}))
-    $container.querySelector('.defects').append(td({id: currentIteration.iterationId}))
-    $container.querySelector('.success').append(td({id: currentIteration.iterationId}))
-    $container.querySelector('.wip').append(td({id: currentIteration.iterationId}))
-    $container.querySelector('.throughput').append(td({id: currentIteration.iterationId}))
-    $container.querySelector('.lead-time').append(td({id: currentIteration.iterationId}))
+    $currentIteration = $template.content.firstElementChild.cloneNode(true);
+    $currentIteration.querySelector('.iteration-name').innerText = currentIteration.iterationId;
+    $container.append($currentIteration);
   };
 
   const updateIteration = (detail) => {
-    $container.querySelector(`.total [data-iteration-id="${currentIteration.iterationId}"]`).textContent = currentIteration.total();
-    $container.querySelector(`.defects [data-iteration-id="${currentIteration.iterationId}"]`).textContent = currentIteration.defects();
-    $container.querySelector(`.success [data-iteration-id="${currentIteration.iterationId}"]`).textContent = currentIteration.success();
-    $container.querySelector(`.wip [data-iteration-id="${currentIteration.iterationId}"]`).textContent = currentIteration.wip();
-    $container.querySelector(`.throughput [data-iteration-id="${currentIteration.iterationId}"]`).textContent = round(currentIteration.throughput(detail.timestamp), 2);
-    $container.querySelector(`.lead-time [data-iteration-id="${currentIteration.iterationId}"]`).textContent = round(currentIteration.leadTime(detail.timestamp), 2);
+    $currentIteration.querySelector(`.total`).textContent = currentIteration.total();
+    $currentIteration.querySelector(`.defects`).textContent = currentIteration.defects();
+    $currentIteration.querySelector(`.success`).textContent = currentIteration.success();
+    $currentIteration.querySelector(`.wip`).textContent = currentIteration.wip();
+    $currentIteration.querySelector(`.throughput`).textContent = round(currentIteration.throughput(detail.timestamp), 2);
+    $currentIteration.querySelector(`.lead-time`).textContent = round(currentIteration.leadTime(detail.timestamp), 2);
   };
 
   document.addEventListener('IterationStarted', ({detail}) => {
