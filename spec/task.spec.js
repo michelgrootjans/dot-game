@@ -1,7 +1,7 @@
 const {CreateGame} = require("../application/api/commands/game");
 const {StartIteration, EndIteration} = require("../application/api/commands/iteration");
-const {CreateTask, MoveTask} = require("../application/api/commands/task");
-const {TaskCreated, TaskMoved, TaskFinished} = require("../application/api/events/task");
+const {CreateTask, MoveTask, RejectTask} = require("../application/api/commands/task");
+const {TaskCreated, TaskMoved, TaskFinished, TaskRejected} = require("../application/api/events/task");
 const {IterationFinished} = require("../application/api/events/iteration");
 const TestApplication = require("./TestApplication");
 const TestDate = require("./TestDate");
@@ -34,6 +34,16 @@ describe('Tasks', () => {
     expect(events).toMatchObject([
       TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1'}}),
       TaskMoved({gameId: 'g1', taskId: 't1', from: {columnId: 'c1'}, to: {columnId: 'c2'}})
+    ]);
+  });
+
+  it('rejects a task', () => {
+    application.execute(CreateTask({gameId: 'g1', taskId: 't1'}))
+    application.execute(RejectTask({gameId: 'g1', taskId: 't1'}))
+    expect(events).toMatchObject([
+      TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1'}}),
+      TaskMoved({gameId: 'g1', taskId: 't1', from: {columnId: 'c1'}, to: {columnId: 'c10'}}),
+      TaskRejected({gameId: 'g1', taskId: 't1', column: {columnId: 'c10'}}),
     ]);
   });
 

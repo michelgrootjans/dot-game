@@ -1,5 +1,5 @@
 const {IterationStarted, IterationFinished} = require("../api/events/iteration");
-const {TaskCreated, TaskMoved, TaskFinished} = require("../api/events/task");
+const {TaskCreated, TaskMoved, TaskFinished, TaskRejected} = require("../api/events/task");
 const {anyCardColor} = require("./Colors");
 
 const minutes = 60 * 1000;
@@ -9,6 +9,7 @@ const Game = game => {
   const columns = game.columns;
   const todoColumn = columns.find(column => column.columnType === 'start-column');
   const doneColumn = columns.find(column => column.columnType === 'end-column');
+  const defectsColumn = columns.find(column => column.columnType === 'defect-column');
 
   const findTask = taskId => game.tasks.find(t => t.taskId === taskId);
   const findColumn = columnId => columns.find(c => c.columnId === columnId);
@@ -57,6 +58,19 @@ const Game = game => {
     }
   }
 
+  const rejectTask = (command, publish) => {
+    if (!iterationIsRunning()) return;
+
+    const task = findTask(command.taskId);
+    if(command.payload) task.payload = {...task.payload, ...command.payload}
+    const column = findColumn(task.columnId);
+
+    task.columnId = defectsColumn.columnId;
+
+    publish(TaskMoved({...task, from: column, to: defectsColumn, gameId}));
+    publish(TaskRejected({...task, column: defectsColumn, gameId}));
+  }
+
   const findWork = (columnId) => {
     const work = columns.find(c => c.columnId === columnId);
     const inbox = columns.find(c => c.nextColumnId === columnId);
@@ -70,6 +84,7 @@ const Game = game => {
     endIteration,
     createTask,
     moveTask,
+    rejectTask,
     findWork
   }
 };
