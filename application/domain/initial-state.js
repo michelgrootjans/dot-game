@@ -8,7 +8,8 @@ const initialState = () => ({
       {columnId: "c6", columnType: "work-column", nextColumnId: "c7", title: "Development", taskName: "development", difficulty: 2},
       {columnId: "c7", columnType: "queue-column", nextColumnId: "c8", title: "", taskName: "development"},
       {columnId: "c8", columnType: "work-column", nextColumnId: "c9", title: "QA", taskName: "qa", difficulty: 1},
-      {columnId: "c9", columnType: "end-column", title: "Done", taskName: "done"}
+      {columnId: "c9", columnType: "end-column", title: "Done", taskName: "done"},
+      {columnId: "c10", columnType: "defect-column", title: "Defects", taskName: "defect"},
     ]
   }
 )

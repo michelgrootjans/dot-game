@@ -5,16 +5,19 @@ const {anyCardColor} = require("./Colors");
 const minutes = 60 * 1000;
 
 const Game = game => {
-  const columns = game.columns;
-  const todoColumn = columns[0];
-  const doneColumn = columns[columns.length - 1];
   const gameId = game.gameId;
+  const columns = game.columns;
+  const todoColumn = columns.find(column => column.columnType === 'start-column');
+  const doneColumn = columns.find(column => column.columnType === 'end-column');
 
   const findTask = taskId => game.tasks.find(t => t.taskId === taskId);
   const findColumn = columnId => columns.find(c => c.columnId === columnId);
 
+  const iterationIsRunning = () => game.currentIteration;
+
   const startIteration = (duration = 5 * minutes, publish) => {
-    if(game.currentIteration) return;
+    if(iterationIsRunning()) return;
+
     const startTime = Date.now();
     game.currentIteration = {duration, startTime};
     game.tasks = []
@@ -22,13 +25,14 @@ const Game = game => {
   };
 
   const endIteration = (publish) => {
-    if(!game.currentIteration) return;
+    if(!iterationIsRunning()) return;
+
     delete game.currentIteration;
     publish(IterationFinished({gameId}));
   }
 
   const createTask = (taskId, publish) => {
-    if (!game.currentIteration) return;
+    if (!iterationIsRunning()) return;
 
     const task = {taskId, color: anyCardColor(), columnId: todoColumn.columnId, payload: {}};
     game.tasks.push(task);
@@ -36,7 +40,7 @@ const Game = game => {
   }
 
   const moveTask = (command, publish) => {
-    if (!game.currentIteration) return;
+    if (!iterationIsRunning()) return;
 
     const task = findTask(command.taskId);
     if(command.payload) task.payload = {...task.payload, ...command.payload}
@@ -57,12 +61,7 @@ const Game = game => {
     const work = columns.find(c => c.columnId === columnId);
     const inbox = columns.find(c => c.nextColumnId === columnId);
     const outbox = columns.find(c => c.columnId === work.nextColumnId);
-    return {
-      gameId,
-      inbox,
-      work,
-      outbox
-    }
+    return {gameId, inbox, work, outbox}
   };
 
   return {
