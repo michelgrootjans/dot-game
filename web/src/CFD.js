@@ -10,6 +10,7 @@ const createDataset = (label, color) => ({
   pointRadius: 0,
   backgroundColor: `rgba(${color}, 0.1)`,
   borderColor: `rgba(${color}, 1)`,
+  borderWidth: 1,
 });
 
 const todo = createDataset('todo', '255, 99, 132');
