@@ -1,6 +1,19 @@
-const initialize = gameId => {
+const initializeStopButton = gameId => {
+  const $stopIterationButton = document.getElementById('stop-iteration');
+  if (!$stopIterationButton) return;
+
+
+  document.addEventListener('IterationStarted', () => $stopIterationButton.disabled = false)
+  document.addEventListener('IterationFinished', () => $stopIterationButton.disabled = true)
+
+  $stopIterationButton.addEventListener('click', () => {
+    fetch(`/api/games/${gameId}/iterations/stop`, {method: 'POST'})
+  });
+};
+
+const initializeStartButton = gameId => {
   const $startIterationButton = document.getElementById('start-iteration');
-  if(!$startIterationButton) return;
+  if (!$startIterationButton) return;
 
 
   document.addEventListener('IterationStarted', () => $startIterationButton.disabled = true)
@@ -10,7 +23,7 @@ const initialize = gameId => {
 
   $startIterationButton.addEventListener('click', () => {
     let duration = $iterationLength?.value;
-    if(duration) duration = duration * 60 * 1000;
+    if (duration) duration = duration * 60 * 1000;
 
     fetch(`/api/games/${gameId}/iterations`, {
       method: 'POST',
@@ -18,6 +31,11 @@ const initialize = gameId => {
       body: JSON.stringify({duration})
     })
   });
+};
+
+const initialize = gameId => {
+  initializeStartButton(gameId);
+  initializeStopButton(gameId);
 
 };
 
