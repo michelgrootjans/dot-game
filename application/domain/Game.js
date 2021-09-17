@@ -8,7 +8,7 @@ const Game = game => {
   const gameId = game.gameId;
   const columns = game.columns;
   const todoColumn = columns.find(column => column.columnType === 'start-column');
-  const doneColumn = columns.find(column => column.columnType === 'end-column');
+  const doneColumn = columns.find(column => column.columnType === 'done-column');
   const defectsColumn = columns.find(column => column.columnType === 'defect-column');
 
   const findTask = taskId => game.tasks.find(t => t.taskId === taskId);
@@ -75,11 +75,13 @@ const Game = game => {
     const work = columns.find(c => c.columnId === columnId);
     const inbox = columns.find(c => c.nextColumnId === columnId);
     const outbox = columns.find(c => c.columnId === work.nextColumnId);
-    return {gameId, inbox, work, outbox}
+    return {gameId, inbox, work, outbox, defects: defectsColumn}
   };
 
   return {
     ...game,
+    activeColumns: columns.filter(column => ![doneColumn, defectsColumn].includes(column)),
+    endColumns: [doneColumn, defectsColumn],
     startIteration,
     endIteration,
     createTask,

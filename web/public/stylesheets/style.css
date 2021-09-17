@@ -75,15 +75,29 @@ input#iteration-length{
 .column.start-column {
   border-left: 1px solid black;
 }
-.column.queue-column {
-  border-left: 1px dashed grey;
-}
 .column.work-column {
   border-left: 1px solid black;
 }
-.column.end-column {
+.column.queue-column {
+  border-left: 1px dashed grey;
+}
+.column.test-column {
+  border-left: 1px solid black;
+}
+.column.done-column {
   border-left: 1px solid black;
   border-right: 1px solid black;
+  height: 50%;
+  overflow: hidden;
+}
+.column.defect-column h4 {
+  height: 0;
+}
+.column.defect-column {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  height: 50%;
+  overflow: hidden;
 }
 
 .column h2 {
@@ -148,10 +162,17 @@ input#iteration-length{
   right: 10px;
   bottom: 10px;
 }
+.reject-button {
+  visibility: hidden;
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+}
 #workspace {
   width: 300px;
 }
-#workspace .card {
+#workspace .card,
+#testspace .card{
   width: 180px;
   height: 180px;
 }
@@ -167,33 +188,38 @@ input#iteration-length{
 
 .start-column .card:nth-child(5n+1),
 .queue-column .card:nth-child(5n+1),
-.end-column .card:nth-child(5n+1){
+.defect-column .card:nth-child(5n+1),
+.done-column .card:nth-child(5n+1){
   z-index: 10;
 }
 .start-column .card:nth-child(5n+2),
 .queue-column .card:nth-child(5n+2),
-.end-column .card:nth-child(5n+2){
+.defect-column .card:nth-child(5n+2),
+.done-column .card:nth-child(5n+2){
   transform: rotate(1deg);
   margin-top: -85px;
   z-index: 9;
 }
 .start-column .card:nth-child(5n+3),
 .queue-column .card:nth-child(5n+3),
-.end-column .card:nth-child(5n+3){
+.defect-column .card:nth-child(5n+3),
+.done-column .card:nth-child(5n+3){
   transform: rotate(2deg);
   margin-top: -85px;
   z-index: 8;
 }
 .start-column .card:nth-child(5n+4),
 .queue-column .card:nth-child(5n+4),
-.end-column .card:nth-child(5n+4){
+.defect-column .card:nth-child(5n+4),
+.done-column .card:nth-child(5n+4){
   transform: rotate(3deg);
   margin-top: -85px;
   z-index: 7;
 }
 .start-column .card:nth-child(5n+5),
 .queue-column .card:nth-child(5n+5),
-.end-column .card:nth-child(5n+5){
+.defect-column .card:nth-child(5n+5),
+.done-column .card:nth-child(5n+5){
   transform: rotate(4deg);
   margin-top: -85px;
   z-index: 6;
@@ -202,4 +228,18 @@ input#iteration-length{
 .chart-container {
   width: 400px;
   height: 200px;
+}
+
+/*Test-space*/
+#testspace .move-button {
+  visibility: visible;
+}
+#testspace .move-button:before {
+  content: 'Accept'
+}
+#testspace .reject-button {
+  visibility: visible;
+}
+#testspace .reject-button:before {
+  content: 'Reject'
 }

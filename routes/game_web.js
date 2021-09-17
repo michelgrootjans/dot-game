@@ -30,6 +30,8 @@ const init = application => {
       res.render('games/start-work', {work});
     } else if (columnType === 'work-column') {
       res.render('games/work', {work});
+    } else if (columnType === 'test-column') {
+      res.render('games/test', {work});
     } else {
       res.redirect(`/games/${params.gameId}/${work.inbox.columnId}`);
     }

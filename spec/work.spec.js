@@ -10,13 +10,23 @@ describe('Iteration', () => {
     application.execute(CreateGame({gameId: 'g1'}))
   });
 
-  it('get the first work column', function () {
+  it('get the inbox work column', function () {
+    expect(application.execute(FindWork({gameId: 'g1', columnId: 'c1'}))).toMatchObject({
+      gameId: 'g1',
+      inbox: undefined,
+      work: {columnId: 'c1'},
+      outbox: {columnId: 'c2'},
+      defects: {columnId: 'c10'},
+    });
+  });
 
+  it('get the first work column', function () {
     expect(application.execute(FindWork({gameId: 'g1', columnId: 'c2'}))).toMatchObject({
       gameId: 'g1',
       inbox: {columnId: 'c1'},
       work: {columnId: 'c2'},
-      outbox: {columnId: 'c3'}
+      outbox: {columnId: 'c3'},
+      defects: {columnId: 'c10'},
     });
   });
 
@@ -25,7 +35,8 @@ describe('Iteration', () => {
       gameId: 'g1',
       inbox: {columnId: 'c3', columnType: 'queue-column'},
       work: {columnId: 'c4', columnType: 'work-column'},
-      outbox: {columnId: 'c5', columnType: 'queue-column'}
+      outbox: {columnId: 'c5', columnType: 'queue-column'},
+      defects: {columnId: 'c10', columnType: 'defect-column'},
     });
   });
 

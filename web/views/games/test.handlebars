@@ -1,0 +1,35 @@
+<div class="container" data-game-id="{{work.gameId}}">
+    <h1>{{work.work.title}}</h1>
+
+    <div>
+        <progress value="" id="progressbar"></progress>
+    </div>
+
+    <div id="work-container">
+        <div id="inbox" class="queue-column" data-column-id="{{work.inbox.columnId}}">
+            <h2>Inbox</h2>
+            <div class="tasks"></div>
+        </div>
+
+        <div id="testspace" data-column-id="{{work.work.columnId}}" data-column-difficulty="{{work.work.difficulty}}">
+            <h2>Test-space</h2>
+            <div id="questions"></div>
+            <div class="tasks"></div>
+        </div>
+
+        <div>
+            <div id="outbox" class="queue-column" data-column-id="{{work.outbox.columnId}}">
+                <h2>Done</h2>
+                <div class="tasks"></div>
+            </div>
+
+            <div id="defects" class="queue-column" data-column-id="{{work.defects.columnId}}">
+                <h2>Defects</h2>
+                <div class="tasks"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{{>cardtemplate }}

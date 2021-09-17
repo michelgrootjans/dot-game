@@ -22,9 +22,14 @@
     </label>
 
     <div id="board">
-        {{#each game.columns}}
+        {{#each game.activeColumns}}
             {{>column column=this game=../game}}
         {{/each}}
+        <div>
+            {{#each game.endColumns}}
+                {{>column column=this game=../game}}
+            {{/each}}
+        </div>
     </div>
 
 </div>
