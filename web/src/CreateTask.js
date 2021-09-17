@@ -1,4 +1,4 @@
-const {v4: uuid} = require("uuid");
+const API = require("./API");
 
 const initialize = gameId => {
   const $createTaskButton = document.getElementById('create-task');
@@ -13,11 +13,7 @@ const initialize = gameId => {
   $createTaskButton.addEventListener('click', () => {
     disableCreation();
     setTimeout(enableCreation, 1000);
-    fetch(`/api/games/${gameId}/tasks`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({taskId: uuid()})
-    })
+    API(gameId).task.create();
   });
 };
 

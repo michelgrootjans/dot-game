@@ -198,13 +198,13 @@ input#iteration-length{
   visibility: visible;
 }
 #testspace .move-button:before {
-  content: 'Accept'
+  content: 'Accept ✅'
 }
 #testspace .reject-button {
   visibility: visible;
 }
 #testspace .reject-button:before {
-  content: 'Reject'
+  content: 'Reject ❌'
 }
 
 /*charts*/

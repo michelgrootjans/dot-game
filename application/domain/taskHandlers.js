@@ -1,5 +1,7 @@
+const {v4: uuid} = require("uuid");
+
 const CreateTaskHandler = (games, publish) => {
-  const execute = ({gameId, taskId}) => games.find(gameId)?.createTask(taskId, publish);
+  const execute = ({gameId, taskId = uuid()}) => games.find(gameId)?.createTask(taskId, publish);
   return {execute}
 };
 

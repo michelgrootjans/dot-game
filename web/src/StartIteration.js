@@ -1,3 +1,5 @@
+const API = require("./API");
+
 const initializeStopButton = gameId => {
   const $stopIterationButton = document.getElementById('stop-iteration');
   if (!$stopIterationButton) return;
@@ -6,9 +8,7 @@ const initializeStopButton = gameId => {
   document.addEventListener('IterationStarted', () => $stopIterationButton.disabled = false)
   document.addEventListener('IterationFinished', () => $stopIterationButton.disabled = true)
 
-  $stopIterationButton.addEventListener('click', () => {
-    fetch(`/api/games/${gameId}/iterations/stop`, {method: 'POST'})
-  });
+  $stopIterationButton.addEventListener('click', () => API(gameId).iteration.stop());
 };
 
 const initializeStartButton = gameId => {
@@ -25,18 +25,13 @@ const initializeStartButton = gameId => {
     let duration = $iterationLength?.value;
     if (duration) duration = duration * 60 * 1000;
 
-    fetch(`/api/games/${gameId}/iterations`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({duration})
-    })
+    API(gameId).iteration.start({duration})
   });
 };
 
 const initialize = gameId => {
   initializeStartButton(gameId);
   initializeStopButton(gameId);
-
 };
 
 module.exports = {

@@ -1,6 +1,8 @@
 const {Chart, ArcElement, LineElement, BarElement, PointElement, BarController, BubbleController, DoughnutController, LineController, PieController, PolarAreaController, RadarController, ScatterController, CategoryScale, LinearScale, LogarithmicScale, RadialLinearScale, TimeScale, TimeSeriesScale, Decimation, Filler, Legend, Title, Tooltip, SubTitle} = require('chart.js');
 Chart.register(ArcElement, LineElement, BarElement, PointElement, BarController, BubbleController, DoughnutController, LineController, PieController, PolarAreaController, RadarController, ScatterController, CategoryScale, LinearScale, LogarithmicScale, RadialLinearScale, TimeScale, TimeSeriesScale, Decimation, Filler, Legend, Title, Tooltip, SubTitle);
 
+const API = require("./API");
+
 const createDataset = (label, color) => ({
   label: label,
   type: 'line',
@@ -48,12 +50,12 @@ const config = {
 const Cfd = (context, gameId) => {
   const chart = new Chart(context, config);
 
-  const fetchHistory = () => fetch(`/api/games/${gameId}/stats`, {method: 'GET'})
+  const getHistory = () => API(gameId).stats()
     .then(response => response.json())
     .then(response => response.history);
 
   const update = async () => {
-    const newHistory = await fetchHistory();
+    const newHistory = await getHistory();
 
     const getSeries = name => newHistory.map(record => ({x: record.time, y: record[name]}));
 

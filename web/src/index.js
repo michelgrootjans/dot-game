@@ -7,6 +7,7 @@ import Charts from './Charts';
 import Workspace from "./Workspace";
 import IterationStats from "./IterationStats";
 import Testing from "./Testing";
+import Simulations from "./Simulations";
 
 const socket = io();
 socket.on('message', event => {
@@ -26,6 +27,8 @@ const initializeGame = gameId => {
   Charts.initialize(gameId);
   ProgressBar.initialize();
   IterationStats.initialize(gameId);
+
+  Simulations.initialize(gameId);
 };
 
 const currentGameId = document.querySelector('[data-game-id]').dataset.gameId;
