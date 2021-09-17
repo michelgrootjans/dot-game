@@ -1,3 +1,4 @@
+/*generic*/
 body {
   padding-left: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -11,48 +12,11 @@ progress {
   width: 1410px;
 }
 
+/*board*/
 .top-container {
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: minmax(500px, max-content);
-}
-
-.iteration-stats {
-  border-collapse: collapse;
-}
-.iteration-stats th,
-.iteration-stats td{
-  border: 1px solid grey;
-  padding: 0.5rem;
-}
-
-#iterations-stats-container {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(50px, max-content);
-}
-.iteration div {
-  text-align: right;
-  padding: 0 10px;
-}
-.iteration .iteration-name {
-  font-weight: bold;
-}
-.success {
-  border-color: rgb(75, 192, 192);
-  background-color: rgba(75, 192, 192, 0.1);
-}
-.wip {
-  border-color: rgb(255, 205, 86);
-  background-color: rgba(255, 205, 86, 0.1);
-}
-.throughput {
-  border-color: rgb(54, 162, 235);
-  background-color: rgba(54, 162, 235, 0.1);
-}
-.lead-time {
-  border-color: rgb(255, 99, 132);
-  background-color: rgba(255, 99, 132, 0.1);
 }
 
 #board {
@@ -72,34 +36,6 @@ input#iteration-length{
   padding: 10px;
 }
 
-.column.start-column {
-  border-left: 1px solid black;
-}
-.column.work-column {
-  border-left: 1px solid black;
-}
-.column.queue-column {
-  border-left: 1px dashed grey;
-}
-.column.test-column {
-  border-left: 1px solid black;
-}
-.column.done-column {
-  border-left: 1px solid black;
-  border-right: 1px solid black;
-  height: 50%;
-  overflow: hidden;
-}
-.column.defect-column h4 {
-  height: 0;
-}
-.column.defect-column {
-  border-left: 1px solid black;
-  border-right: 1px solid black;
-  height: 50%;
-  overflow: hidden;
-}
-
 .column h2 {
   font-size: 16px;
   margin: 0 0 12px 0;
@@ -114,76 +50,49 @@ input#iteration-length{
   width: 100%;
 }
 
-#work-container {
-  display: grid;
-  grid-template-columns: auto;
-  grid-auto-flow: column;
-  height: 60vh;
-  overflow: auto;
+.column.start-column {
+  border-left: 1px solid black;
+}
+.column.work-column {
+  border-left: 1px solid black;
+}
+.column.queue-column {
+  border-left: 1px dashed grey;
+}
+.column.test-column {
+  border-left: 1px solid black;
+}
+.column.done-column,
+.column.defect-column{
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  height: 50%;
+  overflow: hidden;
+}
+.column.defect-column h4 {
+  height: 0;
 }
 
-.column.work-column h4:before{
-  content: 'ongoing';
-}
-.column.queue-column h4:before{
-  content: 'done';
-}
-
-.card {
-  position: relative;
-  background: #feff9c;
-  box-shadow: 1px 1px 2px 1px rgba(9, 30, 66, .25);
-  border-radius: 3px;
-  width: 60px;
-  height: 60px;
-  padding: 10px;
-  margin: 10px;
-}
-
-#inbox .move-button {
-  visibility: visible;
-}
-#inbox .move-button:before {
-  content: 'Start';
-}
-
-.question-container {
+.card .question-container {
   visibility: hidden;
 }
 
-.answer {
+.card .answer {
   position: absolute;
   right: 10px;
   width: 20px;
 }
-.move-button {
+.card .move-button {
   visibility: hidden;
   position: absolute;
   right: 10px;
   bottom: 10px;
 }
-.reject-button {
+.card .reject-button {
   visibility: hidden;
   position: absolute;
   left: 10px;
   bottom: 10px;
-}
-#workspace {
-  width: 300px;
-}
-#workspace .card,
-#testspace .card{
-  width: 180px;
-  height: 180px;
-}
-#workspace .question-container {
-  visibility: visible;
-}
-#workspace .move-button {
-  visibility: visible;
-}
-#workspace .move-button:before {
-  content: 'OK'
 }
 
 .start-column .card:nth-child(5n+1),
@@ -225,9 +134,57 @@ input#iteration-length{
   z-index: 6;
 }
 
-.chart-container {
-  width: 400px;
-  height: 200px;
+
+/*work pages*/
+#work-container {
+  display: grid;
+  grid-template-columns: auto;
+  grid-auto-flow: column;
+  height: 60vh;
+  overflow: auto;
+}
+
+.column.work-column h4:before{
+  content: 'ongoing';
+}
+.column.queue-column h4:before{
+  content: 'done';
+}
+
+.card {
+  position: relative;
+  background: #feff9c;
+  box-shadow: 1px 1px 2px 1px rgba(9, 30, 66, .25);
+  border-radius: 3px;
+  width: 60px;
+  height: 60px;
+  padding: 10px;
+  margin: 10px;
+}
+
+#inbox .move-button {
+  visibility: visible;
+}
+#inbox .move-button:before {
+  content: 'Start';
+}
+
+#workspace {
+  width: 300px;
+}
+#workspace .card,
+#testspace .card{
+  width: 180px;
+  height: 180px;
+}
+#workspace .question-container {
+  visibility: visible;
+}
+#workspace .move-button {
+  visibility: visible;
+}
+#workspace .move-button:before {
+  content: 'OK'
 }
 
 /*Test-space*/
@@ -242,4 +199,49 @@ input#iteration-length{
 }
 #testspace .reject-button:before {
   content: 'Reject'
+}
+
+/*charts*/
+.chart-container {
+  width: 400px;
+  height: 200px;
+}
+
+/*stats*/
+.iteration-stats {
+  border-collapse: collapse;
+}
+.iteration-stats th,
+.iteration-stats td{
+  border: 1px solid grey;
+  padding: 0.5rem;
+}
+
+#iterations-stats-container {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(50px, max-content);
+}
+.iteration div {
+  text-align: right;
+  padding: 0 10px;
+}
+.iteration .iteration-name {
+  font-weight: bold;
+}
+.success {
+  border-color: rgb(75, 192, 192);
+  background-color: rgba(75, 192, 192, 0.1);
+}
+.wip {
+  border-color: rgb(255, 205, 86);
+  background-color: rgba(255, 205, 86, 0.1);
+}
+.throughput {
+  border-color: rgb(54, 162, 235);
+  background-color: rgba(54, 162, 235, 0.1);
+}
+.lead-time {
+  border-color: rgb(255, 99, 132);
+  background-color: rgba(255, 99, 132, 0.1);
 }
