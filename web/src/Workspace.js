@@ -9,31 +9,25 @@ const initialize = () => {
   const workColumnId = $workspace.dataset.columnId;
   const difficulty = $workspace.dataset.columnDifficulty;
 
-  const generateQuestion = taskId => {
-    const card = Card.find({taskId});
-    const puzzle = Puzzle(difficulty).generate()
+  const generateQuestion = detail => {
+    const card = Card.find(detail);
+    const puzzle = Puzzle().generate(difficulty)
     card.querySelector('.question').innerHTML = puzzle.question;
+    card.payload.tasks = card.payload.tasks || []
+    card.payload.tasks.push({workColumnId, question: puzzle.question})
     card.querySelector('.answer').addEventListener('change', event => {
-      const success = (event.target.value === puzzle.answer);
-      card.payload.success = card.payload.success || []
-      card.payload.success.push({workColumnId, success})
+      const task = card.payload.tasks.find(x => x.workColumnId === workColumnId);
+      const actualAnswer = event.target.value;
+      task.actualAnswer = actualAnswer
+      task.success = (actualAnswer === puzzle.answer);
+      console.log({tasks: card.payload.tasks})
     });
   };
-
-
-  const removeAll = () => {
-    const questions = document.getElementsByClassName('question-container');
-    while (questions.length > 0) {
-      questions[0].parentNode.removeChild(questions[0]);
-    }
-  };
-
-  document.addEventListener('IterationStarted', removeAll);
 
   document.addEventListener('TaskMoved', ({detail}) => {
     if(detail.to.columnId !== workColumnId) return;
 
-    generateQuestion(detail.taskId);
+    generateQuestion(detail);
   });
 
 };

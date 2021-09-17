@@ -6,6 +6,7 @@ import Columns from "./Column";
 import Charts from './Charts';
 import Workspace from "./Workspace";
 import IterationStats from "./IterationStats";
+import Testing from "./Testing";
 
 const socket = io();
 socket.on('message', event => {
@@ -19,8 +20,9 @@ socket.on('message', event => {
 const initializeGame = gameId => {
   StartIteration.initialize(gameId);
   CreateTask.initialize(gameId);
-  Columns.initialize()
-  Workspace.initialize()
+  Columns.initialize();
+  Workspace.initialize();
+  Testing.initialize();
   Charts.initialize(gameId);
   ProgressBar.initialize();
   IterationStats.initialize(gameId);

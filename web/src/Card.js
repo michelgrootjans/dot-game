@@ -8,7 +8,7 @@ const execute = (action, gameId, taskId, payload) => {
   });
 };
 
-const create = ({gameId, taskId, color}) => {
+const create = ({gameId, taskId, color, payload}) => {
   const card = $cardTemplate.content.firstElementChild.cloneNode(true);
 
   const move = (event) => {
@@ -22,7 +22,7 @@ const create = ({gameId, taskId, color}) => {
   };
 
   card.dataset.taskId = taskId;
-  card.payload = {}
+  card.payload = payload || {}
   card.setAttribute('style', `background: ${color};`);
   card.querySelector('.move-button').addEventListener('click', move)
   card.querySelector('.reject-button').addEventListener('click', reject)

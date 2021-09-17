@@ -73,6 +73,9 @@ input#iteration-length{
   height: 0;
 }
 
+.card .previous-puzzles{
+  visibility: hidden;
+}
 .card .question-container {
   visibility: hidden;
 }
@@ -188,6 +191,9 @@ input#iteration-length{
 }
 
 /*Test-space*/
+#testspace .previous-puzzles {
+  visibility: visible;
+}
 #testspace .move-button {
   visibility: visible;
 }
