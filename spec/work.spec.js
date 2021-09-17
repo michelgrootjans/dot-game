@@ -40,5 +40,25 @@ describe('Iteration', () => {
     });
   });
 
+  it('get the done column', function () {
+    expect(application.execute(FindWork({gameId: 'g1', columnId: 'c9'}))).toMatchObject({
+      gameId: 'g1',
+      inbox: {columnId: 'c8'},
+      work: {columnId: 'c9'},
+      outbox: undefined,
+      defects: {columnId: 'c10'},
+    });
+  });
+
+  it('get the defects column', function () {
+    expect(application.execute(FindWork({gameId: 'g1', columnId: 'c10'}))).toMatchObject({
+      gameId: 'g1',
+      inbox: {columnId: 'c8'},
+      work: {columnId: 'c10'},
+      outbox: undefined,
+      defects: {columnId: 'c10'},
+    });
+  });
+
 });
 

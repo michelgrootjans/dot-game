@@ -8,11 +8,18 @@ const Game = game => {
   const gameId = game.gameId;
   const columns = game.columns;
   const todoColumn = columns.find(column => column.columnType === 'start-column');
+  const testColumn = columns.find(column => column.columnType === 'test-column');
   const doneColumn = columns.find(column => column.columnType === 'done-column');
   const defectsColumn = columns.find(column => column.columnType === 'defect-column');
 
   const findTask = taskId => game.tasks.find(t => t.taskId === taskId);
   const findColumn = columnId => columns.find(c => c.columnId === columnId);
+  const inboxOf = column => {
+    if(column === defectsColumn) return testColumn;
+    return columns.find(c => c.nextColumnId === column.columnId);
+  };
+  const outboxOf = work => columns.find(c => c.columnId === work.nextColumnId);
+
 
   const iterationIsRunning = () => game.currentIteration;
 
@@ -72,9 +79,9 @@ const Game = game => {
   }
 
   const findWork = (columnId) => {
-    const work = columns.find(c => c.columnId === columnId);
-    const inbox = columns.find(c => c.nextColumnId === columnId);
-    const outbox = columns.find(c => c.columnId === work.nextColumnId);
+    const work = findColumn(columnId);
+    const inbox = inboxOf(work);
+    const outbox = outboxOf(work);
     return {gameId, inbox, work, outbox, defects: defectsColumn}
   };
 
