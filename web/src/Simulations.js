@@ -2,29 +2,33 @@ const API = require("./API");
 
 const randomize = number => (Math.random() + 0.5) * number;
 
-let taskCounter = 1;
 const PushTaskCreator = (api, batchSize) => () => api.task.create();
 
 const PushWorker = (api, batchSize) => {
-  let working = false;
-  const backlog = [];
-  const workspace = []
-
   return (inbox, workColumn, outbox) => {
+    const backlog = [];
+    const workspace = []
+    const working = () => workspace.length > 0;
     const amountOfWork = 1000 * (workColumn.difficulty || 1);
 
+    let workingOnTask = false;
     const start = () => {
+      if(workingOnTask) return;
+      workingOnTask = true;
       const taskId = workspace.shift();
-      setTimeout(() => finish(taskId), randomize(amountOfWork))
+      const effort = randomize(amountOfWork);
+      setTimeout(() => finish(taskId), effort)
     };
 
     const finish = taskId => {
       api.task.move(taskId);
-      if (workspace.length > 0) start()
+      workingOnTask = false;
+      if (working()) start()
       else takeBatch();
     };
 
     const takeBatch = () => {
+      if (working()) return;
       if (backlog.length < batchSize) return;
 
       for (let i = 0; i < batchSize; i++) {
@@ -37,7 +41,7 @@ const PushWorker = (api, batchSize) => {
 
     const pushWork = taskId => {
       backlog.push(taskId);
-      if (!working) takeBatch();
+      takeBatch();
     };
 
     return {
@@ -59,7 +63,7 @@ const Simulation = (createTask, createWorker) => {
     const outboxFor = column => columns.find(c => column.nextColumnId === c.columnId);
 
     workers = workColumns.map(column => createWorker(inboxFor(column), column, outboxFor(column)))
-    // timerHandle = setInterval(createTask, 1000)
+    timerHandle = setInterval(createTask, 500)
   };
 
   const onTaskCreated = ({detail}) => {
@@ -72,7 +76,9 @@ const Simulation = (createTask, createWorker) => {
     worker?.pushWork(detail.taskId)
   };
 
-  const stop = () => clearInterval(timerHandle)
+  const stop = () => {
+    clearInterval(timerHandle);
+  }
 
   return {
     start,
@@ -88,15 +94,15 @@ const initialize = (gameId) => {
 
   window.runSimulation = (param) => {
     const simulation = Simulation(PushTaskCreator(api, 5), PushWorker(api, 5));
-    document.addEventListener('IterationStarted', simulation.start);
+    document.addEventListener('IterationStarted', simulation.start, {once: true});
     document.addEventListener('TaskCreated', simulation.onTaskCreated);
     document.addEventListener('TaskMoved', simulation.onTaskMoved);
     document.addEventListener('IterationFinished', () => {
       simulation.stop()
       document.removeEventListener('TaskCreated', simulation.onTaskCreated);
       document.removeEventListener('TaskMoved', simulation.onTaskMoved);
-    });
-    api.iteration.start({duration: 10 * 60 * 1000})
+    }, {once: true});
+    api.iteration.start({duration: 5 * 60 * 1000})
   };
 }
 
