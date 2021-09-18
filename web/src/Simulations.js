@@ -9,7 +9,7 @@ const PushWorker = (api, batchSize) => {
     const backlog = [];
     const workspace = []
     const working = () => workspace.length > 0;
-    const amountOfWork = 1000 * (workColumn.difficulty || 1);
+    const amountOfWork = 2000 * (workColumn.difficulty || 1);
 
     let workingOnTask = false;
     const start = () => {
@@ -20,28 +20,28 @@ const PushWorker = (api, batchSize) => {
       setTimeout(() => finish(taskId), effort)
     };
 
-    const finish = taskId => {
-      api.task.move(taskId);
+    const finish = async taskId => {
+      await api.task.move(taskId);
       workingOnTask = false;
       if (working()) start()
       else takeBatch();
     };
 
-    const takeBatch = () => {
+    const takeBatch = async () => {
       if (working()) return;
       if (backlog.length < batchSize) return;
 
       for (let i = 0; i < batchSize; i++) {
         const taskId = backlog.shift();
         workspace.push(taskId);
-        api.task.move(taskId);
+        await api.task.move(taskId);
       }
       start()
     };
 
-    const pushWork = taskId => {
+    const pushWork = async taskId => {
       backlog.push(taskId);
-      takeBatch();
+      await takeBatch();
     };
 
     return {
@@ -63,17 +63,17 @@ const Simulation = (createTask, createWorker) => {
     const outboxFor = column => columns.find(c => column.nextColumnId === c.columnId);
 
     workers = workColumns.map(column => createWorker(inboxFor(column), column, outboxFor(column)))
-    timerHandle = setInterval(createTask, 500)
+    // timerHandle = setInterval(createTask, 500)
   };
 
-  const onTaskCreated = ({detail}) => {
+  const onTaskCreated = async ({detail}) => {
     const worker = workers.find(worker => worker.canWorkOn(detail.columnId));
-    worker?.pushWork(detail.taskId)
+    if (worker) await worker.pushWork(detail.taskId)
   };
 
-  const onTaskMoved = ({detail}) => {
+  const onTaskMoved = async ({detail}) => {
     const worker = workers.find(worker => worker.canWorkOn(detail.to.columnId));
-    worker?.pushWork(detail.taskId)
+    if (worker) await worker.pushWork(detail.taskId)
   };
 
   const stop = () => {
@@ -92,12 +92,12 @@ const Simulation = (createTask, createWorker) => {
 const initialize = (gameId) => {
   const api = API(gameId)
 
-  function createSimulation(strategy, batchSize) {
-    if (strategy === 'pull') {
-      return Simulation(PushTaskCreator(api, batchSize), PushWorker(api, batchSize));
-    }
+  const createSimulation = (strategy, batchSize) => {
+    // if (strategy === 'pull') {
+    //   return Simulation(PullTaskCreator(api, batchSize), PullWorker(api, batchSize));
+    // }
     return Simulation(PushTaskCreator(api, batchSize), PushWorker(api, batchSize));
-  }
+  };
 
   window.runSimulation = (strategy = 'push', batchSize = 5) => {
     const simulation = createSimulation(strategy, batchSize);
@@ -109,7 +109,7 @@ const initialize = (gameId) => {
       document.removeEventListener('TaskCreated', simulation.onTaskCreated);
       document.removeEventListener('TaskMoved', simulation.onTaskMoved);
     }, {once: true});
-    api.iteration.start({duration: 5 * 60 * 1000})
+    api.iteration.start({duration: 2 * 60 * 1000})
   };
 }
 
