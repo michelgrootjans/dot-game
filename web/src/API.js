@@ -11,9 +11,9 @@ const API = gameId => {
 
   return {
     task: {
-      create: (payload) => post('tasks', {payload}),
-      move: (taskId, payload) => post(`tasks/${taskId}/move`, {payload}),
-      reject: (taskId, payload) => post(`tasks/${taskId}/reject`, {payload}),
+      create: (data) => post('tasks', data),
+      move: (taskId, data) => post(`tasks/${taskId}/move`, data),
+      reject: (taskId, data) => post(`tasks/${taskId}/reject`, data),
     },
     iteration: {
       start: data => post(`iterations`, data),

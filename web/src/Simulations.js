@@ -2,54 +2,48 @@ const API = require("./API");
 
 const randomize = number => (Math.random() + 0.5) * number;
 
-const PushTaskCreator = (api, batchSize) => {
-  let backlog = 0;
-  return () => {
-    backlog++;
-    while (backlog >= batchSize) {
-      backlog -= batchSize;
-      for (let i = 0; i < batchSize; i++) api.task.create()
-    }
-  }
-};
+let taskCounter = 1;
+const PushTaskCreator = (api, batchSize) => () => api.task.create();
 
-const PushWorker = (api, batchSize) => (inbox, workColumn, outbox) => {
+const PushWorker = (api, batchSize) => {
   let working = false;
   const backlog = [];
   const workspace = []
 
-  const start = () => {
-    const taskId = workspace.shift();
-    api.task.move(taskId);
-    return taskId;
-  };
+  return (inbox, workColumn, outbox) => {
+    const amountOfWork = 1000 * (workColumn.difficulty || 1);
 
-  const finish = taskId => {
-    api.task.move(taskId);
-    if (workspace.length > 0) work()
-    else takeBatch();
-  };
+    const start = () => {
+      const taskId = workspace.shift();
+      setTimeout(() => finish(taskId), randomize(amountOfWork))
+    };
 
-  function work() {
-    const taskId = start();
-    setTimeout(() => finish(taskId), randomize(1000 * workColumn.difficulty))
-  }
+    const finish = taskId => {
+      api.task.move(taskId);
+      if (workspace.length > 0) start()
+      else takeBatch();
+    };
 
-  const takeBatch = () => {
-    if (backlog.length < batchSize) return;
+    const takeBatch = () => {
+      if (backlog.length < batchSize) return;
 
-    for (let i = 0; i < batchSize; i++) workspace.push(backlog.shift())
-    work()
-  };
+      for (let i = 0; i < batchSize; i++) {
+        const taskId = backlog.shift();
+        workspace.push(taskId);
+        api.task.move(taskId);
+      }
+      start()
+    };
 
-  const pushWork = taskId => {
-    backlog.push(taskId);
-    if(!working) takeBatch();
-  };
+    const pushWork = taskId => {
+      backlog.push(taskId);
+      if (!working) takeBatch();
+    };
 
-  return {
-    canWorkOn: columnId => columnId === inbox.columnId,
-    pushWork
+    return {
+      canWorkOn: columnId => columnId === inbox.columnId,
+      pushWork
+    };
   };
 };
 
@@ -65,13 +59,14 @@ const Simulation = (createTask, createWorker) => {
     const outboxFor = column => columns.find(c => column.nextColumnId === c.columnId);
 
     workers = workColumns.map(column => createWorker(inboxFor(column), column, outboxFor(column)))
-    timerHandle = setInterval(createTask, randomize(1000))
+    // timerHandle = setInterval(createTask, 1000)
   };
 
   const onTaskCreated = ({detail}) => {
     const worker = workers.find(worker => worker.canWorkOn(detail.columnId));
     worker?.pushWork(detail.taskId)
   };
+
   const onTaskMoved = ({detail}) => {
     const worker = workers.find(worker => worker.canWorkOn(detail.to.columnId));
     worker?.pushWork(detail.taskId)
@@ -96,14 +91,12 @@ const initialize = (gameId) => {
     document.addEventListener('IterationStarted', simulation.start);
     document.addEventListener('TaskCreated', simulation.onTaskCreated);
     document.addEventListener('TaskMoved', simulation.onTaskMoved);
-    // const timerHandle = setInterval(simulation.createTask, randomize(1000))
     document.addEventListener('IterationFinished', () => {
-      // clearInterval(timerHandle);
       simulation.stop()
       document.removeEventListener('TaskCreated', simulation.onTaskCreated);
       document.removeEventListener('TaskMoved', simulation.onTaskMoved);
     });
-    api.iteration.start({duration: 60000})
+    api.iteration.start({duration: 10 * 60 * 1000})
   };
 }
 
