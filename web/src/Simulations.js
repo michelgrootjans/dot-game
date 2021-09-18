@@ -92,8 +92,15 @@ const Simulation = (createTask, createWorker) => {
 const initialize = (gameId) => {
   const api = API(gameId)
 
-  window.runSimulation = (param) => {
-    const simulation = Simulation(PushTaskCreator(api, 5), PushWorker(api, 5));
+  function createSimulation(strategy, batchSize) {
+    if (strategy === 'pull') {
+      return Simulation(PushTaskCreator(api, batchSize), PushWorker(api, batchSize));
+    }
+    return Simulation(PushTaskCreator(api, batchSize), PushWorker(api, batchSize));
+  }
+
+  window.runSimulation = (strategy = 'push', batchSize = 5) => {
+    const simulation = createSimulation(strategy, batchSize);
     document.addEventListener('IterationStarted', simulation.start, {once: true});
     document.addEventListener('TaskCreated', simulation.onTaskCreated);
     document.addEventListener('TaskMoved', simulation.onTaskMoved);
