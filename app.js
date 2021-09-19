@@ -22,8 +22,7 @@ const stats = StatsRepository();
 const events = EventRepository();
 const delay = (handler, timeout) => setTimeout(handler, timeout);
 const {publish, subscribe} = EventBus();
-subscribe('*', events.store)
-const application = Application({games, stats, publish, subscribe, delay});
+const application = Application({games, stats, publish, subscribe, events, delay});
 
 const app = express();
 

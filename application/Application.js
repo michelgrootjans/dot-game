@@ -3,7 +3,9 @@ const {StartIterationHandler, EndIterationHandler, IterationProcessManager} = re
 const {CreateTaskHandler, MoveTaskHandler, FindWorkHandler, RejectTaskHandler} = require("./domain/taskHandlers");
 const {StatsProcessManager} = require("./domain/StatsProcessManager");
 
-const intializeGames = ({games, delay, publish, subscribe}) => {
+const intializeGames = ({games, delay, publish, subscribe, events}) => {
+  subscribe('*', events.store);
+
   const commandHandlers = {
     'CreateGame': CreateGameHandler(games, publish),
 
@@ -15,7 +17,6 @@ const intializeGames = ({games, delay, publish, subscribe}) => {
     'RejectTask': RejectTaskHandler(games, publish),
 
     'FindWork': FindWorkHandler(games)
-
   }
 
   const handlerFor = commandName => {
