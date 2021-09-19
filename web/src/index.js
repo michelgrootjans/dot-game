@@ -9,15 +9,6 @@ import IterationStats from "./IterationStats";
 import Testing from "./Testing";
 import Simulations from "./Simulations";
 
-const socket = io();
-socket.on('message', event => {
-  if (event.gameId && event.gameId !== currentGameId) return;
-
-  console.log(event);
-
-  document.dispatchEvent(new CustomEvent(event.type, { detail: event }))
-});
-
 const initializeGame = gameId => {
   StartIteration.initialize(gameId);
   CreateTask.initialize(gameId);
@@ -31,5 +22,12 @@ const initializeGame = gameId => {
   Simulations.initialize(gameId);
 };
 
-const currentGameId = document.querySelector('[data-game-id]').dataset.gameId;
-initializeGame(currentGameId);
+const gameId = document.querySelector('[data-game-id]').dataset.gameId;
+initializeGame(gameId);
+
+const socket = io({query: {gameId}});
+socket.on('message', event => {
+  console.log(event);
+
+  document.dispatchEvent(new CustomEvent(event.type, { detail: event }))
+});
