@@ -15,11 +15,14 @@ const Application = require("./application/Application");
 const GamesRepository = require("./application/GameRepository");
 const EventBus = require("./application/EventBus");
 const StatsRepository = require("./application/StatsRepository");
+const EventRepository = require("./application/EventRepository");
 
 const games = GamesRepository();
 const stats = StatsRepository();
+const events = EventRepository();
 const delay = (handler, timeout) => setTimeout(handler, timeout);
 const {publish, subscribe} = EventBus();
+subscribe('*', events.store)
 const application = Application({games, stats, publish, subscribe, delay});
 
 const app = express();
@@ -61,7 +64,7 @@ var port = (process.env.PORT || '3000');
 app.set('port', port);
 
 var server = http.createServer(app);
-const socket = socketApi.init(server)
+const socket = socketApi.init(server, events)
 subscribe('*', socket.publish);
 
 

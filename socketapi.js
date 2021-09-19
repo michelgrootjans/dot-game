@@ -1,20 +1,6 @@
 const { Server } = require("socket.io");
 
-
-const EventSource = () => {
-  const previousEvents = []
-
-  return {
-    store: event => previousEvents.push(event),
-    eventsFor: gameId => previousEvents.filter(e => e.gameId === gameId)
-  }
-}
-
-
-
-let init = server => {
-  const events = EventSource();
-
+let init = (server, events) => {
   const io = new Server(server);
 
   const publish = event => {
@@ -28,7 +14,6 @@ let init = server => {
     socket.join(gameId)
     events.eventsFor(gameId)
       .forEach(event => socket.emit('message', event));
-
   });
 
   return {publish}
