@@ -44,8 +44,8 @@ const initializeStats = ({stats, subscribe}) => {
   StatsProcessManager().initialize(stats, subscribe);
 };
 
-const Application = ({games, stats, delay, publish, subscribe}) => {
-  const {execute} = intializeGames({games, delay, publish, subscribe});
+const Application = ({games, stats, delay, publish, subscribe, events}) => {
+  const {execute} = intializeGames({games, delay, publish, subscribe, events});
   initializeStats({stats, subscribe})
 
   return {execute, subscribe, findGame: games.find, findStats: stats.find};

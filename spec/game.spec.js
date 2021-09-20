@@ -2,15 +2,15 @@ const {CreateGame} = require("../application/api/commands/game");
 const initialState = require("../application/domain/initial-state");
 const TestApplication = require("./TestApplication");
 
-describe('Iteration', () => {
+describe('Game', () => {
   let application = undefined;
 
   beforeEach(() => {
     application = TestApplication();
-    application.execute(CreateGame({gameId: 'g1'}))
   });
 
-  it('cannot start a games again', function () {
+  it('can only start once', function () {
+    application.execute(CreateGame({gameId: 'g1'}))
     expect(application.findGame('g1')).toMatchObject(initialState())
   });
 
