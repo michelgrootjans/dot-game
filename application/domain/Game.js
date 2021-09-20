@@ -6,16 +6,16 @@ const {anyCardColor} = require("./Colors");
 
 const minutes = 60 * 1000;
 
-const Game = game => {
-  const gameId = game.gameId;
-  const columns = game.columns;
+const Game = state => {
+  const gameId = state.gameId;
+  const columns = state.columns;
 
   const todoColumn = columns.find(column => column.columnType === 'start-column');
   const testColumn = columns.find(column => column.columnType === 'test-column');
   const doneColumn = columns.find(column => column.columnType === 'done-column');
   const defectsColumn = columns.find(column => column.columnType === 'defect-column');
 
-  const findTask = taskId => game.tasks.find(t => t.taskId === taskId);
+  const findTask = taskId => state.tasks.find(t => t.taskId === taskId);
   const findColumn = columnId => columns.find(c => c.columnId === columnId);
   const inboxOf = column => {
     if(column === defectsColumn) return testColumn;
@@ -23,7 +23,7 @@ const Game = game => {
   };
   const outboxOf = work => columns.find(c => c.columnId === work.nextColumnId);
 
-  const currentIteration = () => game.currentIteration;
+  const currentIteration = () => state.currentIteration;
   const iterationIsRunning = () => currentIteration();
   const currentIterationId = () => currentIteration().iterationId;
 
@@ -31,9 +31,9 @@ const Game = game => {
     if(iterationIsRunning()) return;
 
     const startTime = Date.now();
-    game.currentIteration = {gameId, iterationId, duration, startTime};
-    game.tasks = []
-    publish(IterationStarted({...game, iterationId, duration, startTime}));
+    state.currentIteration = {gameId, iterationId, duration, startTime};
+    state.tasks = []
+    publish(IterationStarted({...state, iterationId, duration, startTime}));
   };
 
   const endIteration = (publish) => {
@@ -42,7 +42,7 @@ const Game = game => {
     iteration.endTime = Date.now();
     iteration.actualDuration = iteration.endTime - iteration.startTime;
 
-    delete game.currentIteration;
+    delete state.currentIteration;
     publish(IterationFinished({...iteration}));
   }
 
@@ -50,7 +50,7 @@ const Game = game => {
     if (!iterationIsRunning()) return;
 
     const task = {taskId, color: anyCardColor(), columnId: todoColumn.columnId, payload: {}};
-    game.tasks.push(task);
+    state.tasks.push(task);
     publish(TaskCreated({...task, column: todoColumn, gameId, iterationId: currentIterationId()}))
   }
 
@@ -93,7 +93,7 @@ const Game = game => {
   };
 
   return {
-    ...game,
+    ...state,
     activeColumns: columns.filter(column => ![doneColumn, defectsColumn].includes(column)),
     endColumns: [doneColumn, defectsColumn],
     startIteration,
