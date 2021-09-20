@@ -9,6 +9,7 @@ const minutes = 60 * 1000;
 const Game = game => {
   const gameId = game.gameId;
   const columns = game.columns;
+
   const todoColumn = columns.find(column => column.columnType === 'start-column');
   const testColumn = columns.find(column => column.columnType === 'test-column');
   const doneColumn = columns.find(column => column.columnType === 'done-column');
@@ -22,8 +23,9 @@ const Game = game => {
   };
   const outboxOf = work => columns.find(c => c.columnId === work.nextColumnId);
 
-
-  const iterationIsRunning = () => game.currentIteration;
+  const currentIteration = () => game.currentIteration;
+  const iterationIsRunning = () => currentIteration();
+  const currentIterationId = () => currentIteration().iterationId;
 
   const startIteration = (iterationId = uuid(), duration = 5 * minutes, publish) => {
     if(iterationIsRunning()) return;
@@ -36,7 +38,7 @@ const Game = game => {
 
   const endIteration = (publish) => {
     if(!iterationIsRunning()) return;
-    const iteration = game.currentIteration;
+    const iteration = currentIteration();
     iteration.endTime = Date.now();
     iteration.actualDuration = iteration.endTime - iteration.startTime;
 
@@ -49,7 +51,7 @@ const Game = game => {
 
     const task = {taskId, color: anyCardColor(), columnId: todoColumn.columnId, payload: {}};
     game.tasks.push(task);
-    publish(TaskCreated({...task, column: todoColumn, gameId}))
+    publish(TaskCreated({...task, column: todoColumn, gameId, iterationId: currentIterationId()}))
   }
 
   const moveTask = (command, publish) => {
@@ -64,9 +66,9 @@ const Game = game => {
     const nextColumn = findColumn(column.nextColumnId);
     task.columnId = nextColumn.columnId;
 
-    publish(TaskMoved({...task, from: column, to: nextColumn, gameId}));
+    publish(TaskMoved({...task, from: column, to: nextColumn, gameId, iterationId: currentIterationId()}));
     if (task.columnId === doneColumn.columnId) {
-      publish(TaskFinished({...task, gameId, column: doneColumn}));
+      publish(TaskFinished({...task, gameId, iterationId: currentIterationId(), column: doneColumn}));
     }
   }
 
@@ -79,8 +81,8 @@ const Game = game => {
 
     task.columnId = defectsColumn.columnId;
 
-    publish(TaskMoved({...task, from: column, to: defectsColumn, gameId}));
-    publish(TaskRejected({...task, column: defectsColumn, gameId}));
+    publish(TaskMoved({...task, from: column, to: defectsColumn, gameId, iterationId: currentIterationId()}));
+    publish(TaskRejected({...task, column: defectsColumn, gameId, iterationId: currentIterationId()}));
   }
 
   const findWork = (columnId) => {
