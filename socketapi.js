@@ -14,6 +14,11 @@ let init = (server, events) => {
     socket.join(gameId)
     events.eventsFor(gameId)
       .forEach(event => socket.emit('message', event));
+
+    socket.on('replay', data => {
+      events.replay(data.gameId, data.iterationId)
+        .forEach(event => socket.emit('message', event))
+    })
   });
 
   return {publish}
