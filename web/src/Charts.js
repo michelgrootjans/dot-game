@@ -10,7 +10,7 @@ const initialize = (gameId) => {
 
   document.addEventListener('IterationStarted', ({detail}) => {
     cfd.clear()
-    cfd.update();
+    cfd.initialize(detail);
 
     timer = Timer(detail.duration).start(cfd.update);
   });

@@ -3,6 +3,8 @@ Chart.register(ArcElement, LineElement, BarElement, PointElement, BarController,
 
 const API = require("./API");
 
+const distinct = (value, index, self) => self.indexOf(value) === index;
+
 const createDataset = (label, color) => ({
   label: label,
   type: 'line',
@@ -15,17 +17,20 @@ const createDataset = (label, color) => ({
   borderWidth: 1,
 });
 
-const todo = createDataset('todo', '255, 99, 132');
-const analysis = createDataset('analysis', '255, 159, 64');
-const design = createDataset('design', '255, 205, 86');
-const development = createDataset('development', '75, 192, 192');
-const qa = createDataset('qa', '54, 162, 235');
-const done = createDataset('done', '153, 102, 255');
+const colors = [
+  '101, 103, 107',
+  '153, 102, 255',
+  '54, 162, 235',
+  '75, 192, 192',
+  '255, 205, 86',
+  '255, 159, 64',
+  '255, 99, 132',
+]
 
 const config = {
   type: 'line',
   data: {
-    datasets: [done, qa, development, design, analysis, todo]
+    datasets: []
   },
   options: {
     animation: false,
@@ -47,6 +52,7 @@ const config = {
   },
 };
 
+
 const Cfd = (context, gameId) => {
   const chart = new Chart(context, config);
 
@@ -54,27 +60,30 @@ const Cfd = (context, gameId) => {
     .then(response => response.json())
     .then(response => response.history);
 
+  const initialize = (detail) => {
+    console.log(detail.columns);
+    chart.data.datasets = detail.columns
+      .map(column => column.taskName)
+      .filter(distinct)
+      .reverse()
+      .map((label, index) => createDataset(label, colors[index]))
+    console.log(chart.data.datasets)
+  };
+
   const update = async () => {
     const newHistory = await getHistory();
 
-    const getSeries = name => newHistory.map(record => ({x: record.time, y: record[name]}));
+    const getSeries = label => newHistory.map(record => ({x: record.time, y: record[label]}));
 
-    todo.data = getSeries('todo');
-    analysis.data = getSeries('analysis');
-    design.data = getSeries('design');
-    development.data = getSeries('development');
-    qa.data = getSeries('qa');
-    done.data = getSeries('done');
+    chart.data.datasets.forEach(dataset => dataset.data = getSeries(dataset.label))
+
     chart.update()
   };
 
-  const clear = () => {
-    todo.data = [];
-    done.data = [];
-    chart.clear();
-  }
+  const clear = () => chart.clear()
 
   return {
+    initialize,
     update,
     clear
   }
