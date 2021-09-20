@@ -5,7 +5,6 @@ let init = (server, events) => {
 
   const publish = event => {
     console.log({event})
-    events.store(event);
     io.to(event.gameId).emit('message', event)
   };
 
@@ -14,11 +13,6 @@ let init = (server, events) => {
     socket.join(gameId)
     events.eventsFor(gameId)
       .forEach(event => socket.emit('message', event));
-
-    socket.on('replay', data => {
-      events.replay(data.gameId, data.iterationId)
-        .forEach(event => socket.emit('message', event))
-    })
   });
 
   return {publish}

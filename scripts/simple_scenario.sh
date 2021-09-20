@@ -161,4 +161,4 @@ http -f POST :3000/api/games/dummy/tasks/3/move
 
 sleep 1
 #design
-http -f POST :3000/api/games/dummy/tasks/12/reject
+http -f POST :3000/api/games/dummy/tasks/3/reject
