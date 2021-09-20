@@ -1,3 +1,5 @@
+const {v4: uuid} = require("uuid");
+
 const {IterationStarted, IterationFinished} = require("../api/events/iteration");
 const {TaskCreated, TaskMoved, TaskFinished, TaskRejected} = require("../api/events/task");
 const {anyCardColor} = require("./Colors");
@@ -23,20 +25,23 @@ const Game = game => {
 
   const iterationIsRunning = () => game.currentIteration;
 
-  const startIteration = (duration = 5 * minutes, publish) => {
+  const startIteration = (iterationId = uuid(), duration = 5 * minutes, publish) => {
     if(iterationIsRunning()) return;
 
     const startTime = Date.now();
-    game.currentIteration = {duration, startTime};
+    game.currentIteration = {gameId, iterationId, duration, startTime};
     game.tasks = []
-    publish(IterationStarted({...game, duration, startTime}));
+    publish(IterationStarted({...game, iterationId, duration, startTime}));
   };
 
   const endIteration = (publish) => {
     if(!iterationIsRunning()) return;
+    const iteration = game.currentIteration;
+    iteration.endTime = Date.now();
+    iteration.actualDuration = iteration.endTime - iteration.startTime;
 
     delete game.currentIteration;
-    publish(IterationFinished({gameId}));
+    publish(IterationFinished({...iteration}));
   }
 
   const createTask = (taskId, publish) => {

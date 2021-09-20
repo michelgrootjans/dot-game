@@ -32,10 +32,10 @@ describe('Iteration', () => {
   });
 
   it('can start', function () {
-    application.execute(StartIteration({gameId: 'g1', duration: 1000}))
+    application.execute(StartIteration({gameId: 'g1', iterationId: 'i1', duration: 1000}))
     expect(application.eventsFor('g1')).toMatchObject([
       GameCreated({gameId: 'g1'}),
-      IterationStarted({gameId: 'g1', duration: 1000})
+      IterationStarted({gameId: 'g1', iterationId: 'i1', duration: 1000})
     ]);
   });
 
@@ -57,12 +57,12 @@ describe('Iteration', () => {
   });
 
   it('can end', function () {
-    application.execute(StartIteration({gameId: 'g1'}))
+    application.execute(StartIteration({gameId: 'g1', iterationId: 'i1'}))
     application.execute(EndIteration({gameId: 'g1'}))
     expect(application.eventsFor('g1')).toMatchObject([
       GameCreated({gameId: 'g1'}),
-      IterationStarted({gameId: 'g1'}),
-      IterationFinished({gameId: 'g1'})
+      IterationStarted({gameId: 'g1', iterationId: 'i1'}),
+      IterationFinished({gameId: 'g1', iterationId: 'i1'})
     ]);
   });
 

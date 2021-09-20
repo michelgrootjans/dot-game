@@ -1,7 +1,7 @@
 const {EndIteration} = require("../api/commands/iteration");
 
 const StartIterationHandler = (games, publish) => {
-  const execute = ({gameId, duration}) => games.find(gameId)?.startIteration(duration, publish);
+  const execute = ({gameId, iterationId, duration}) => games.find(gameId)?.startIteration(iterationId, duration, publish);
   return {execute}
 };
 
