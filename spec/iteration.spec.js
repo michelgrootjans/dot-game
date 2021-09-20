@@ -59,7 +59,8 @@ describe('Iteration', () => {
   it('can end', function () {
     application.execute(StartIteration({gameId: 'g1', iterationId: 'i1'}))
     application.execute(EndIteration({gameId: 'g1'}))
-    expect(application.eventsFor('g1')).toMatchObject([
+    let actual = application.eventsFor('g1');
+    expect(actual).toMatchObject([
       GameCreated({gameId: 'g1'}),
       IterationStarted({gameId: 'g1', iterationId: 'i1'}),
       IterationFinished({gameId: 'g1', iterationId: 'i1'})

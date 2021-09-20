@@ -5,8 +5,7 @@ const CreateGameHandler = (games, publish) => ({
   execute: ({gameId}) => {
     if(games.find(gameId)) return;
 
-    const newGame = {...initialState(), gameId}
-    const game = {...newGame, gameId};
+    const game = {...initialState(), gameId};
     games.add(game)
     publish(GameCreated(game));
   }
