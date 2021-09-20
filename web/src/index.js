@@ -8,9 +8,8 @@ import Workspace from "./Workspace";
 import IterationStats from "./IterationStats";
 import Testing from "./Testing";
 import Simulations from "./Simulations";
-import Replay from "./Replay";
 
-const initializeGame = (gameId, socket) => {
+const initializeGame = (gameId) => {
   StartIteration.initialize(gameId);
   CreateTask.initialize(gameId);
   Columns.initialize();
@@ -21,12 +20,11 @@ const initializeGame = (gameId, socket) => {
   IterationStats.initialize(gameId);
 
   Simulations.initialize(gameId);
-  Replay.initialize(gameId, socket);
 };
 
 const gameId = document.querySelector('[data-game-id]').dataset.gameId;
+initializeGame(gameId);
 const socket = io({query: {gameId}});
-initializeGame(gameId, socket);
 
 socket.on('message', event => {
   console.log(event);
