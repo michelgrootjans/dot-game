@@ -50,7 +50,7 @@ input#iteration-length{
   width: 100%;
 }
 
-.column.start-column {
+.column.todo-column {
   border-left: 1px solid black;
 }
 .column.work-column {
@@ -98,13 +98,13 @@ input#iteration-length{
   bottom: 10px;
 }
 
-.start-column .card:nth-child(5n+1),
+.todo-column .card:nth-child(5n+1),
 .wait-column .card:nth-child(5n+1),
 .fail-column .card:nth-child(5n+1),
 .done-column .card:nth-child(5n+1){
   z-index: 10;
 }
-.start-column .card:nth-child(5n+2),
+.todo-column .card:nth-child(5n+2),
 .wait-column .card:nth-child(5n+2),
 .fail-column .card:nth-child(5n+2),
 .done-column .card:nth-child(5n+2){
@@ -112,7 +112,7 @@ input#iteration-length{
   margin-top: -85px;
   z-index: 9;
 }
-.start-column .card:nth-child(5n+3),
+.todo-column .card:nth-child(5n+3),
 .wait-column .card:nth-child(5n+3),
 .fail-column .card:nth-child(5n+3),
 .done-column .card:nth-child(5n+3){
@@ -120,7 +120,7 @@ input#iteration-length{
   margin-top: -85px;
   z-index: 8;
 }
-.start-column .card:nth-child(5n+4),
+.todo-column .card:nth-child(5n+4),
 .wait-column .card:nth-child(5n+4),
 .fail-column .card:nth-child(5n+4),
 .done-column .card:nth-child(5n+4){
@@ -128,7 +128,7 @@ input#iteration-length{
   margin-top: -85px;
   z-index: 7;
 }
-.start-column .card:nth-child(5n+5),
+.todo-column .card:nth-child(5n+5),
 .wait-column .card:nth-child(5n+5),
 .fail-column .card:nth-child(5n+5),
 .done-column .card:nth-child(5n+5){
