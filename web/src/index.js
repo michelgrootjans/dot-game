@@ -12,7 +12,7 @@ import EventBus from "./EventBus";
 
 const initializeGame = (gameId, subscribe) => {
   StartIteration.initialize(gameId, subscribe);
-  CreateTask.initialize(gameId);
+  CreateTask.initialize(gameId, subscribe);
   Columns.initialize();
   Workspace.initialize();
   Testing.initialize();
