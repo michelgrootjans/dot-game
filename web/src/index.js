@@ -8,9 +8,10 @@ import Workspace from "./Workspace";
 import IterationStats from "./IterationStats";
 import Testing from "./Testing";
 import Simulations from "./Simulations";
+import EventBus from "./EventBus";
 
-const initializeGame = (gameId) => {
-  StartIteration.initialize(gameId);
+const initializeGame = (gameId, subscribe) => {
+  StartIteration.initialize(gameId, subscribe);
   CreateTask.initialize(gameId);
   Columns.initialize();
   Workspace.initialize();
@@ -22,14 +23,18 @@ const initializeGame = (gameId) => {
   Simulations.initialize(gameId);
 };
 
-const gameId = document.querySelector('[data-game-id]').dataset.gameId;
-initializeGame(gameId);
-const socket = io({query: {gameId}});
+const eventBus = EventBus();
 
-function publish(event) {
+const publish = event => {
   console.log(event);
   document.dispatchEvent(new CustomEvent(event.type, {detail: event}))
-}
+  eventBus.publish(event);
+};
+
+const gameId = document.querySelector('[data-game-id]').dataset.gameId;
+initializeGame(gameId, eventBus.subscribe);
+
+const socket = io({query: {gameId}});
 
 socket.on('message', event => publish(event));
 socket.on('replay', events => events.forEach(event => publish(event)));

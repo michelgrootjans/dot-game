@@ -1,23 +1,23 @@
 const API = require("./API");
 
-const initializeStopButton = gameId => {
+const initializeStopButton = (gameId, subscribe) => {
   const $stopIterationButton = document.getElementById('stop-iteration');
   if (!$stopIterationButton) return;
 
 
-  document.addEventListener('IterationStarted', () => $stopIterationButton.disabled = false)
-  document.addEventListener('IterationFinished', () => $stopIterationButton.disabled = true)
+  subscribe('IterationStarted', () => $stopIterationButton.disabled = false)
+  subscribe('IterationFinished', () => $stopIterationButton.disabled = true)
 
   $stopIterationButton.addEventListener('click', () => API(gameId).iteration.stop());
 };
 
-const initializeStartButton = gameId => {
+const initializeStartButton = (gameId, subscribe) => {
   const $startIterationButton = document.getElementById('start-iteration');
   if (!$startIterationButton) return;
 
 
-  document.addEventListener('IterationStarted', () => $startIterationButton.disabled = true)
-  document.addEventListener('IterationFinished', () => $startIterationButton.disabled = false)
+  subscribe('IterationStarted', () => $startIterationButton.disabled = true)
+  subscribe('IterationFinished', () => $startIterationButton.disabled = false)
 
   const $iterationLength = document.getElementById('iteration-length');
 
@@ -29,9 +29,9 @@ const initializeStartButton = gameId => {
   });
 };
 
-const initialize = gameId => {
-  initializeStartButton(gameId);
-  initializeStopButton(gameId);
+const initialize = (gameId, subscribe) => {
+  initializeStartButton(gameId, subscribe);
+  initializeStopButton(gameId, subscribe);
 };
 
 module.exports = {
