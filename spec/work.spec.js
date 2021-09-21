@@ -33,10 +33,10 @@ describe('Iteration', () => {
   it('get the second work column', function () {
     expect(application.execute(FindWork({gameId: 'g1', columnId: 'c4'}))).toMatchObject({
       gameId: 'g1',
-      inbox: {columnId: 'c3', columnType: 'queue-column'},
+      inbox: {columnId: 'c3', columnType: 'wait-column'},
       work: {columnId: 'c4', columnType: 'work-column'},
-      outbox: {columnId: 'c5', columnType: 'queue-column'},
-      defects: {columnId: 'c10', columnType: 'defect-column'},
+      outbox: {columnId: 'c5', columnType: 'wait-column'},
+      defects: {columnId: 'c10', columnType: 'fail-column'},
     });
   });
 

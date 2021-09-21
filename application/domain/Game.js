@@ -13,7 +13,7 @@ const Game = state => {
   const todoColumn = columns.find(column => column.columnType === 'todo-column');
   const testColumn = columns.find(column => column.columnType === 'test-column');
   const doneColumn = columns.find(column => column.columnType === 'done-column');
-  const defectsColumn = columns.find(column => column.columnType === 'defect-column');
+  const defectsColumn = columns.find(column => column.columnType === 'fail-column');
 
   const findTask = taskId => state.tasks.find(t => t.taskId === taskId);
   const findColumn = columnId => columns.find(c => c.columnId === columnId);

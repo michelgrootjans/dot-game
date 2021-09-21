@@ -6,6 +6,7 @@ const {IterationFinished, IterationStarted} = require("../application/api/events
 const TestApplication = require("./TestApplication");
 const TestDate = require("./TestDate");
 const {GameCreated} = require("../application/api/events/game");
+const initialState = require("../application/domain/initial-state");
 
 describe('Tasks', () => {
   beforeEach(TestDate.freeze);
@@ -15,7 +16,17 @@ describe('Tasks', () => {
 
   beforeEach(() => {
     application = TestApplication();
-    application.execute(CreateGame({gameId: 'g1'}))
+    application.execute(CreateGame({gameId: 'g1', state: {
+        columns: [
+          {columnId: "c1", columnType: "todo-column", nextColumnId: "c2", title: "To do", taskName: "todo"},
+          {columnId: "c2", columnType: "work-column", nextColumnId: "c3", title: "Analysis", taskName: "task1", difficulty: 1},
+          {columnId: "c3", columnType: "wait-column", nextColumnId: "c4", title: "", taskName: "task1"},
+          {columnId: "c4", columnType: "work-column", nextColumnId: "c5", title: "Design", taskName: "task2", difficulty: 2},
+          {columnId: "c5", columnType: "done-column", title: "Done", taskName: "done"},
+          {columnId: "c6", columnType: "fail-column", title: "Defects", taskName: "defect"},
+        ]
+      }
+    }))
     application.execute(StartIteration({gameId: 'g1', iterationId: 'i1'}))
   });
 
@@ -46,8 +57,8 @@ describe('Tasks', () => {
       GameCreated({gameId: 'g1'}),
       IterationStarted({gameId: 'g1'}),
       TaskCreated({gameId: 'g1', iterationId: 'i1', taskId: 't1', column: {columnId: 'c1'}}),
-      TaskMoved({gameId: 'g1', iterationId: 'i1', taskId: 't1', from: {columnId: 'c1'}, to: {columnId: 'c10'}}),
-      TaskRejected({gameId: 'g1', iterationId: 'i1', taskId: 't1', column: {columnId: 'c10'}}),
+      TaskMoved({gameId: 'g1', iterationId: 'i1', taskId: 't1', from: {columnId: 'c1'}, to: {columnId: 'c6'}}),
+      TaskRejected({gameId: 'g1', iterationId: 'i1', taskId: 't1', column: {columnId: 'c6'}}),
     ]);
   });
 
@@ -66,7 +77,7 @@ describe('Tasks', () => {
 
   it('moves a task until done', () => {
     application.execute(CreateTask({gameId: 'g1', taskId: 't1'}));
-    for (let i = 1; i < 9; i++) {
+    for (let i = 1; i < 5; i++) {
       application.execute(MoveTask({gameId: 'g1', taskId: 't1'}))
     }
     expect(application.eventsFor('g1')).toMatchObject([
@@ -77,10 +88,6 @@ describe('Tasks', () => {
       TaskMoved({gameId: 'g1', iterationId: 'i1', taskId: 't1', from: {columnId: 'c2'}, to: {columnId: 'c3'}}),
       TaskMoved({gameId: 'g1', iterationId: 'i1', taskId: 't1', from: {columnId: 'c3'}, to: {columnId: 'c4'}}),
       TaskMoved({gameId: 'g1', iterationId: 'i1', taskId: 't1', from: {columnId: 'c4'}, to: {columnId: 'c5'}}),
-      TaskMoved({gameId: 'g1', iterationId: 'i1', taskId: 't1', from: {columnId: 'c5'}, to: {columnId: 'c6'}}),
-      TaskMoved({gameId: 'g1', iterationId: 'i1', taskId: 't1', from: {columnId: 'c6'}, to: {columnId: 'c7'}}),
-      TaskMoved({gameId: 'g1', iterationId: 'i1', taskId: 't1', from: {columnId: 'c7'}, to: {columnId: 'c8'}}),
-      TaskMoved({gameId: 'g1', iterationId: 'i1', taskId: 't1', from: {columnId: 'c8'}, to: {columnId: 'c9'}}),
       TaskFinished({gameId: 'g1', iterationId: 'i1', taskId: 't1'}),
     ]);
   });

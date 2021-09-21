@@ -56,20 +56,20 @@ input#iteration-length{
 .column.work-column {
   border-left: 1px solid black;
 }
-.column.queue-column {
+.column.wait-column {
   border-left: 1px dashed grey;
 }
 .column.test-column {
   border-left: 1px solid black;
 }
 .column.done-column,
-.column.defect-column{
+.column.fail-column{
   border-left: 1px solid black;
   border-right: 1px solid black;
   height: 50%;
   overflow: hidden;
 }
-.column.defect-column h4 {
+.column.fail-column h4 {
   height: 0;
 }
 
@@ -99,38 +99,38 @@ input#iteration-length{
 }
 
 .start-column .card:nth-child(5n+1),
-.queue-column .card:nth-child(5n+1),
-.defect-column .card:nth-child(5n+1),
+.wait-column .card:nth-child(5n+1),
+.fail-column .card:nth-child(5n+1),
 .done-column .card:nth-child(5n+1){
   z-index: 10;
 }
 .start-column .card:nth-child(5n+2),
-.queue-column .card:nth-child(5n+2),
-.defect-column .card:nth-child(5n+2),
+.wait-column .card:nth-child(5n+2),
+.fail-column .card:nth-child(5n+2),
 .done-column .card:nth-child(5n+2){
   transform: rotate(1deg);
   margin-top: -85px;
   z-index: 9;
 }
 .start-column .card:nth-child(5n+3),
-.queue-column .card:nth-child(5n+3),
-.defect-column .card:nth-child(5n+3),
+.wait-column .card:nth-child(5n+3),
+.fail-column .card:nth-child(5n+3),
 .done-column .card:nth-child(5n+3){
   transform: rotate(2deg);
   margin-top: -85px;
   z-index: 8;
 }
 .start-column .card:nth-child(5n+4),
-.queue-column .card:nth-child(5n+4),
-.defect-column .card:nth-child(5n+4),
+.wait-column .card:nth-child(5n+4),
+.fail-column .card:nth-child(5n+4),
 .done-column .card:nth-child(5n+4){
   transform: rotate(3deg);
   margin-top: -85px;
   z-index: 7;
 }
 .start-column .card:nth-child(5n+5),
-.queue-column .card:nth-child(5n+5),
-.defect-column .card:nth-child(5n+5),
+.wait-column .card:nth-child(5n+5),
+.fail-column .card:nth-child(5n+5),
 .done-column .card:nth-child(5n+5){
   transform: rotate(4deg);
   margin-top: -85px;
@@ -150,7 +150,7 @@ input#iteration-length{
 .column.work-column h4:before{
   content: 'ongoing';
 }
-.column.queue-column h4:before{
+.column.wait-column h4:before{
   content: 'done';
 }
 
