@@ -11,8 +11,7 @@ let init = (server, events) => {
   io.on('connection', (socket) => {
     const gameId = socket.handshake.query.gameId;
     socket.join(gameId)
-    events.eventsFor(gameId)
-      .forEach(event => socket.emit('message', event));
+    socket.emit('replay', events.eventsFor(gameId));
   });
 
   return {publish}
