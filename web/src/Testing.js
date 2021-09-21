@@ -1,19 +1,16 @@
 const Card = require("./Card");
 
-const initialize = () => {
+const initialize = (subscribe) => {
   const $testspace = document.getElementById('testspace')
 
   if (!$testspace) return;
 
   const workColumnId = $testspace.dataset.columnId;
 
-  const generateQuestion = detail => {
-  };
+  subscribe('TaskMoved', (event) => {
+    if(event.to.columnId !== workColumnId) return;
 
-  document.addEventListener('TaskMoved', ({detail}) => {
-    if(detail.to.columnId !== workColumnId) return;
-
-    const card = Card.find(detail);
+    const card = Card.find(event);
 
     const answers = card.querySelector('.previous-puzzles');
     card?.payload?.tasks.forEach(task => {

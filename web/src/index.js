@@ -15,7 +15,7 @@ const initializeGame = (gameId, subscribe) => {
   CreateTask.initialize(gameId, subscribe);
   Columns.initialize(subscribe);
   Workspace.initialize(subscribe);
-  Testing.initialize();
+  Testing.initialize(subscribe);
   Charts.initialize(gameId);
   ProgressBar.initialize();
   IterationStats.initialize(gameId);
