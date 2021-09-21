@@ -32,10 +32,14 @@ describe('stats end-to-end', () => {
     TestDate.advanceTime(1);
     application.execute(MoveTask({gameId: 'g1', taskId: 't1'}))
 
+    TestDate.advanceTime(1);
+    application.execute(MoveTask({gameId: 'g1', taskId: 't1'}))
+
     expect(application.findStats('g1').history()).toMatchObject([
         {time: 0, todo: 0, busy: 0, done: 0},
         {time: 1, todo: 1, busy: 0, done: 0},
-        {time: 2, todo: 0, busy: 1, done: 0}
+        {time: 2, todo: 0, busy: 1, done: 0},
+        {time: 3, todo: 0, busy: 0, done: 1},
       ]
     )
   });
