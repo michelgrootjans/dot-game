@@ -21,9 +21,6 @@
         <progress value="" max="" id="progressbar"></progress>
     </div>
 
-    <button id="create-task" disabled="disabled">Create Task</button>
-
-
     <div id="board">
         {{#each game.activeColumns}}
             {{>column column=this game=../game}}
