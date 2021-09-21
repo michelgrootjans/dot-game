@@ -1,20 +1,20 @@
 const Timer = require("./Timer");
 
-const initialize = () => {
+const initialize = (subscribe) => {
 
   const progressBar = document.getElementById("progressbar");
   if(!progressBar) return;
 
   let timer = undefined;
 
-  document.addEventListener('IterationStarted', ({detail}) => {
-    const duration = detail.duration;
-    const startTime = detail.startTime;
+  subscribe('IterationStarted', (event) => {
+    const duration = event.duration;
+    const startTime = event.startTime;
     progressBar.max = `${duration}`;
     timer = Timer(duration).start(() => progressBar.value = Date.now() - startTime);
   });
 
-  document.addEventListener('IterationFinished', () => timer.stop());
+  subscribe('IterationFinished', () => timer.stop());
 };
 
 module.exports = {initialize};

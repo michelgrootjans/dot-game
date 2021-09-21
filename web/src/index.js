@@ -17,7 +17,7 @@ const initializeGame = (gameId, subscribe) => {
   Workspace.initialize(subscribe);
   Testing.initialize(subscribe);
   Charts.initialize(gameId, subscribe);
-  ProgressBar.initialize();
+  ProgressBar.initialize(subscribe);
   IterationStats.initialize(gameId);
 
   Simulations.initialize(gameId);
