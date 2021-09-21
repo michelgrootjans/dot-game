@@ -56,7 +56,7 @@ const IterationStats = (iterationId, details) => {
   };
 };
 
-const initialize = (gameId, subscribe) => {
+const initialize = () => {
   const $container = document.getElementById('iterations-stats-container');
 
   const $template = document.getElementById('iteration-stats-template');
@@ -82,26 +82,26 @@ const initialize = (gameId, subscribe) => {
     $currentIteration.querySelector(`.lead-time`).textContent = round(currentIteration.leadTime(detail.timestamp), 2);
   };
 
-  subscribe('IterationStarted', (event) => {
-    currentIteration = IterationStats(iterations.length + 1, event)
+  document.addEventListener('IterationStarted', ({detail}) => {
+    currentIteration = IterationStats(iterations.length + 1, detail)
     iterations.push(currentIteration);
-    renderIteration(event);
+    renderIteration(detail);
   });
-  subscribe('TaskCreated', (event) => {
-    currentIteration.startTask(event)
-    updateIteration(event);
+  document.addEventListener('TaskCreated', ({detail}) => {
+    currentIteration.startTask(detail)
+    updateIteration(detail);
   });
-  subscribe('TaskFinished', (event) => {
-    currentIteration.finishTask(event)
-    updateIteration(event);
+  document.addEventListener('TaskFinished', ({detail}) => {
+    currentIteration.finishTask(detail)
+    updateIteration(detail);
   });
-  subscribe('TaskRejected', (event) => {
-    currentIteration.rejectTask(event)
-    updateIteration(event);
+  document.addEventListener('TaskRejected', ({detail}) => {
+    currentIteration.rejectTask(detail)
+    updateIteration(detail);
   });
-  subscribe('IterationFinished', (event) => {
-    currentIteration.finishIteration(event)
-    updateIteration(event);
+  document.addEventListener('IterationFinished', ({detail}) => {
+    currentIteration.finishIteration(detail)
+    updateIteration(detail);
   });
 }
 

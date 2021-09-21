@@ -1,14 +1,14 @@
 const API = require("./API");
 
-const initialize = (gameId, subscribe) => {
+const initialize = gameId => {
   const $createTaskButton = document.getElementById('create-task');
   if(!$createTaskButton) return;
 
   const enableCreation = () => $createTaskButton.disabled = false;
   const disableCreation = () => $createTaskButton.disabled = true;
 
-  subscribe('IterationStarted', enableCreation)
-  subscribe('IterationFinished', disableCreation)
+  document.addEventListener('IterationStarted', enableCreation)
+  document.addEventListener('IterationFinished', disableCreation)
 
   $createTaskButton.addEventListener('click', () => {
     disableCreation();

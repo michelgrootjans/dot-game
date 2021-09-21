@@ -1,18 +1,18 @@
 const Cfd = require("./CFD");
 const Timer = require("./Timer");
 
-const initialize = (gameId, subscribe) => {
+const initialize = (gameId) => {
   const $cfd = document.getElementById('cfd');
   if(!$cfd) return;
 
   const cfd = Cfd($cfd, gameId);
   let timer = undefined
 
-  subscribe('IterationStarted', (event) => {
+  document.addEventListener('IterationStarted', ({detail}) => {
     cfd.clear()
-    cfd.initialize(event);
+    cfd.initialize(detail);
 
-    timer = Timer(event.duration).start(cfd.update);
+    timer = Timer(detail.duration).start(cfd.update);
   });
 
   document.addEventListener('IterationFinished', () => timer.stop());

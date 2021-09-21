@@ -1,7 +1,7 @@
 const Card = require("./Card");
 const Puzzle = require("./Puzzle");
 
-const initialize = (subscribe) => {
+const initialize = () => {
   const $workspace = document.getElementById('workspace')
 
   if (!$workspace) return;
@@ -24,10 +24,10 @@ const initialize = (subscribe) => {
     });
   };
 
-  subscribe('TaskMoved', (event) => {
-    if(event.to.columnId !== workColumnId) return;
+  document.addEventListener('TaskMoved', ({detail}) => {
+    if(detail.to.columnId !== workColumnId) return;
 
-    generateQuestion(event);
+    generateQuestion(detail);
   });
 
 };

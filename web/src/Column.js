@@ -1,23 +1,23 @@
 const Card = require("./Card");
 
-const initialize = (susbcribe) => {
+const initialize = () => {
   const columns = Array.from(document.querySelectorAll('[data-column-id]'))
     .reduce((map, item) => {
       map[item.dataset.columnId] = item.querySelector('.tasks');
       return map;
     }, {})
 
-  susbcribe('TaskCreated', (event) => {
-    columns[event.column.columnId]?.append(Card.create(event));
+  document.addEventListener('TaskCreated', ({detail}) => {
+    columns[detail.column.columnId]?.append(Card.create(detail));
   });
 
-  susbcribe('TaskMoved', (event) => {
-    const nextColumn = columns[event.to.columnId];
+  document.addEventListener('TaskMoved', ({detail}) => {
+    const nextColumn = columns[detail.to.columnId];
 
     if (nextColumn) {
-      nextColumn.append(Card.findOrCreate(event));
+      nextColumn.append(Card.findOrCreate(detail));
     } else {
-      Card.remove(event)
+      Card.remove(detail)
     }
   });
 };
