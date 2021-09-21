@@ -26,9 +26,7 @@ const intializeGames = ({games, delay, publish, subscribe, events}) => {
     throw `Unknown command: ${JSON.stringify(commandName)}`;
   };
 
-  const execute = command => {
-    return handlerFor(command.type).execute(command);
-  };
+  const execute = command => handlerFor(command.type).execute(command);
 
   IterationProcessManager().initialize(subscribe, execute, delay);
 
