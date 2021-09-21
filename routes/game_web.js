@@ -26,7 +26,7 @@ const init = application => {
     const params = allParams(req);
     const work = application.execute(FindWork(params))
     const columnType = work.work.columnType;
-    if (columnType === 'start-column') {
+    if (columnType === 'todo-column') {
       res.render('games/start-work', {work});
     } else if (columnType === 'work-column') {
       res.render('games/work', {work});

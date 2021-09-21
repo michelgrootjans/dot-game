@@ -1,6 +1,6 @@
 const initialState = () => ({
     columns: [
-      {columnId: "c1", columnType: "start-column", nextColumnId: "c2", title: "To do", taskName: "todo"},
+      {columnId: "c1", columnType: "todo-column", nextColumnId: "c2", title: "To do", taskName: "todo"},
       {columnId: "c2", columnType: "work-column", nextColumnId: "c3", title: "Analysis", taskName: "analysis", difficulty: 1},
       {columnId: "c3", columnType: "queue-column", nextColumnId: "c4", title: "", taskName: "analysis"},
       {columnId: "c4", columnType: "work-column", nextColumnId: "c5", title: "Design", taskName: "design", difficulty: 2},

@@ -16,7 +16,14 @@ describe('stats end-to-end', () => {
   it("keeps history", () => {
     application = TestApplication();
 
-    application.execute(CreateGame({gameId: 'g1'}));
+    application.execute(CreateGame({gameId: 'g1', state: {
+        columns: [
+          {columnId: "c1", columnType: "todo-column", taskName: "todo", nextColumnId: "c2"},
+          {columnId: "c2", columnType: "work-column", taskName: "busy", nextColumnId: "c3"},
+          {columnId: "c3", columnType: "done-column", taskName: "done"},
+        ]
+      }
+    }));
     application.execute(StartIteration({gameId: 'g1'}));
 
     TestDate.advanceTime(1);
@@ -26,9 +33,9 @@ describe('stats end-to-end', () => {
     application.execute(MoveTask({gameId: 'g1', taskId: 't1'}))
 
     expect(application.findStats('g1').history()).toMatchObject([
-        {time: 0, todo: 0, analysis: 0, design: 0, development: 0, qa: 0, done: 0},
-        {time: 1, todo: 1, analysis: 0, design: 0, development: 0, qa: 0, done: 0},
-        {time: 2, todo: 0, analysis: 1, design: 0, development: 0, qa: 0, done: 0}
+        {time: 0, todo: 0, busy: 0, done: 0},
+        {time: 1, todo: 1, busy: 0, done: 0},
+        {time: 2, todo: 0, busy: 1, done: 0}
       ]
     )
   });

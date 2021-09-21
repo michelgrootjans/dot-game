@@ -10,7 +10,7 @@ const Game = state => {
   const gameId = state.gameId;
   const columns = state.columns;
 
-  const todoColumn = columns.find(column => column.columnType === 'start-column');
+  const todoColumn = columns.find(column => column.columnType === 'todo-column');
   const testColumn = columns.find(column => column.columnType === 'test-column');
   const doneColumn = columns.find(column => column.columnType === 'done-column');
   const defectsColumn = columns.find(column => column.columnType === 'defect-column');
