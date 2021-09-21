@@ -27,7 +27,7 @@ const eventBus = EventBus();
 
 const publish = event => {
   console.log(event);
-  document.dispatchEvent(new CustomEvent(event.type, {detail: event}))
+  // document.dispatchEvent(new CustomEvent(event.type, {detail: event}))
   eventBus.publish(event);
 };
 
