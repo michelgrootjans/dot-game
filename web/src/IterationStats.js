@@ -66,8 +66,9 @@ const initialize = () => {
   let currentIteration = undefined;
   let $currentIteration = undefined;
 
-  const renderIteration = () => {
+  const renderIteration = (detail) => {
     $currentIteration = $template.content.firstElementChild.cloneNode(true);
+    $currentIteration.dataset.iterationId = detail.iterationId;
     $currentIteration.querySelector('.iteration-name').innerText = currentIteration.iterationId;
     $container.append($currentIteration);
   };
@@ -84,7 +85,7 @@ const initialize = () => {
   document.addEventListener('IterationStarted', ({detail}) => {
     currentIteration = IterationStats(iterations.length + 1, detail)
     iterations.push(currentIteration);
-    renderIteration();
+    renderIteration(detail);
   });
   document.addEventListener('TaskCreated', ({detail}) => {
     currentIteration.startTask(detail)
