@@ -24,7 +24,7 @@ const findOrCreate = detail => find(detail) || create(detail)
 const remove = (detail) => find(detail)?.remove();
 
 const removeAll = () => {
-  const cards = document.getElementsByClassName('card');
+  const cards = document.getElementsByClassName('postit');
   while (cards.length > 0) {
     cards[0].parentNode.removeChild(cards[0]);
   }
