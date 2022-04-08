@@ -1,4 +1,6 @@
 const express = require('express');
+const {v4: uuid} = require("uuid");
+
 const {CreateGame} = require("../application/api/commands/game");
 const {FindWork} = require("../application/api/commands/iteration");
 const router = express.Router();
@@ -7,9 +9,10 @@ const allParams = request => ({...request.body, ...request.params});
 
 const init = application => {
   router.post('/', function (req, res, next) {
-    const command = CreateGame(allParams(req));
+    const gameId = req.body.gameId || uuid();
+    const command = CreateGame({gameId});
     application.execute(command);
-    res.redirect('/games/' + req.body.gameId)
+    res.redirect('/games/' + gameId)
   });
 
   router.get('/:gameId', function (req, res, next) {
@@ -18,7 +21,7 @@ const init = application => {
     if (game) {
       res.render('games/index', {game});
     } else {
-      res.status(404).send('game not found')
+      res.redirect('/')
     }
   });
 
