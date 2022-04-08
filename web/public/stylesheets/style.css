@@ -163,6 +163,9 @@ input#iteration-length{
   height: 60px;
   padding: 10px;
   margin: 10px;
+
+  /* undo bootstrap reboot */
+  box-sizing: content-box;
 }
 
 #inbox .move-button {
