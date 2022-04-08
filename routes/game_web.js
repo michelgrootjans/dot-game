@@ -6,13 +6,40 @@ const {FindWork} = require("../application/api/commands/iteration");
 const router = express.Router();
 
 const allParams = request => ({...request.body, ...request.params});
+const basePath = req => req.protocol + '://' + req.get('host');
 
 const init = application => {
   router.post('/', function (req, res, next) {
     const gameId = req.body.gameId || uuid();
     const command = CreateGame({gameId});
     application.execute(command);
-    res.redirect('/games/' + gameId)
+    res.redirect(`/games/${gameId}/invite`)
+  });
+
+  router.get('/:gameId/invite', function (req, res, next) {
+    const gameId = allParams(req).gameId;
+    const game = application.findGame(gameId)
+    if (game) {
+      const linkForParticipants = `${basePath(req)}/games/${gameId}/join`;
+      res.render('games/invite', {game, linkForParticipants});
+    } else {
+      res.redirect('/')
+    }
+  });
+
+  router.get('/:gameId/join', function (req, res, next) {
+    const gameId = req.params.gameId;
+    const game = application.findGame(gameId);
+    if (game) {
+      try {
+        const columnId = game.join()
+        res.redirect(`/games/${game.gameId}/${columnId}`);
+      } catch {
+        res.status(404).send("Sorry, this game is full")
+      }
+    } else {
+      res.redirect('/');
+    }
   });
 
   router.get('/:gameId', function (req, res, next) {
