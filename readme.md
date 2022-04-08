@@ -11,7 +11,7 @@ Enter a name for your gamem and you're good to go
 # Run it locally
 run the following commands in two separate terminals:
  - `npm run serverstart`
- - `npm run webpack:start`
+ - `npm run webpack:watch`
 
 `open localhost:3000`
 

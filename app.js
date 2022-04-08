@@ -9,7 +9,6 @@ const exphbs = require("express-handlebars");
 const socketApi = require('./socketapi')
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
 const Application = require("./application/Application");
 
 const GamesRepository = require("./application/GameRepository");
@@ -39,7 +38,6 @@ app.use(express.static(path.join(__dirname, 'web', 'public')));
 app.use(express.static(path.join(__dirname, 'web', 'dist')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/games', require('./routes/game_web').init(application))
 app.use('/api/games', require('./routes/game_api').init(application))
 
