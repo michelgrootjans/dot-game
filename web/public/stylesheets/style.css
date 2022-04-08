@@ -73,65 +73,65 @@ input#iteration-length{
   height: 0;
 }
 
-.card .previous-puzzles{
+.postit .previous-puzzles{
   visibility: hidden;
 }
-.card .question-container {
+.postit .question-container {
   visibility: hidden;
 }
 
-.card .answer {
+.postit .answer {
   position: absolute;
   right: 10px;
   width: 20px;
 }
-.card .move-button {
+.postit .move-button {
   visibility: hidden;
   position: absolute;
   right: 10px;
   bottom: 10px;
 }
-.card .reject-button {
+.postit .reject-button {
   visibility: hidden;
   position: absolute;
   left: 10px;
   bottom: 10px;
 }
 
-.todo-column .card:nth-child(5n+1),
-.wait-column .card:nth-child(5n+1),
-.fail-column .card:nth-child(5n+1),
-.done-column .card:nth-child(5n+1){
+.todo-column .postit:nth-child(5n+1),
+.wait-column .postit:nth-child(5n+1),
+.fail-column .postit:nth-child(5n+1),
+.done-column .postit:nth-child(5n+1){
   z-index: 10;
 }
-.todo-column .card:nth-child(5n+2),
-.wait-column .card:nth-child(5n+2),
-.fail-column .card:nth-child(5n+2),
-.done-column .card:nth-child(5n+2){
+.todo-column .postit:nth-child(5n+2),
+.wait-column .postit:nth-child(5n+2),
+.fail-column .postit:nth-child(5n+2),
+.done-column .postit:nth-child(5n+2){
   transform: rotate(1deg);
   margin-top: -85px;
   z-index: 9;
 }
-.todo-column .card:nth-child(5n+3),
-.wait-column .card:nth-child(5n+3),
-.fail-column .card:nth-child(5n+3),
-.done-column .card:nth-child(5n+3){
+.todo-column .postit:nth-child(5n+3),
+.wait-column .postit:nth-child(5n+3),
+.fail-column .postit:nth-child(5n+3),
+.done-column .postit:nth-child(5n+3){
   transform: rotate(2deg);
   margin-top: -85px;
   z-index: 8;
 }
-.todo-column .card:nth-child(5n+4),
-.wait-column .card:nth-child(5n+4),
-.fail-column .card:nth-child(5n+4),
-.done-column .card:nth-child(5n+4){
+.todo-column .postit:nth-child(5n+4),
+.wait-column .postit:nth-child(5n+4),
+.fail-column .postit:nth-child(5n+4),
+.done-column .postit:nth-child(5n+4){
   transform: rotate(3deg);
   margin-top: -85px;
   z-index: 7;
 }
-.todo-column .card:nth-child(5n+5),
-.wait-column .card:nth-child(5n+5),
-.fail-column .card:nth-child(5n+5),
-.done-column .card:nth-child(5n+5){
+.todo-column .postit:nth-child(5n+5),
+.wait-column .postit:nth-child(5n+5),
+.fail-column .postit:nth-child(5n+5),
+.done-column .postit:nth-child(5n+5){
   transform: rotate(4deg);
   margin-top: -85px;
   z-index: 6;
@@ -154,7 +154,7 @@ input#iteration-length{
   content: 'done';
 }
 
-.card {
+.postit {
   position: relative;
   background: #feff9c;
   box-shadow: 1px 1px 2px 1px rgba(9, 30, 66, .25);
@@ -175,8 +175,8 @@ input#iteration-length{
 #workspace {
   width: 300px;
 }
-#workspace .card,
-#testspace .card{
+#workspace .postit,
+#testspace .postit{
   width: 180px;
   height: 180px;
 }
