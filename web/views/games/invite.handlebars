@@ -1,12 +1,15 @@
-<div id="container" data-game-id="{{game.gameId}}">
+<div class="container" id="container" data-game-id="{{game.gameId}}">
     <h1>Join this game!</h1>
-    <a href="{{linkForParticipants}}" target="_blank">
-        <div id="qrcode"></div>
-    </a>
+    <div class="row">
+        <a href="{{linkForParticipants}}" target="_blank">
+            <div id="qrcode"></div>
+        </a>
+    </div>
+    <div class="row">
+        <div class="players"></div>
+        <a href="/games/{{game.gameId}}">Go to game</a>
 
-    <div class="players"></div>
-
-    <a href="/games/{{game.gameId}}">Go to game</a>
+    </div>
 </div>
 
 

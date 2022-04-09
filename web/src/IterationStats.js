@@ -66,6 +66,7 @@ const initialize = () => {
   let currentIteration = undefined;
   let $currentIteration = undefined;
 
+
   const renderIteration = (detail) => {
     $currentIteration = $template.content.firstElementChild.cloneNode(true);
     $currentIteration.dataset.iterationId = detail.iterationId;

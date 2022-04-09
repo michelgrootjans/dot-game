@@ -1,7 +1,7 @@
 /*generic*/
 body {
-  padding-left: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  /*padding-left: 50px;*/
+  /*font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;*/
 }
 
 a {
@@ -9,14 +9,7 @@ a {
 }
 
 progress {
-  width: 1410px;
-}
-
-/*board*/
-.top-container {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(500px, max-content);
+  width: 100%;
 }
 
 #board {
@@ -31,46 +24,50 @@ input#iteration-length{
   width: 5em;
 }
 
-.column {
+.board-column {
   background: #EBECF0;
   padding: 10px;
 }
 
-.column h2 {
+.board-column h2 {
   font-size: 16px;
   margin: 0 0 12px 0;
   height: 2em;
   text-align: center;
 }
 
-.column h4 {
+.board-column h4 {
   height: 1em;
+  font-size: 1em;
   color: darkgrey;
   text-align: center;
   width: 100%;
 }
 
-.column.todo-column {
+.board-column.todo-column {
   border-left: 1px solid black;
 }
-.column.work-column {
+.board-column.work-column {
   border-left: 1px solid black;
 }
-.column.wait-column {
+.board-column.wait-column {
   border-left: 1px dashed grey;
 }
-.column.test-column {
+.board-column.test-column {
   border-left: 1px solid black;
 }
-.column.done-column,
-.column.fail-column{
+.board-column.done-column,
+.board-column.fail-column{
   border-left: 1px solid black;
   border-right: 1px solid black;
   height: 50%;
   overflow: hidden;
 }
-.column.fail-column h4 {
+.board-column.fail-column h4 {
   height: 0;
+}
+.last-column {
+  padding-left: 0px;
 }
 
 .postit .previous-puzzles{
@@ -83,7 +80,7 @@ input#iteration-length{
 .postit .answer {
   position: absolute;
   right: 10px;
-  width: 20px;
+  width: 40px;
 }
 .postit .move-button {
   visibility: hidden;
@@ -147,10 +144,10 @@ input#iteration-length{
   overflow: auto;
 }
 
-.column.work-column h4:before{
+.board-column.work-column h4:before{
   content: 'ongoing';
 }
-.column.wait-column h4:before{
+.board-column.wait-column h4:before{
   content: 'done';
 }
 
@@ -213,7 +210,8 @@ input#iteration-length{
 /*charts*/
 .chart-container {
   width: 400px;
-  height: 200px;
+  height: 318px;
+  position: relative;
 }
 
 /*stats*/

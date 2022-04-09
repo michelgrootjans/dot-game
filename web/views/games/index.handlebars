@@ -1,4 +1,4 @@
-<div id="container" data-game-id="{{game.gameId}}">
+<div class="container" id="container" data-game-id="{{game.gameId}}">
     <h1>The Dot Game</h1>
 
     <button id="start-iteration">Start Iteration</button>
@@ -6,26 +6,26 @@
 
     <label>
         Minutes
-        <input id="iteration-length" type="text" value="5">
+        <input id="iteration-length" type="text" value="2">
     </label>
 
-    <div class="top-container">
-        <div class="chart-container">
+    <div class="row">
+        <div class="col chart-container">
             <canvas id="cfd"></canvas>
         </div>
 
         {{>iteration-stats }}
     </div>
 
-    <div>
+    <div class="row">
         <progress value="" max="" id="progressbar"></progress>
     </div>
 
-    <div id="board">
+    <div id="board" class="row">
         {{#each game.activeColumns}}
             {{>column column=this game=../game}}
         {{/each}}
-        <div>
+        <div class="last-column">
             {{#each game.endColumns}}
                 {{>column column=this game=../game}}
             {{/each}}

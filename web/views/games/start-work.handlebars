@@ -1,19 +1,17 @@
 <div class="container" data-game-id="{{work.gameId}}">
-    <a href="/games/{{work.gameId}}">Back to board</a>
-    <a href=""></a>
     <h1>{{work.work.title}}</h1>
 
-    <div>
+    <div class="row">
         <progress value="" id="progressbar"></progress>
     </div>
 
-    <div id="work-container">
-        <div id="workspace">
+    <div class="row">
+        <div id="workspace" class="col">
             <h2>Workspace</h2>
-            <button id="create-task" disabled="disabled">Create Task</button>
+            <button id="create-task" class="btn btn-primary" disabled="disabled">Create Task</button>
         </div>
 
-        <div id="outbox" class="wait-column" data-column-id="{{work.work.columnId}}">
+        <div id="outbox" class="wait-column col" data-column-id="{{work.work.columnId}}">
             <h2>Outbox</h2>
             <div class="tasks"></div>
         </div>
