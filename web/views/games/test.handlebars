@@ -2,17 +2,17 @@
     <a href="/games/{{work.gameId}}">Back to board</a>
     <h1>{{work.work.title}}</h1>
 
-    <div>
+    <div class="row">
         <progress value="" id="progressbar"></progress>
     </div>
 
-    <div id="work-container">
-        <div id="inbox" class="wait-column" data-column-id="{{work.inbox.columnId}}">
+    <div id="work-container" class="row">
+        <div id="inbox" class="wait-column col" data-column-id="{{work.inbox.columnId}}">
             <h2>Inbox</h2>
             <div class="tasks"></div>
         </div>
 
-        <div id="testspace" data-column-id="{{work.work.columnId}}" data-column-difficulty="{{work.work.difficulty}}">
+        <div id="testspace" class="col" data-column-id="{{work.work.columnId}}" data-column-difficulty="{{work.work.difficulty}}">
             <h2>Test-space</h2>
             <div class="tasks"></div>
         </div>

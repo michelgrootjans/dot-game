@@ -46,7 +46,7 @@ const init = application => {
     const gameId = allParams(req).gameId;
     const game = application.findGame(gameId)
     if (game) {
-      res.render('games/index', {game});
+      res.render('games/index', {game, layout: 'desktop'});
     } else {
       res.redirect('/')
     }
@@ -57,11 +57,11 @@ const init = application => {
     const work = application.execute(FindWork(params))
     const columnType = work.work.columnType;
     if (columnType === 'todo-column') {
-      res.render('games/start-work', {work});
+      res.render('games/start-work', {work, layout: 'mobile'});
     } else if (columnType === 'work-column') {
-      res.render('games/work', {work});
+      res.render('games/work', {work, layout: 'mobile'});
     } else if (columnType === 'test-column') {
-      res.render('games/test', {work});
+      res.render('games/test', {work, layout: 'mobile'});
     } else {
       res.redirect(`/games/${params.gameId}/${work.inbox.columnId}`);
     }
