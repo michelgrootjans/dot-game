@@ -68,7 +68,7 @@ input#iteration-length{
 .postit .answer {
   position: absolute;
   right: 10px;
-  width: 40px;
+  width: 60px;
 }
 .postit .move-button {
   visibility: hidden;
