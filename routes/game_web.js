@@ -21,7 +21,7 @@ const init = application => {
     const game = application.findGame(gameId)
     if (game) {
       const linkForParticipants = `${basePath(req)}/games/${gameId}/join`;
-      res.render('games/invite', {game, linkForParticipants});
+      res.render('games/invite', {game, linkForParticipants, title: 'Join the Dot Game'});
     } else {
       res.redirect('/')
     }
@@ -57,11 +57,11 @@ const init = application => {
     const work = application.execute(FindWork(params))
     const columnType = work.work.columnType;
     if (columnType === 'todo-column') {
-      res.render('games/start-work', {work, layout: 'mobile'});
+      res.render('games/start-work', {work, layout: 'mobile', title: work.work.title});
     } else if (columnType === 'work-column') {
-      res.render('games/work', {work, layout: 'mobile'});
+      res.render('games/work', {work, layout: 'mobile', title: work.work.title});
     } else if (columnType === 'test-column') {
-      res.render('games/test', {work, layout: 'mobile'});
+      res.render('games/test', {work, layout: 'mobile', title: work.work.title});
     } else {
       res.redirect(`/games/${params.gameId}/${work.inbox.columnId}`);
     }
