@@ -1,13 +1,19 @@
 <div class="container" id="container" data-game-id="{{game.gameId}}">
-    <h1>The Dot Game</h1>
+    <div class="row">
+        <div class="col">
+            <h1>The Dot Game</h1>
+        </div>
+        <div class="col">
+            <button id="start-iteration">Start Iteration</button>
+            <button id="stop-iteration" disabled="disabled">Stop Iteration</button>
 
-    <button id="start-iteration">Start Iteration</button>
-    <button id="stop-iteration" disabled="disabled">Stop Iteration</button>
+            <label>
+                Minutes
+                <input id="iteration-length" type="text" value="2">
+            </label>
+        </div>
 
-    <label>
-        Minutes
-        <input id="iteration-length" type="text" value="2">
-    </label>
+    </div>
 
     <div class="row">
         <div class="col chart-container">
