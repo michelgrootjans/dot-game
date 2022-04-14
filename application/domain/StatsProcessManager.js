@@ -39,6 +39,7 @@ const GameStats = (iterationStartedEvent, startTime) => {
 
   return {
     gameId: iterationStartedEvent.gameId,
+    iterationId: iterationStartedEvent.iterationId,
     history: () => currentIteration.history(),
     addTask: (time, event) => currentIteration.addTask(time, event),
     moveTask: (time, event) => currentIteration.moveTask(time, event),
