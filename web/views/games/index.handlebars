@@ -18,9 +18,16 @@
     <div class="row">
         {{>iteration-stats }}
 
-        <div class="col chart-container">
+        <div class="col collapse show toggle-chart">
+            <p data-bs-toggle="collapse" data-bs-target=".toggle-chart">
+                Show chart
+            </p>
+        </div>
+
+        <div class="col chart-container collapse toggle-chart" data-bs-toggle="collapse" data-bs-target=".toggle-chart">
             <canvas id="cfd"></canvas>
         </div>
+
     </div>
 
     <div class="row">
