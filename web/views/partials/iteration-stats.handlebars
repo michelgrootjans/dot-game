@@ -2,9 +2,15 @@
     <div class="row">
         <div id="iterations-stats-container" class="col">
             <div>
-                <div class="iteration-name" id="iterations-stats-toggler">
-                    <i class="bi bi-plus-slash-minus"></i>
+                <div class="iteration-name" id="iterations-stats-toggler" data-bs-toggle="collapse" data-bs-target=".toggle-advanced-stats">
+                    <div class="collapse show toggle-advanced-stats" data-bs-toggle="collapse" data-bs-target=".toggle-advanced-stats">
+                        <i class="bi bi-plus-square-dotted"></i>
+                    </div>
+                    <div class="collapse toggle-advanced-stats" data-bs-toggle="collapse" data-bs-target=".toggle-advanced-stats">
+                        <i class="bi bi-dash-square-dotted"></i>
+                    </div>
                 </div>
+
                 <div class="total stats-advanced collapse">Total</div>
                 <div class="defects stats-advanced collapse">Defects</div>
                 <div class="success stats-advanced collapse">Success</div>
