@@ -65,7 +65,7 @@ const initialize = () => {
   const $toggleAdvancedStats = document.getElementById('iterations-stats-toggler');
 
   const applyAdvancedView = visible => {
-    const elements = $container.querySelectorAll('.stats-advanced.collapse');
+    const elements = document.querySelectorAll('.stats-advanced.collapse');
     if (visible) {
       for (const element of elements) {
         element.classList.add('show')
