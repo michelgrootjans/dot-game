@@ -52,7 +52,7 @@ describe('Stats Process Manager', () => {
   let stats, publish;
 
   const lastStat = () => {
-    const history = stats.findStats('g1').history();
+    const history = stats.find('g1').history();
     return history[history.length - 1];
   };
 
@@ -66,7 +66,7 @@ describe('Stats Process Manager', () => {
   it("starts with a clean history", () => {
     publish(IterationStarted({gameId: 'g1', columns:[{columnId: 'c1', taskName: 'todo'}]}))
 
-    expect(stats.findStats('g1').history()).toMatchObject(
+    expect(stats.find('g1').history()).toMatchObject(
       [{time: 0, todo: 0, wip: 0}],
     )
   });
@@ -76,7 +76,7 @@ describe('Stats Process Manager', () => {
     TestDate.advanceTime(1);
     publish(TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1', taskName: 'todo'}}))
 
-    expect(stats.findStats('g1').history()).toMatchObject(
+    expect(stats.find('g1').history()).toMatchObject(
       [{time: 0, todo: 0, wip: 0}, {time: 1, todo: 1, wip: 1}],
     )
   });
@@ -93,7 +93,7 @@ describe('Stats Process Manager', () => {
     TestDate.advanceTime(1);
     publish(TaskMoved({gameId: 'g1', taskId: 't1', from: {columnId: 'c1', taskName: 'todo'}, to: {columnId: 'c2', taskName: 'done'}}))
 
-    expect(stats.findStats('g1').history()).toMatchObject([
+    expect(stats.find('g1').history()).toMatchObject([
       {time: 0, todo: 0, done: 0, wip: 0},
       {time: 1, todo: 1, done: 0, wip: 1},
       {time: 2, todo: 0, done: 1, wip: 0}],
@@ -138,7 +138,7 @@ describe('Stats Process Manager', () => {
     TestDate.advanceTime(1)
     publish(TaskCreated({gameId: 'g1', taskId: 't2', column: {columnId: 'c1', taskName: 'todo'}}))
 
-    expect(stats.findStats('g1').history()).toMatchObject(
+    expect(stats.find('g1').history()).toMatchObject(
       [{time: 0, todo: 0}, {time: 1, todo: 1}],
     )
   });
