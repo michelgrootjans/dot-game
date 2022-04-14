@@ -8,7 +8,11 @@ const initializeStopButton = gameId => {
   document.addEventListener('IterationStarted', () => $stopIterationButton.disabled = false)
   document.addEventListener('IterationFinished', () => $stopIterationButton.disabled = true)
 
-  $stopIterationButton.addEventListener('click', () => API(gameId).iteration.stop());
+  $stopIterationButton.addEventListener('click', () => {
+    if (confirm("This will disrupt the workshop. Are you sure you want to stop this iteration?")) {
+      API(gameId).iteration.stop();
+    }
+  });
 };
 
 const initializeStartButton = gameId => {
