@@ -28,7 +28,8 @@ const IterationStats = (iterationId, details) => {
   const finishTask = (details) => tasks.find(t => t.taskId === details.taskId).finish();
   const rejectTask = (details) => tasks.find(t => t.taskId === details.taskId).reject();
 
-  const finishIteration = (details) => {}
+  const finishIteration = (details) => {
+  }
   const tasksDone = () => tasks.filter(t => t.done());
   const tasksRejected = () => tasks.filter(t => t.rejected());
   const tasksInProgress = () => tasks.filter(t => t.inProgress());
@@ -58,20 +59,42 @@ const IterationStats = (iterationId, details) => {
 
 const initialize = () => {
   const $container = document.getElementById('iterations-stats-container');
-
   const $template = document.getElementById('iteration-stats-template');
   if (!($container && $template)) return;
+
+  const $toggleAdvancedStats = document.getElementById('iterations-stats-toggler');
+
+  const applyAdvancedView = visible => {
+    const elements = $container.querySelectorAll('.stats-advanced.collapse');
+    if (visible) {
+      for (const element of elements) {
+        element.classList.add('show')
+      }
+    } else {
+      for (const element of elements) {
+        element.classList.remove('show')
+      }
+    }
+  };
+
+  let visible = !$toggleAdvancedStats;
+  if ($toggleAdvancedStats) {
+    $toggleAdvancedStats.addEventListener('click', () => {
+      visible = !visible;
+      applyAdvancedView(visible);
+    });
+  }
 
   const iterations = []
   let currentIteration = undefined;
   let $currentIteration = undefined;
-
 
   const renderIteration = (detail) => {
     $currentIteration = $template.content.firstElementChild.cloneNode(true);
     $currentIteration.dataset.iterationId = detail.iterationId;
     $currentIteration.querySelector('.iteration-name').innerText = currentIteration.iterationId;
     $container.append($currentIteration);
+    applyAdvancedView(visible);
   };
 
   const updateIteration = (detail) => {

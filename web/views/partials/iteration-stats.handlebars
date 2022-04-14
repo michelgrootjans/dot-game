@@ -1,22 +1,28 @@
-<div id="iterations-stats-container" class="col">
-    <div>
-        <div class="iteration-name">&nbsp;</div>
-        <div class="total">Total</div>
-        <div class="defects">Defects</div>
-        <div class="success">Success</div>
-        <div class="wip">WIP</div>
-        <div class="throughput">Throughput</div>
-        <div class="lead-time">Lead Time</div>
+<div class="col">
+    <div class="row">
+        <div id="iterations-stats-container" class="col">
+            <div>
+                <div class="iteration-name"id="iterations-stats-toggler">
+                    <i class="bi bi-plus-slash-minus"></i>
+                </div>
+                <div class="total stats-advanced collapse">Total</div>
+                <div class="defects stats-advanced collapse">Defects</div>
+                <div class="success stats-advanced collapse">Success</div>
+                <div class="wip stats-advanced collapse">WIP</div>
+                <div class="throughput">Throughput</div>
+                <div class="lead-time">Lead Time</div>
+            </div>
+        </div>
     </div>
 </div>
 
 <template id="iteration-stats-template">
     <div class="iteration">
         <div class="iteration-name"></div>
-        <div class="total">0</div>
-        <div class="defects">0</div>
-        <div class="success">0</div>
-        <div class="wip">0</div>
+        <div class="total stats-advanced collapse">0</div>
+        <div class="defects stats-advanced collapse">0</div>
+        <div class="success stats-advanced collapse">0</div>
+        <div class="wip stats-advanced collapse">0</div>
         <div class="throughput">-</div>
         <div class="lead-time">-</div>
     </div>
