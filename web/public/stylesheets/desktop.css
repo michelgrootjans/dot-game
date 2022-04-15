@@ -189,11 +189,6 @@ input#iteration-length{
 .iteration-stats {
   border-collapse: collapse;
 }
-.iteration-stats th,
-.iteration-stats td{
-  border: 1px solid grey;
-  padding: 0.5rem;
-}
 
 #iterations-stats-container {
   display: grid;
@@ -203,6 +198,9 @@ input#iteration-length{
 .iteration div {
   text-align: center;
   padding: 0 10px;
+}
+.iteration.current {
+  border: gray 1px dashed;
 }
 .iteration .iteration-name {
   font-weight: bold;

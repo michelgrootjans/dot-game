@@ -1,9 +1,16 @@
 const Cfd = require("./CFD");
 const Timer = require("./Timer");
 
+const setCurrentIteration = (iterationId) => {
+  document.querySelectorAll('.iteration.current')
+    .forEach(element => element.classList.remove('current'))
+  document.querySelectorAll(`.iteration[data-iteration-id="${iterationId}"]`)
+    .forEach(element => element.classList.add('current'));
+};
+
 const initialize = (gameId) => {
   const $cfd = document.getElementById('cfd');
-  if(!$cfd) return;
+  if (!$cfd) return;
 
   const cfd = Cfd($cfd, gameId);
   let timer = undefined
@@ -15,18 +22,23 @@ const initialize = (gameId) => {
     cfd.initialize(detail);
 
     timer = Timer(detail.duration).start(() => update(detail.iterationId));
+    setCurrentIteration(detail.iterationId);
   });
 
   document.addEventListener('IterationFinished', ({detail}) => {
     timer.stop();
 
-    const selector = `.show-previous-iteration[data-iteration-id="${detail.iterationId}"]`;
-    const previousIterationElements = document.querySelectorAll(selector);
-    console.log({selector, previousIterationElements})
+    const iterationId = detail.iterationId;
 
-    previousIterationElements.forEach(element => {
-      element.addEventListener('click', () => update(detail.iterationId))
-    });
+    document.querySelectorAll(`.show-previous-iteration[data-iteration-id="${iterationId}"]`)
+      .forEach(element => {
+        element.addEventListener('click', () => {
+          update(iterationId)
+            .then(() => {
+              setCurrentIteration(iterationId);
+            });
+        })
+      });
   });
 
 }
