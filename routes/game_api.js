@@ -23,9 +23,8 @@ const init = application => {
   });
 
   router.get('/:gameId/iterations/:iterationId/stats', function (req, res, next) {
-    const gameId = req.params.gameId;
-    const iterationId = req.params.iterationId;
-    const stats = application.findStats(gameId) || {gameId, iterationId, history: () => {}};
+    const {gameId, iterationId} = req.params;
+    const stats = application.findStats(gameId, iterationId) || {gameId, iterationId, history: () => {}};
     res.send({...stats, history: stats.history()});
   });
 

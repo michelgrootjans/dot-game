@@ -50,7 +50,7 @@ const GameStats = (iterationStartedEvent, startTime) => {
 const StatsProcessManager = () => {
   const initialize = (stats, subscribe) => {
     subscribe('IterationStarted', (event) => {
-      const current = stats.find(event.gameId);
+      const current = stats.find(event.gameId, event.iterationId);
       if (current) {
         current.restart(Date.now())
       } else {
@@ -58,11 +58,11 @@ const StatsProcessManager = () => {
       }
     })
     subscribe('TaskCreated', (event) => {
-      const current = stats.find(event.gameId);
+      const current = stats.find(event.gameId, event.iterationId);
       current && current.addTask(Date.now(), event);
     })
     subscribe('TaskMoved', (event) => {
-      const current = stats.find(event.gameId);
+      const current = stats.find(event.gameId, event.iterationId);
       current && current.moveTask(Date.now(), event);
     })
   };

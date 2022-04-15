@@ -19,7 +19,7 @@ const API = gameId => {
       start: data => post(`iterations`, data),
       stop: () => post(`iterations/stop`),
     },
-    stats: () => get(`stats`)
+    stats: (iterationId) => get(`iterations/${iterationId}/stats`)
   }
 }
 

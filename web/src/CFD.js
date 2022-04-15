@@ -55,7 +55,7 @@ const config = {
 const Cfd = (context, gameId) => {
   const chart = new Chart(context, config);
 
-  const getHistory = () => API(gameId).stats()
+  const getHistory = (iterationId) => API(gameId).stats(iterationId)
     .then(response => response.json())
     .then(response => response.history);
 
@@ -69,8 +69,8 @@ const Cfd = (context, gameId) => {
     console.log(chart.data.datasets)
   };
 
-  const update = async () => {
-    const newHistory = await getHistory();
+  const update = async (detail) => {
+    const newHistory = await getHistory(detail.iterationId);
 
     const getSeries = label => newHistory.map(record => ({x: record.time, y: record[label]}));
 
