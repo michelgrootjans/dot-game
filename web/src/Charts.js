@@ -17,7 +17,18 @@ const initialize = (gameId) => {
     timer = Timer(detail.duration).start(() => update(detail.iterationId));
   });
 
-  document.addEventListener('IterationFinished', () => timer.stop());
+  document.addEventListener('IterationFinished', ({detail}) => {
+    timer.stop();
+
+    const selector = `.show-previous-iteration[data-iteration-id="${detail.iterationId}"]`;
+    const previousIterationElements = document.querySelectorAll(selector);
+    console.log({selector, previousIterationElements})
+
+    previousIterationElements.forEach(element => {
+      element.addEventListener('click', () => update(detail.iterationId))
+    });
+  });
+
 }
 
-module.exports = {initialize, update}
+module.exports = {initialize}
