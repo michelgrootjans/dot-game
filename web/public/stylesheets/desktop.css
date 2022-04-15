@@ -4,8 +4,8 @@
   display: grid;
   grid-auto-columns: 150px;
   grid-auto-flow: column;
-  height: 60vh;
-  overflow: auto;
+  overflow: visible;
+  min-height: 500px;
 }
 
 input#iteration-length{
@@ -19,8 +19,7 @@ input#iteration-length{
 
 .board-column h2 {
   font-size: 16px;
-  margin: 0 0 12px 0;
-  height: 2em;
+  height: 1em;
   text-align: center;
 }
 
@@ -32,30 +31,23 @@ input#iteration-length{
   width: 100%;
 }
 
-.board-column.todo-column {
-  border-left: 1px solid black;
-}
-.board-column.work-column {
+.board-column.todo-column,
+.board-column.work-column,
+.board-column.test-column {
   border-left: 1px solid black;
 }
 .board-column.wait-column {
   border-left: 1px dashed grey;
 }
-.board-column.test-column {
-  border-left: 1px solid black;
-}
-.board-column.done-column,
-.board-column.fail-column{
+.last-column {
+  background: #EBECF0;
   border-left: 1px solid black;
   border-right: 1px solid black;
-  height: 50%;
-  overflow: hidden;
+  height: 100%;
+  padding: 0px;
 }
 .board-column.fail-column h4 {
   height: 0;
-}
-.last-column {
-  padding-left: 0px;
 }
 
 .postit .previous-puzzles{

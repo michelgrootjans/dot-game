@@ -11,19 +11,16 @@
             <div class="tasks"></div>
         </div>
 
+        <div id="workspace" class="col" data-column-id="{{work.work.columnId}}" data-column-difficulty="{{work.work.difficulty}}">
+            <h2>Workspace</h2>
+            <div class="tasks"></div>
+        </div>
+
         <div id="outbox" class="wait-column col" data-column-id="{{work.outbox.columnId}}">
             <h2>Outbox</h2>
             <div class="tasks"></div>
         </div>
     </div>
-
-    <div class="row">
-        <div id="workspace" class="col" data-column-id="{{work.work.columnId}}" data-column-difficulty="{{work.work.difficulty}}">
-            <h2>Workspace</h2>
-            <div class="tasks"></div>
-        </div>
-    </div>
-
 </div>
 
 {{>cardtemplate }}

@@ -6,7 +6,7 @@
         <progress value="" id="progressbar"></progress>
     </div>
 
-    <div id="work-container" class="row">
+    <div class="row">
         <div id="inbox" class="wait-column col" data-column-id="{{work.inbox.columnId}}">
             <h2>Inbox</h2>
             <div class="tasks"></div>
@@ -14,6 +14,18 @@
 
         <div id="testspace" class="col" data-column-id="{{work.work.columnId}}" data-column-difficulty="{{work.work.difficulty}}">
             <h2>Test-space</h2>
+            <div class="tasks"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="outbox" class="wait-column col" data-column-id="{{work.outbox.columnId}}">
+            <h2>Done</h2>
+            <div class="tasks"></div>
+        </div>
+
+        <div id="defects" class="wait-column col" data-column-id="{{work.defects.columnId}}">
+            <h2>Defect</h2>
             <div class="tasks"></div>
         </div>
     </div>
