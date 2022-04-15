@@ -41,20 +41,8 @@ describe('stats end-to-end', () => {
         {time: 1, todo: 1, busy: 0, done: 0},
         {time: 2, todo: 0, busy: 1, done: 0},
         {time: 3, todo: 0, busy: 0, done: 1},
-        {time: 3, todo: 0, busy: 0, done: 1},
       ]
     )
-
-    TestDate.advanceTime(1);
-    expect(application.findStats('g1').history()).toMatchObject([
-        {time: 0, todo: 0, busy: 0, done: 0},
-        {time: 1, todo: 1, busy: 0, done: 0},
-        {time: 2, todo: 0, busy: 1, done: 0},
-        {time: 3, todo: 0, busy: 0, done: 1},
-        {time: 4, todo: 0, busy: 0, done: 1},
-      ]
-    )
-
   });
 });
 
@@ -81,7 +69,6 @@ describe('Stats Process Manager', () => {
 
     expect(stats.find('g1').history()).toMatchObject([
       {time: 0, todo: 0, wip: 0},
-      {time: 0, todo: 0, wip: 0},
     ])
   });
 
@@ -92,7 +79,6 @@ describe('Stats Process Manager', () => {
 
     expect(stats.find('g1').history()).toMatchObject([
         {time: 0, todo: 0, wip: 0},
-        {time: 1, todo: 1, wip: 1},
         {time: 1, todo: 1, wip: 1},
       ],
     )
@@ -119,7 +105,6 @@ describe('Stats Process Manager', () => {
     expect(stats.find('g1').history()).toMatchObject([
       {time: 0, todo: 0, done: 0, wip: 0},
       {time: 1, todo: 1, done: 0, wip: 1},
-      {time: 2, todo: 0, done: 1, wip: 0},
       {time: 2, todo: 0, done: 1, wip: 0},
       ],
     )
@@ -180,7 +165,7 @@ describe('Stats Process Manager', () => {
     publish(TaskCreated({gameId: 'g1', taskId: 't2', column: {columnId: 'c1', taskName: 'todo'}}))
 
     expect(stats.find('g1').history()).toMatchObject(
-      [{time: 0, todo: 0}, {time: 1, todo: 1}, {time: 1, todo: 1}],
+      [{time: 0, todo: 0}, {time: 1, todo: 1}],
     )
   });
 });

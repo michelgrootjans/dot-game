@@ -63,43 +63,35 @@
     bottom: 10px;
 }
 
-.todo-column .postit:nth-child(5n+1),
-.wait-column .postit:nth-child(5n+1),
-.fail-column .postit:nth-child(5n+1),
-.done-column .postit:nth-child(5n+1){
+.todo-column .postit:nth-child(4n+1),
+.wait-column .postit:nth-child(4n+1),
+.fail-column .postit:nth-child(4n+1),
+.done-column .postit:nth-child(4n+1){
     z-index: 10;
 }
-.todo-column .postit:nth-child(5n+2),
-.wait-column .postit:nth-child(5n+2),
-.fail-column .postit:nth-child(5n+2),
-.done-column .postit:nth-child(5n+2){
+.todo-column .postit:nth-child(4n+2),
+.wait-column .postit:nth-child(4n+2),
+.fail-column .postit:nth-child(4n+2),
+.done-column .postit:nth-child(4n+2){
     transform: rotate(1deg);
     margin-top: -85px;
     z-index: 9;
 }
-.todo-column .postit:nth-child(5n+3),
-.wait-column .postit:nth-child(5n+3),
-.fail-column .postit:nth-child(5n+3),
-.done-column .postit:nth-child(5n+3){
+.todo-column .postit:nth-child(4n+3),
+.wait-column .postit:nth-child(4n+3),
+.fail-column .postit:nth-child(4n+3),
+.done-column .postit:nth-child(4n+3){
     transform: rotate(2deg);
     margin-top: -85px;
     z-index: 8;
 }
-.todo-column .postit:nth-child(5n+4),
-.wait-column .postit:nth-child(5n+4),
-.fail-column .postit:nth-child(5n+4),
-.done-column .postit:nth-child(5n+4){
+.todo-column .postit:nth-child(4n+4),
+.wait-column .postit:nth-child(4n+4),
+.fail-column .postit:nth-child(4n+4),
+.done-column .postit:nth-child(4n+4){
     transform: rotate(3deg);
     margin-top: -85px;
     z-index: 7;
-}
-.todo-column .postit:nth-child(5n+5),
-.wait-column .postit:nth-child(5n+5),
-.fail-column .postit:nth-child(5n+5),
-.done-column .postit:nth-child(5n+5){
-    transform: rotate(4deg);
-    margin-top: -85px;
-    z-index: 6;
 }
 
 /*Test-space*/
