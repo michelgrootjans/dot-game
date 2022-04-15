@@ -20,12 +20,10 @@ const Game = state => {
   state.assignedColumns = state.assignedColumns || [];
 
   const join = () => {
-    console.log('before', {state})
     if(state.unassignedColumns.length === 0) throw 'Sorry, game is full';
     const playerColumn = state.unassignedColumns[0];
     state.unassignedColumns.splice(0, 1);
     state.assignedColumns.push(playerColumn);
-    console.log('after', {state})
     return playerColumn.columnId;
   };
 

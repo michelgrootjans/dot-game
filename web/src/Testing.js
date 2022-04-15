@@ -21,8 +21,6 @@ const initialize = () => {
       answer.innerText = `${task.question + task.actualAnswer} ${task.success ? '✅' : '❌'}`;
       answers.append(answer);
     });
-
-    console.log(card.payload)
   });
 
 };

@@ -60,17 +60,15 @@ const Cfd = (context, gameId) => {
     .then(response => response.history);
 
   const initialize = (detail) => {
-    console.log(detail.columns);
     chart.data.datasets = detail.columns
       .map(column => column.taskName)
       .filter(distinct)
       .reverse()
       .map((label, index) => createDataset(label, colors[index]))
-    console.log(chart.data.datasets)
   };
 
-  const update = async (detail) => {
-    const newHistory = await getHistory(detail.iterationId);
+  const update = async (iterationId) => {
+    const newHistory = await getHistory(iterationId);
 
     const getSeries = label => newHistory.map(record => ({x: record.time, y: record[label]}));
 

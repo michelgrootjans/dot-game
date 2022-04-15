@@ -27,7 +27,6 @@ initializeGame(gameId);
 const socket = io({query: {gameId}});
 
 function publish(event) {
-  console.log(event);
   document.dispatchEvent(new CustomEvent(event.type, {detail: event}))
 }
 
