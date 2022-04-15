@@ -28,7 +28,7 @@ const IterationStats = (iterationStartedEvent, startTime) => {
       if(event.to.taskName === lastTaskName) decrement('wip')
       return history.push({...currentStats, time: getTime(time)});
     },
-    history: () => history
+    history: () => [...history, {...currentStats, time: getTime(Date.now())}]
   }
 };
 

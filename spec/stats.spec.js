@@ -16,7 +16,8 @@ describe('stats end-to-end', () => {
   it("keeps history", () => {
     application = TestApplication();
 
-    application.execute(CreateGame({gameId: 'g1', state: {
+    application.execute(CreateGame({
+      gameId: 'g1', state: {
         columns: [
           {columnId: "c1", columnType: "todo-column", taskName: "todo", nextColumnId: "c2"},
           {columnId: "c2", columnType: "work-column", taskName: "busy", nextColumnId: "c3"},
@@ -40,8 +41,20 @@ describe('stats end-to-end', () => {
         {time: 1, todo: 1, busy: 0, done: 0},
         {time: 2, todo: 0, busy: 1, done: 0},
         {time: 3, todo: 0, busy: 0, done: 1},
+        {time: 3, todo: 0, busy: 0, done: 1},
       ]
     )
+
+    TestDate.advanceTime(1);
+    expect(application.findStats('g1').history()).toMatchObject([
+        {time: 0, todo: 0, busy: 0, done: 0},
+        {time: 1, todo: 1, busy: 0, done: 0},
+        {time: 2, todo: 0, busy: 1, done: 0},
+        {time: 3, todo: 0, busy: 0, done: 1},
+        {time: 4, todo: 0, busy: 0, done: 1},
+      ]
+    )
+
   });
 });
 
@@ -64,11 +77,12 @@ describe('Stats Process Manager', () => {
   });
 
   it("starts with a clean history", () => {
-    publish(IterationStarted({gameId: 'g1', columns:[{columnId: 'c1', taskName: 'todo'}]}))
+    publish(IterationStarted({gameId: 'g1', columns: [{columnId: 'c1', taskName: 'todo'}]}))
 
-    expect(stats.find('g1').history()).toMatchObject(
-      [{time: 0, todo: 0, wip: 0}],
-    )
+    expect(stats.find('g1').history()).toMatchObject([
+      {time: 0, todo: 0, wip: 0},
+      {time: 0, todo: 0, wip: 0},
+    ])
   });
 
   it("adds one item", () => {
@@ -76,8 +90,11 @@ describe('Stats Process Manager', () => {
     TestDate.advanceTime(1);
     publish(TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1', taskName: 'todo'}}))
 
-    expect(stats.find('g1').history()).toMatchObject(
-      [{time: 0, todo: 0, wip: 0}, {time: 1, todo: 1, wip: 1}],
+    expect(stats.find('g1').history()).toMatchObject([
+        {time: 0, todo: 0, wip: 0},
+        {time: 1, todo: 1, wip: 1},
+        {time: 1, todo: 1, wip: 1},
+      ],
     )
   });
 
@@ -86,27 +103,36 @@ describe('Stats Process Manager', () => {
         gameId: 'g1', columns: [
           {columnId: 'c1', taskName: 'todo'},
           {columnId: 'c2', taskName: 'done'}
-      ]}
+        ]
+      }
     ));
     TestDate.advanceTime(1);
     publish(TaskCreated({gameId: 'g1', taskId: 't1', column: {columnId: 'c1', taskName: 'todo'}}))
     TestDate.advanceTime(1);
-    publish(TaskMoved({gameId: 'g1', taskId: 't1', from: {columnId: 'c1', taskName: 'todo'}, to: {columnId: 'c2', taskName: 'done'}}))
+    publish(TaskMoved({
+      gameId: 'g1',
+      taskId: 't1',
+      from: {columnId: 'c1', taskName: 'todo'},
+      to: {columnId: 'c2', taskName: 'done'}
+    }))
 
     expect(stats.find('g1').history()).toMatchObject([
       {time: 0, todo: 0, done: 0, wip: 0},
       {time: 1, todo: 1, done: 0, wip: 1},
-      {time: 2, todo: 0, done: 1, wip: 0}],
+      {time: 2, todo: 0, done: 1, wip: 0},
+      {time: 2, todo: 0, done: 1, wip: 0},
+      ],
     )
   });
 
   it("moves multiple items", () => {
     publish(IterationStarted({
-      gameId: 'g1', columns: [
-        {columnId: 'c1', taskName: 'todo'},
-        {columnId: 'c2', taskName: 'dev'},
-        {columnId: 'c2', taskName: 'done'},
-      ]}
+        gameId: 'g1', columns: [
+          {columnId: 'c1', taskName: 'todo'},
+          {columnId: 'c2', taskName: 'dev'},
+          {columnId: 'c2', taskName: 'done'},
+        ]
+      }
     ));
     expect(lastStat()).toMatchObject({time: 0, todo: 0, dev: 0, done: 0, wip: 0})
 
@@ -119,13 +145,28 @@ describe('Stats Process Manager', () => {
     expect(lastStat()).toMatchObject({time: 1, todo: 3, dev: 0, done: 0, wip: 3})
 
     TestDate.advanceTime(1);
-    publish(TaskMoved({gameId: 'g1', taskId: 't1', from: {columnId: 'c1', taskName: 'todo'}, to: {columnId: 'c2', taskName: 'dev'}}))
+    publish(TaskMoved({
+      gameId: 'g1',
+      taskId: 't1',
+      from: {columnId: 'c1', taskName: 'todo'},
+      to: {columnId: 'c2', taskName: 'dev'}
+    }))
     expect(lastStat()).toMatchObject({time: 2, todo: 2, dev: 1, done: 0, wip: 3})
-    publish(TaskMoved({gameId: 'g1', taskId: 't2', from: {columnId: 'c1', taskName: 'todo'}, to: {columnId: 'c2', taskName: 'dev'}}))
+    publish(TaskMoved({
+      gameId: 'g1',
+      taskId: 't2',
+      from: {columnId: 'c1', taskName: 'todo'},
+      to: {columnId: 'c2', taskName: 'dev'}
+    }))
     expect(lastStat()).toMatchObject({time: 2, todo: 1, dev: 2, done: 0, wip: 3})
 
     TestDate.advanceTime(1);
-    publish(TaskMoved({gameId: 'g1', taskId: 't1', from: {columnId: 'c2', taskName: 'dev'}, to: {columnId: 'c3', taskName: 'done'}}))
+    publish(TaskMoved({
+      gameId: 'g1',
+      taskId: 't1',
+      from: {columnId: 'c2', taskName: 'dev'},
+      to: {columnId: 'c3', taskName: 'done'}
+    }))
     expect(lastStat()).toMatchObject({time: 3, todo: 1, dev: 1, done: 1, wip: 2})
   });
 
@@ -139,7 +180,7 @@ describe('Stats Process Manager', () => {
     publish(TaskCreated({gameId: 'g1', taskId: 't2', column: {columnId: 'c1', taskName: 'todo'}}))
 
     expect(stats.find('g1').history()).toMatchObject(
-      [{time: 0, todo: 0}, {time: 1, todo: 1}],
+      [{time: 0, todo: 0}, {time: 1, todo: 1}, {time: 1, todo: 1}],
     )
   });
 });
