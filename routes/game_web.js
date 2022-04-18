@@ -63,7 +63,7 @@ const init = application => {
     } else if (columnType === 'test-column') {
       res.render('games/test', {work, layout: 'mobile', title: work.work.title});
     } else {
-      res.redirect(`/games/${params.gameId}/${work.inbox.columnId}`);
+      res.status(404).send("Sorry, something went wrong");
     }
   });
 
