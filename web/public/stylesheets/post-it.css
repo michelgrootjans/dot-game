@@ -1,0 +1,114 @@
+.postit {
+    position: relative;
+    background: #feff9c;
+    box-shadow: 1px 1px 2px 1px rgba(9, 30, 66, .25);
+    border-radius: 3px;
+    width: 60px;
+    height: 60px;
+    padding: 10px;
+    margin: 10px;
+
+    /* undo bootstrap reboot */
+    box-sizing: content-box;
+}
+
+.todo-column .postit:nth-child(4n+1),
+.wait-column .postit:nth-child(4n+1),
+.fail-column .postit:nth-child(4n+1),
+.done-column .postit:nth-child(4n+1){
+    z-index: 10;
+}
+.todo-column .postit:nth-child(4n+2),
+.wait-column .postit:nth-child(4n+2),
+.fail-column .postit:nth-child(4n+2),
+.done-column .postit:nth-child(4n+2){
+    transform: rotate(1deg);
+    margin-top: -85px;
+    z-index: 9;
+}
+.todo-column .postit:nth-child(4n+3),
+.wait-column .postit:nth-child(4n+3),
+.fail-column .postit:nth-child(4n+3),
+.done-column .postit:nth-child(4n+3){
+    transform: rotate(2deg);
+    margin-top: -85px;
+    z-index: 8;
+}
+.todo-column .postit:nth-child(4n+4),
+.wait-column .postit:nth-child(4n+4),
+.fail-column .postit:nth-child(4n+4),
+.done-column .postit:nth-child(4n+4){
+    transform: rotate(3deg);
+    margin-top: -85px;
+    z-index: 7;
+}
+
+/*details*/
+.postit .previous-puzzles{
+    visibility: hidden;
+}
+
+.postit .question-container {
+    visibility: hidden;
+}
+
+.postit .answer {
+    position: absolute;
+    right: 10px;
+    width: 60px;
+}
+
+#inbox .move-button {
+    visibility: visible;
+}
+#inbox .move-button:before {
+    content: 'Start';
+}
+
+#workspace .postit,
+#testspace .postit{
+    width: 180px;
+    height: 180px;
+}
+
+#workspace .question-container {
+    visibility: visible;
+}
+#workspace .move-button {
+    visibility: visible;
+}
+#workspace .move-button:before {
+    content: 'OK'
+}
+
+
+.postit .move-button {
+    visibility: hidden;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+.postit .reject-button {
+    visibility: hidden;
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+}
+
+/*Test-space*/
+#testspace .previous-puzzles {
+    visibility: visible;
+}
+#testspace .move-button {
+    visibility: visible;
+}
+#testspace .move-button:before {
+    content: 'Accept ✅'
+}
+#testspace .reject-button {
+    visibility: visible;
+}
+#testspace .reject-button:before {
+    content: 'Reject ❌'
+}
+

@@ -1,0 +1,42 @@
+/*stats*/
+.iteration-stats {
+    border-collapse: collapse;
+}
+.iteration-stats th,
+.iteration-stats td{
+    border: 1px solid grey;
+    padding: 0.5rem;
+}
+
+#iterations-stats-container {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(50px, max-content);
+}
+.iteration div {
+    text-align: right;
+    padding: 0 10px;
+}
+.iteration .iteration-name {
+    font-weight: bold;
+}
+.success {
+    border-color: rgb(75, 192, 192);
+    background-color: rgba(75, 192, 192, 0.1);
+}
+.wip {
+    border-color: rgb(255, 205, 86);
+    background-color: rgba(255, 205, 86, 0.1);
+}
+.throughput {
+    border-color: rgb(54, 162, 235);
+    background-color: rgba(54, 162, 235, 0.1);
+}
+.lead-time {
+    border-color: rgb(255, 99, 132);
+    background-color: rgba(255, 99, 132, 0.1);
+}
+
+.iteration.current {
+    border: gray 1px dashed;
+}

@@ -144,10 +144,10 @@ input#iteration-length{
   box-sizing: content-box;
 }
 
-#inbox .move-button {
+#inbox .postit .move-button {
   visibility: visible;
 }
-#inbox .move-button:before {
+#inbox .postit .move-button:before {
   content: 'Start';
 }
 

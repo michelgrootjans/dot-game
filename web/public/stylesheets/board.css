@@ -1,0 +1,53 @@
+#board {
+    background: #EBECF0;
+    border-radius: 10px;
+    border: 10px solid #adb2bd;
+    box-shadow: inset -1px 2px 2px #404040, 4px 4px 4px rgba(0, 0, 0, 0.1);
+    min-height: 600px;
+}
+
+.board-column {
+}
+
+.board-column h2 {
+    font-size: 16px;
+    margin: 12px 0 0 0;
+    height: 1em;
+    text-align: center;
+}
+
+.board-column h4 {
+    height: 1em;
+    font-size: 1em;
+    color: darkgrey;
+    text-align: center;
+    width: 100%;
+}
+
+.board-column.todo-column,
+.board-column.work-column,
+.board-column.test-column {
+    border-left: 2px solid black;
+}
+.board-column.wait-column {
+    border-left: 1px dashed grey;
+}
+.board-column.done-column,
+.board-column.fail-column{
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    overflow: hidden;
+}
+.board-column.fail-column h4 {
+    height: 0;
+}
+.last-column {
+}
+
+.board-column.work-column h4:before{
+    content: 'ongoing';
+}
+.board-column.wait-column h4:before{
+    content: 'done';
+}
+

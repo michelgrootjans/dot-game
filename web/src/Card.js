@@ -8,13 +8,13 @@ const create = ({gameId, taskId, color, payload}) => {
   card.payload = payload || {}
 
   card.setAttribute('style', `background: ${color};`);
-  card.querySelector('.move-button').addEventListener('click', (event) => {
+  card.querySelector('.move-button')?.addEventListener('click', (event) => {
     event.preventDefault()
-    return API(gameId).task.move(taskId, {payload})
+    API(gameId).task.move(taskId, {payload})
   })
-  card.querySelector('.reject-button').addEventListener('click', (event) => {
+  card.querySelector('.reject-button')?.addEventListener('click', (event) => {
     event.preventDefault()
-    return API(gameId).task.reject(taskId, {payload})
+    API(gameId).task.reject(taskId, {payload})
   })
   return card;
 };
