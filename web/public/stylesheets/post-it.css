@@ -22,7 +22,7 @@
 .wait-column .postit:nth-child(4n+2),
 .fail-column .postit:nth-child(4n+2),
 .done-column .postit:nth-child(4n+2){
-    transform: rotate(1deg);
+    transform: rotate(2deg);
     margin-top: -85px;
     z-index: 9;
 }
@@ -30,7 +30,7 @@
 .wait-column .postit:nth-child(4n+3),
 .fail-column .postit:nth-child(4n+3),
 .done-column .postit:nth-child(4n+3){
-    transform: rotate(2deg);
+    transform: rotate(-2deg);
     margin-top: -85px;
     z-index: 8;
 }
@@ -38,7 +38,7 @@
 .wait-column .postit:nth-child(4n+4),
 .fail-column .postit:nth-child(4n+4),
 .done-column .postit:nth-child(4n+4){
-    transform: rotate(3deg);
+    transform: rotate(4deg);
     margin-top: -85px;
     z-index: 7;
 }
