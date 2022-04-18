@@ -37,7 +37,7 @@
     <div id="board" class="row">
         {{#each game.activeColumns}}
             <div class="col board-column {{columnType}}" data-column-id="{{columnId}}">
-                <h2><a href="{{game.gameId}}/{{columnId}}" target="_blank">{{title}}</a></h2>
+                <h2><a href="/games/{{../game.gameId}}/{{columnId}}" target="_blank">{{title}}</a></h2>
                 <h4></h4>
                 <div class="tasks"></div>
             </div>
@@ -45,8 +45,8 @@
         <div class="col board-column done-column">
             {{#each game.endColumns}}
             <div class="row">
-                <div class="col {{columnType}}" data-column-id="{{columnId}}">
-                    <h2><a href="{{game.gameId}}/{{columnId}}" target="_blank">{{title}}</a></h2>
+                <div class="col" data-column-id="{{columnId}}">
+                    <h2>{{title}}</h2>
                     <h4></h4>
                     <div class="tasks"></div>
                 </div>

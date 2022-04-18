@@ -59,10 +59,10 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-var port = (process.env.PORT || '3000');
+const port = (process.env.PORT || '3000');
 app.set('port', port);
 
-var server = http.createServer(app);
+const server = http.createServer(app);
 const socket = socketApi.init(server, events)
 subscribe('*', socket.publish);
 
