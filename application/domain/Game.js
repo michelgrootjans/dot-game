@@ -20,7 +20,14 @@ const Game = state => {
   const isOpen = () => playerColumns.some(c => c.numberOfAssignments === 0);
   const join = (columnId) => findColumn(columnId).numberOfAssignments++;
   const leave = (columnId) => findColumn(columnId).numberOfAssignments--;
-  const findFreeWork = () => playerColumns.find(c => c.numberOfAssignments === 0)?.columnId;
+  const findFreeWork = () => {
+    const column = playerColumns.find(c => c.numberOfAssignments === 0 && !c.reserved);
+    if(column) {
+      column.reserved = true;
+      setTimeout(() => column.reserved = false, 5000)
+    }
+    return column?.columnId;
+  };
   const assignments = () => playerColumns
 
   const findTask = taskId => state.tasks.find(t => t.taskId === taskId);
