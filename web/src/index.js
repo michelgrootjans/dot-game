@@ -26,7 +26,10 @@ const gameId = document.querySelector('[data-game-id]').dataset.gameId;
 initializeGame(gameId);
 const socket = io({query: {gameId}});
 
-const publish = event => document.dispatchEvent(new CustomEvent(event.type, {detail: event}));
+const publish = event => {
+  console.log(event);
+  document.dispatchEvent(new CustomEvent(event.type, {detail: event}));
+};
 
 socket.on('message', event => publish(event));
 socket.on('replay', events => events.forEach(event => publish(event)));
