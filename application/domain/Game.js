@@ -105,6 +105,7 @@ const Game = state => {
     ...state,
     activeColumns: columns.filter(column => ![doneColumn, defectsColumn].includes(column)),
     endColumns: [doneColumn, defectsColumn],
+    playerColumns,
 
     isOpen,
     join,

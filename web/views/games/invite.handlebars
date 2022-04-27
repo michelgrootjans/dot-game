@@ -1,9 +1,24 @@
 <div class="container" id="container" data-game-id="{{game.gameId}}">
     <h1>Join this game!</h1>
     <div class="row">
-        <a href="{{linkForParticipants}}" target="_blank">
-            <div id="qrcode"></div>
-        </a>
+        <div class="col">
+            <a href="{{linkForParticipants}}" target="_blank">
+                <div id="qrcode"></div>
+            </a>
+        </div>
+        <div class="col">
+
+            {{#each game.playerColumns}}
+                <ul data-column-id="{{columnId}}">
+                    <li>
+                        {{title}}
+                        <span class="participants">
+                    </span>
+                    </li>
+                </ul>
+            {{/each}}
+        </div>
+
     </div>
     <div class="row">
         <div class="players"></div>

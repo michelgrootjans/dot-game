@@ -21,7 +21,7 @@ const init = application => {
     const game = application.findGame(gameId)
     if (game) {
       const linkForParticipants = `${basePath(req)}/games/${gameId}/join`;
-      res.render('games/invite', {game, linkForParticipants, title: 'Join the Dot Game'});
+      res.render('games/invite', {game, linkForParticipants, layout: 'desktop', title: 'Join the Dot Game'});
     } else {
       res.redirect('/')
     }
