@@ -37,7 +37,11 @@
     <div id="board" class="row">
         {{#each game.activeColumns}}
             <div class="col board-column {{columnType}}" data-column-id="{{columnId}}">
-                <h2><a href="/games/{{../game.gameId}}/{{columnId}}" target="_blank">{{title}}</a></h2>
+                <h2>
+                    <a href="/games/{{../game.gameId}}/{{columnId}}" target="_blank">{{title}}</a>
+                    <span class="participants">
+                    </span>
+                </h2>
                 <h4></h4>
                 <div class="tasks"></div>
             </div>
@@ -58,3 +62,10 @@
 </div>
 
 {{>cardtemplate-show }}
+
+<template id="player-template">
+    <span class="participant">
+        <i class="bi bi-person-fill"></i>
+    </span>
+</template>
+
