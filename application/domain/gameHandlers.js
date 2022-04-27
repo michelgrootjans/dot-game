@@ -5,7 +5,6 @@ const CreateGameHandler = (games, publish) => ({
   execute: ({gameId, state = initialState()}) => {
     if(games.find(gameId)) return;
 
-    state.columns = state.columns.map(c => ({...c, numberOfAssignments: 0}))
     const game = {...state, gameId};
     games.add(game)
     publish(GameCreated(game));

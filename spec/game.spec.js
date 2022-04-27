@@ -24,7 +24,7 @@ describe('Game', () => {
       expect(game().isOpen()).toBeTruthy();
       expect(game().findFreeWork()).toBe('c1');
       expect(game().assignments()).toMatchObject([
-        {columnId: 'c1', numberOfAssignments: 0, reserved: true},
+        {columnId: 'c1', numberOfAssignments: 0},
         {columnId: 'c2', numberOfAssignments: 0},
         {columnId: 'c4', numberOfAssignments: 0},
         {columnId: 'c6', numberOfAssignments: 0},

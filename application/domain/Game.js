@@ -6,9 +6,38 @@ const {anyCardColor} = require("./Colors");
 
 const minutes = 60 * 1000;
 
+const Column = (state) => {
+  state.numberOfAssignments = state.numberOfAssignments || 0;
+
+  const reserve = (timeout = 5000) => {
+    state.reserved = true;
+    setTimeout(() => state.reserved = false, timeout)
+  };
+
+  const join = () => {
+    state.numberOfAssignments++;
+    state.reserved = false;
+  };
+
+  const leave = () => {
+    state.numberOfAssignments--;
+    state.reserved = false;
+  };
+
+  const isOpen = () => state.numberOfAssignments === 0 && !state.reserved;
+
+  return {
+    ...state,
+    join,
+    leave,
+    isOpen,
+    reserve
+  }
+};
+
 const Game = state => {
   const gameId = state.gameId;
-  const columns = state.columns;
+  const columns = state.columns.map(Column);
 
   const todoColumn = columns.find(column => column.columnType === 'todo-column');
   const workColumns = columns.filter(column => column.columnType === 'work-column');
@@ -17,15 +46,12 @@ const Game = state => {
   const defectsColumn = columns.find(column => column.columnType === 'fail-column');
   const playerColumns = [todoColumn, ...workColumns, testColumn];
 
-  const isOpen = () => playerColumns.some(c => c.numberOfAssignments === 0);
-  const join = (columnId) => findColumn(columnId).numberOfAssignments++;
-  const leave = (columnId) => findColumn(columnId).numberOfAssignments--;
-  const findFreeWork = () => {
-    const column = playerColumns.find(c => c.numberOfAssignments === 0 && !c.reserved);
-    if(column) {
-      column.reserved = true;
-      setTimeout(() => column.reserved = false, 5000)
-    }
+  const isOpen = () => playerColumns.some(c => c.isOpen());
+  const join = (columnId) => findColumn(columnId).join();
+  const leave = (columnId) => findColumn(columnId).leave();
+  const findFreeWork = (timeout = 5000) => {
+    const column = playerColumns.find(c => c.isOpen());
+    if(column) column.reserve(timeout);
     return column?.columnId;
   };
   const assignments = () => playerColumns

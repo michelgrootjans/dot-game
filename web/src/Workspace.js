@@ -20,7 +20,6 @@ const initialize = () => {
       const actualAnswer = event.target.value;
       task.actualAnswer = actualAnswer
       task.success = (actualAnswer === puzzle.answer);
-      console.log({tasks: card.payload.tasks})
     });
   };
 

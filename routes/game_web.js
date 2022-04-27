@@ -36,7 +36,7 @@ const init = application => {
     }
     
     if (game.isOpen()) {
-      res.redirect(`/games/${game.gameId}/${(game.findFreeWork())}`);
+      res.redirect(`/games/${game.gameId}/${(game.findFreeWork(5000))}`);
     } else {
       res.status(404).send("Sorry, this game is full")
     }
@@ -56,7 +56,6 @@ const init = application => {
     const params = allParams(req);
     const work = application.execute(FindWork(params))
     const columnType = work.work.columnType;
-    console.log(work.work.columnId)
     if (columnType === 'todo-column') {
       res.render('games/start-work', {work, layout: 'mobile', title: work.work.title});
     } else if (columnType === 'work-column') {

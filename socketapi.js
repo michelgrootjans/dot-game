@@ -15,8 +15,6 @@ let init = (server, events, application) => {
     socket.join(gameId)
     socket.emit('replay', events.eventsFor(gameId));
 
-    console.log('connection', {gameId, workColumnId})
-
     if (workColumnId) {
       application.execute(JoinGame({gameId, columnId: workColumnId}))
       socket.on('disconnect', () => {
