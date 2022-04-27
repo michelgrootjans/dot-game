@@ -1,4 +1,5 @@
 const {Server} = require("socket.io");
+const {JoinGame, LeaveGame} = require("./application/api/commands/player");
 
 let init = (server, events, application) => {
   const io = new Server(server);
@@ -17,12 +18,9 @@ let init = (server, events, application) => {
     console.log('connection', {gameId, workColumnId})
 
     if (workColumnId) {
-      // application.execute({type: 'JoinGame', gameId, workColumnId})
-      const joined = {type: 'PlayerJoined', gameId, workColumnId};
-      publish(joined);
+      application.execute(JoinGame({gameId, columnId: workColumnId}))
       socket.on('disconnect', () => {
-        const left = {type: 'PlayerLeft', gameId, workColumnId};
-        publish(left)
+        application.execute(LeaveGame({gameId, columnId: workColumnId}))
       });
     }
   });

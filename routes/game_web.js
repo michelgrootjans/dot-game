@@ -30,15 +30,15 @@ const init = application => {
   router.get('/:gameId/join', function (req, res, next) {
     const gameId = req.params.gameId;
     const game = application.findGame(gameId);
-    if (game) {
-      try {
-        const columnId = game.join()
-        res.redirect(`/games/${game.gameId}/${columnId}`);
-      } catch {
-        res.status(404).send("Sorry, this game is full")
-      }
-    } else {
+    if (!game) {
       res.redirect('/');
+      return;
+    }
+    
+    if (game.isOpen()) {
+      res.redirect(`/games/${game.gameId}/${(game.findFreeWork())}`);
+    } else {
+      res.status(404).send("Sorry, this game is full")
     }
   });
 

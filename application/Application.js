@@ -2,6 +2,7 @@ const {CreateGameHandler} = require("./domain/gameHandlers");
 const {StartIterationHandler, EndIterationHandler, IterationProcessManager} = require("./domain/iterationHandlers");
 const {CreateTaskHandler, MoveTaskHandler, FindWorkHandler, RejectTaskHandler} = require("./domain/taskHandlers");
 const {StatsProcessManager} = require("./domain/StatsProcessManager");
+const {JoinGameHandler, LeaveGameHandler} = require("./domain/PlayerHandlers");
 
 const intializeGames = ({games, delay, publish, subscribe, events}) => {
   subscribe('*', events.store);
@@ -11,6 +12,9 @@ const intializeGames = ({games, delay, publish, subscribe, events}) => {
 
     'StartIteration': StartIterationHandler(games, publish),
     'EndIteration': EndIterationHandler(games, publish),
+
+    'JoinGame': JoinGameHandler(games, publish),
+    'LeaveGame': LeaveGameHandler(games, publish),
 
     'CreateTask': CreateTaskHandler(games, publish),
     'MoveTask': MoveTaskHandler(games, publish),

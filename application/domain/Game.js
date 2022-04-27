@@ -16,16 +16,12 @@ const Game = state => {
   const doneColumn = columns.find(column => column.columnType === 'done-column');
   const defectsColumn = columns.find(column => column.columnType === 'fail-column');
   const playerColumns = [todoColumn, ...workColumns, testColumn];
-  state.unassignedColumns = state.unassignedColumns || [...playerColumns]
-  state.assignedColumns = state.assignedColumns || [];
 
-  const join = () => {
-    if(state.unassignedColumns.length === 0) throw 'Sorry, game is full';
-    const playerColumn = state.unassignedColumns[0];
-    state.unassignedColumns.splice(0, 1);
-    state.assignedColumns.push(playerColumn);
-    return playerColumn.columnId;
-  };
+  const isOpen = () => playerColumns.some(c => c.numberOfAssignments === 0);
+  const join = (columnId) => findColumn(columnId).numberOfAssignments++;
+  const leave = (columnId) => findColumn(columnId).numberOfAssignments--;
+  const findFreeWork = () => playerColumns.find(c => c.numberOfAssignments === 0).columnId;
+  const assignments = () => playerColumns
 
   const findTask = taskId => state.tasks.find(t => t.taskId === taskId);
   const findColumn = columnId => columns.find(c => c.columnId === columnId);
@@ -109,7 +105,13 @@ const Game = state => {
     ...state,
     activeColumns: columns.filter(column => ![doneColumn, defectsColumn].includes(column)),
     endColumns: [doneColumn, defectsColumn],
+
+    isOpen,
     join,
+    findFreeWork,
+    leave,
+    assignments,
+
     startIteration,
     endIteration,
     createTask,
