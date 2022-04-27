@@ -63,7 +63,7 @@ const port = (process.env.PORT || '3000');
 app.set('port', port);
 
 const server = http.createServer(app);
-const socket = socketApi.init(server, events)
+const socket = socketApi.init(server, events, application)
 subscribe('*', socket.publish);
 
 

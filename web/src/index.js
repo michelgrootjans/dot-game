@@ -11,23 +11,32 @@ import Simulations from "./Simulations";
 
 
 const $gameId = document.querySelector('[data-game-id]');
+
+const getQuery = gameId => {
+  const $workColumnId = document.querySelector('[data-work-column-id]');
+  const workColumnId = $workColumnId?.dataset.workColumnId;
+
+  return workColumnId ? {gameId, workColumnId} : {gameId};
+};
+
+const initializeGame = (gameId) => {
+  StartIteration.initialize(gameId);
+  CreateTask.initialize(gameId);
+  Columns.initialize();
+  Workspace.initialize();
+  Testing.initialize();
+  Charts.initialize(gameId);
+  ProgressBar.initialize();
+  IterationStats.initialize(gameId);
+
+  Simulations.initialize(gameId);
+};
+
 if ($gameId) {
-  const initializeGame = (gameId) => {
-    StartIteration.initialize(gameId);
-    CreateTask.initialize(gameId);
-    Columns.initialize();
-    Workspace.initialize();
-    Testing.initialize();
-    Charts.initialize(gameId);
-    ProgressBar.initialize();
-    IterationStats.initialize(gameId);
-
-    Simulations.initialize(gameId);
-  };
-
   const gameId = $gameId.dataset.gameId;
-  initializeGame(gameId);
-  const socket = io({query: {gameId}});
+
+  const socket = io({query: getQuery(gameId)});
+  initializeGame(gameId, socket);
 
   const publish = event => {
     console.log(event);

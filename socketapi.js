@@ -1,6 +1,6 @@
-const { Server } = require("socket.io");
+const {Server} = require("socket.io");
 
-let init = (server, events) => {
+let init = (server, events, application) => {
   const io = new Server(server);
 
   const publish = event => {
@@ -9,9 +9,22 @@ let init = (server, events) => {
   };
 
   io.on('connection', (socket) => {
-    const gameId = socket.handshake.query.gameId;
+    const {gameId, workColumnId} = socket.handshake.query;
+
     socket.join(gameId)
     socket.emit('replay', events.eventsFor(gameId));
+
+    console.log('connection', {gameId, workColumnId})
+
+    if (workColumnId) {
+      // application.execute({type: 'JoinGame', gameId, workColumnId})
+      const joined = {type: 'PlayerJoined', gameId, workColumnId};
+      publish(joined);
+      socket.on('disconnect', () => {
+        const left = {type: 'PlayerLeft', gameId, workColumnId};
+        publish(left)
+      });
+    }
   });
 
   return {publish}
