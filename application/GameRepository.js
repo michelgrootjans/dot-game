@@ -1,19 +1,19 @@
-const Game = require("./domain/Game");
+const Game = require('./domain/Game')
 
 const GameRepository = () => {
-  let games = [];
+  let games = []
 
-  const add = game => games = [...games, game];
-  const find = gameId => {
-    const game = games.find(game => game.gameId === gameId);
+  const add = (game) => (games = [...games, game])
+  const find = (gameId) => {
+    const game = games.find((game) => game.gameId === gameId)
     if (game) {
-      return Game(game);
+      return Game(game)
     }
-  };
+  }
   return {
     add,
-    find
+    find,
   }
-};
+}
 
 module.exports = GameRepository

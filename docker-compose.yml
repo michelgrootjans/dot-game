@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  server:
+    command: bash -c "npm install && npm run serverstart"
+    image: node:slim
+    user: 1000:1000
+    volumes:
+      - '.:/app'
+    working_dir: /app
+    network_mode: host
+    restart: unless-stopped
+    expose:
+      - 3000
+
+  front:
+    depends_on:
+      - server
+    command: npm run webpack:watch
+    image: node:16-slim
+    user: 1000:1000
+    volumes:
+      - '.:/app'
+    working_dir: /app

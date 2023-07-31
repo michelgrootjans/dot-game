@@ -1,73 +1,90 @@
-const express = require('express');
-const {v4: uuid} = require("uuid");
+const express = require('express')
+const { v4: uuid } = require('uuid')
 
-const {CreateGame} = require("../application/api/commands/game");
-const {FindWork} = require("../application/api/commands/iteration");
-const router = express.Router();
+const { CreateGame } = require('../application/api/commands/game')
+const { FindWork } = require('../application/api/commands/iteration')
+const router = express.Router()
 
-const allParams = request => ({...request.body, ...request.params});
-const basePath = req => req.protocol + '://' + req.get('host');
+const allParams = (request) => ({ ...request.body, ...request.params })
+const basePath = (req) => req.protocol + '://' + req.get('host')
 
-const init = application => {
+const init = (application) => {
   router.post('/', function (req, res, next) {
-    const gameId = req.body.gameId || uuid();
-    const command = CreateGame({gameId});
-    application.execute(command);
+    const gameId = req.body.gameId || uuid()
+    const command = CreateGame({ gameId })
+    application.execute(command)
     res.redirect(`/games/${gameId}/invite`)
-  });
+  })
 
   router.get('/:gameId/invite', function (req, res, next) {
-    const gameId = allParams(req).gameId;
+    const gameId = allParams(req).gameId
     const game = application.findGame(gameId)
     if (game) {
-      const linkForParticipants = `${basePath(req)}/games/${gameId}/join`;
-      res.render('games/invite', {game, linkForParticipants, layout: 'desktop', title: 'Join the Dot Game'});
+      const linkForParticipants = `${basePath(req)}/games/${gameId}/join`
+      res.render('games/invite', {
+        game,
+        linkForParticipants,
+        layout: 'desktop',
+        title: 'Join the Dot Game',
+      })
     } else {
       res.redirect('/')
     }
-  });
+  })
 
   router.get('/:gameId/join', function (req, res, next) {
-    const gameId = req.params.gameId;
-    const game = application.findGame(gameId);
+    const gameId = req.params.gameId
+    const game = application.findGame(gameId)
     if (!game) {
-      res.redirect('/');
-      return;
+      res.redirect('/')
+      return
     }
-    
+
     if (game.isOpen()) {
-      res.redirect(`/games/${game.gameId}/${(game.findFreeWork(5000))}`);
+      res.redirect(`/games/${game.gameId}/${game.findFreeWork(5000)}`)
     } else {
-      res.status(404).send("Sorry, this game is full")
+      res.status(404).send('Sorry, this game is full')
     }
-  });
+  })
 
   router.get('/:gameId', function (req, res, next) {
-    const gameId = allParams(req).gameId;
+    const gameId = allParams(req).gameId
     const game = application.findGame(gameId)
     if (game) {
-      res.render('games/index', {game, layout: 'desktop'});
+      res.render('games/index', { game, layout: 'desktop' })
     } else {
       res.redirect('/')
     }
-  });
+  })
 
   router.get('/:gameId/:columnId', function (req, res, next) {
-    const params = allParams(req);
+    const params = allParams(req)
     const work = application.execute(FindWork(params))
-    const columnType = work.work.columnType;
+    const columnType = work.work.columnType
     if (columnType === 'todo-column') {
-      res.render('games/start-work', {work, layout: 'mobile', title: work.work.title});
+      res.render('games/start-work', {
+        work,
+        layout: 'mobile',
+        title: work.work.title,
+      })
     } else if (columnType === 'work-column') {
-      res.render('games/work', {work, layout: 'mobile', title: work.work.title});
+      res.render('games/work', {
+        work,
+        layout: 'mobile',
+        title: work.work.title,
+      })
     } else if (columnType === 'test-column') {
-      res.render('games/test', {work, layout: 'mobile', title: work.work.title});
+      res.render('games/test', {
+        work,
+        layout: 'mobile',
+        title: work.work.title,
+      })
     } else {
-      res.status(404).send("Sorry, something went wrong");
+      res.status(404).send('Sorry, something went wrong')
     }
-  });
+  })
 
-  return router;
+  return router
 }
 
-module.exports = {init};
+module.exports = { init }
