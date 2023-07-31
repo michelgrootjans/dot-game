@@ -60,6 +60,11 @@ const init = (application) => {
   router.get('/:gameId/:columnId', function (req, res, next) {
     const params = allParams(req)
     const work = application.execute(FindWork(params))
+    if (!work) {
+      res.status(404).send('This games does not exist.')
+      return
+    }
+
     const columnType = work.work.columnType
     if (columnType === 'todo-column') {
       res.render('games/start-work', {

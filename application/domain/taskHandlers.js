@@ -20,7 +20,7 @@ const RejectTaskHandler = (games, publish) => {
 
 const FindWorkHandler = (games) => {
   const execute = ({ gameId, columnId }) =>
-    games.find(gameId).findWork(columnId)
+    games.find(gameId)?.findWork(columnId)
   return { execute }
 }
 
