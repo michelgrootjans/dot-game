@@ -11,6 +11,7 @@ const {
   TaskRejected,
 } = require('../api/events/task')
 const { anyCardColor } = require('./Colors')
+const { Puzzle } = require('./Puzzle')
 
 const minutes = 60 * 1000
 
@@ -64,6 +65,8 @@ const Game = (state) => {
   )
   const playerColumns = [todoColumn, ...workColumns, testColumn]
 
+  const puzzleColumns = columns.filter((column) => column.difficulty > 0)
+
   const isOpen = () => playerColumns.some((c) => c.isOpen())
   const join = (columnId) => findColumn(columnId).join()
   const leave = (columnId) => findColumn(columnId).leave()
@@ -114,11 +117,16 @@ const Game = (state) => {
   const createTask = (taskId, publish) => {
     if (!iterationIsRunning()) return
 
+    const tasks = {}
+    for (const column of puzzleColumns) {
+      tasks[column.columnId] = Puzzle().generate(column.difficulty)
+    }
+
     const task = {
       taskId,
       color: anyCardColor(),
       columnId: todoColumn.columnId,
-      payload: {},
+      payload: { tasks },
     }
     state.tasks.push(task)
     publish(TaskCreated({ ...task, column: todoColumn, ...ids() }))

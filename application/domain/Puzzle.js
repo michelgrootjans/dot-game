@@ -56,4 +56,4 @@ const Puzzle = () => {
   }
 }
 
-module.exports = Puzzle
+module.exports = { Puzzle }

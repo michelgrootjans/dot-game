@@ -1,5 +1,4 @@
 const Card = require('./Card')
-const Puzzle = require('./Puzzle')
 
 const initialize = () => {
   const $workspace = document.getElementById('workspace')
@@ -7,21 +6,15 @@ const initialize = () => {
   if (!$workspace) return
 
   const workColumnId = $workspace.dataset.columnId
-  const difficulty = $workspace.dataset.columnDifficulty
 
   const generateQuestion = (detail) => {
     const card = Card.find(detail)
-    const puzzle = Puzzle().generate(difficulty)
-    card.querySelector('.question').innerHTML = puzzle.question
-    card.payload.tasks = card.payload.tasks || []
-    card.payload.tasks.push({ workColumnId, question: puzzle.question })
+    const task = card.payload.tasks[workColumnId]
+    card.querySelector('.question').innerHTML = task.question
     card.querySelector('.answer').addEventListener('change', (event) => {
-      const task = card.payload.tasks.find(
-        (x) => x.workColumnId === workColumnId
-      )
       const actualAnswer = event.target.value
       task.actualAnswer = actualAnswer
-      task.success = actualAnswer === puzzle.answer
+      task.success = actualAnswer === task.answer
     })
   }
 
