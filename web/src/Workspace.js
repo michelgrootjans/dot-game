@@ -27,6 +27,8 @@ const initialize = () => {
     if(detail.to.columnId !== workColumnId) return;
 
     generateQuestion(detail);
+
+    card.querySelector(".answer").focus();
   });
 
 };
