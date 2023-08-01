@@ -35,7 +35,7 @@ const initializeStartButton = gameId => {
 
 const initialize = gameId => {
   initializeStartButton(gameId);
-  initializeStopButton(gameId);
+  // initializeStopButton(gameId);
 };
 
 module.exports = {
