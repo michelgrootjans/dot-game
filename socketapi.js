@@ -1,29 +1,29 @@
-const {Server} = require("socket.io");
-const {JoinGame, LeaveGame} = require("./application/api/commands/player");
+const { Server } = require('socket.io')
+const { JoinGame, LeaveGame } = require('./application/api/commands/player')
 
 let init = (server, events, application) => {
-  const io = new Server(server);
+  const io = new Server(server)
 
-  const publish = event => {
-    console.log({event})
+  const publish = (event) => {
+    console.log({ event })
     io.to(event.gameId).emit('message', event)
-  };
+  }
 
   io.on('connection', (socket) => {
-    const {gameId, workColumnId} = socket.handshake.query;
+    const { gameId, workColumnId } = socket.handshake.query
 
     socket.join(gameId)
-    socket.emit('replay', events.eventsFor(gameId));
+    socket.emit('replay', events.eventsFor(gameId))
 
     if (workColumnId) {
-      application.execute(JoinGame({gameId, columnId: workColumnId}))
+      application.execute(JoinGame({ gameId, columnId: workColumnId }))
       socket.on('disconnect', () => {
-        application.execute(LeaveGame({gameId, columnId: workColumnId}))
-      });
+        application.execute(LeaveGame({ gameId, columnId: workColumnId }))
+      })
     }
-  });
+  })
 
-  return {publish}
-};
+  return { publish }
+}
 
-module.exports = {init}
+module.exports = { init }
