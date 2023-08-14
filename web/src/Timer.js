@@ -1,21 +1,22 @@
 const Timer = (duration, timeout = 1000) => {
-  const endTime = Date.now() + parseInt(duration);
+  const endTime = Date.now() + parseInt(duration)
 
   return {
     start: (handler) => {
       handler()
       const timerHandle = setInterval(() => {
         handler()
-        const currentTime = Date.now();
-        if (endTime < currentTime) clearInterval(timerHandle);
-      }, timeout);
+        const currentTime = Date.now()
+        if (endTime < currentTime) clearInterval(timerHandle)
+      }, timeout)
       return {
         stop: () => {
           handler()
           clearInterval(timerHandle)
-        }
+        },
       }
-    }}
-};
+    },
+  }
+}
 
-module.exports = Timer;
+module.exports = Timer

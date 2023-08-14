@@ -1,8 +1,8 @@
 const EventRepository = () => {
   const events = []
 
-  const store = event => events.push(event);
-  const eventsFor = gameId => events.filter(e => e.gameId === gameId);
+  const store = (event) => events.push(event)
+  const eventsFor = (gameId) => events.filter((e) => e.gameId === gameId)
 
   return {
     store,
@@ -10,4 +10,4 @@ const EventRepository = () => {
   }
 }
 
-module.exports = EventRepository;
+module.exports = EventRepository

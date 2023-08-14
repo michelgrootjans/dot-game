@@ -1,9 +1,60 @@
-const {Chart, ArcElement, LineElement, BarElement, PointElement, BarController, BubbleController, DoughnutController, LineController, PieController, PolarAreaController, RadarController, ScatterController, CategoryScale, LinearScale, LogarithmicScale, RadialLinearScale, TimeScale, TimeSeriesScale, Decimation, Filler, Legend, Title, Tooltip, SubTitle} = require('chart.js');
-Chart.register(ArcElement, LineElement, BarElement, PointElement, BarController, BubbleController, DoughnutController, LineController, PieController, PolarAreaController, RadarController, ScatterController, CategoryScale, LinearScale, LogarithmicScale, RadialLinearScale, TimeScale, TimeSeriesScale, Decimation, Filler, Legend, Title, Tooltip, SubTitle);
+const {
+  Chart,
+  ArcElement,
+  LineElement,
+  BarElement,
+  PointElement,
+  BarController,
+  BubbleController,
+  DoughnutController,
+  LineController,
+  PieController,
+  PolarAreaController,
+  RadarController,
+  ScatterController,
+  CategoryScale,
+  LinearScale,
+  LogarithmicScale,
+  RadialLinearScale,
+  TimeScale,
+  TimeSeriesScale,
+  Decimation,
+  Filler,
+  Legend,
+  Title,
+  Tooltip,
+  SubTitle,
+} = require('chart.js')
+Chart.register(
+  ArcElement,
+  LineElement,
+  BarElement,
+  PointElement,
+  BarController,
+  BubbleController,
+  DoughnutController,
+  LineController,
+  PieController,
+  PolarAreaController,
+  RadarController,
+  ScatterController,
+  CategoryScale,
+  LinearScale,
+  LogarithmicScale,
+  RadialLinearScale,
+  TimeScale,
+  TimeSeriesScale,
+  Decimation,
+  Filler,
+  Legend,
+  Title,
+  Tooltip,
+  SubTitle
+)
 
-const API = require("./API");
+const API = require('./API')
 
-const distinct = (value, index, self) => self.indexOf(value) === index;
+const distinct = (value, index, self) => self.indexOf(value) === index
 
 const createDataset = (label, color) => ({
   label: label,
@@ -15,7 +66,7 @@ const createDataset = (label, color) => ({
   backgroundColor: `rgba(${color}, 0.1)`,
   borderColor: `rgba(${color}, 1)`,
   borderWidth: 1,
-});
+})
 
 const colors = [
   '101, 103, 107',
@@ -30,60 +81,69 @@ const colors = [
 const config = {
   type: 'line',
   data: {
-    datasets: []
+    datasets: [],
   },
   options: {
     animation: false,
     scales: {
       x: {
         type: 'linear',
-        ticks: {stepSize: 5}
+        ticks: { stepSize: 5 },
       },
       y: {
         type: 'linear',
-        ticks: {stepSize: 5},
+        ticks: { stepSize: 5 },
         stacked: true,
       },
     },
     plugins: {
-      legend: {display: true, position: 'left', align: 'start', reverse: true},
-    }
+      legend: {
+        display: true,
+        position: 'left',
+        align: 'start',
+        reverse: true,
+      },
+    },
   },
-};
-
+}
 
 const Cfd = (context, gameId) => {
-  const chart = new Chart(context, config);
+  const chart = new Chart(context, config)
 
-  const getHistory = (iterationId) => API(gameId).stats(iterationId)
-    .then(response => response.json())
-    .then(response => response.history);
+  const getHistory = (iterationId) =>
+    API(gameId)
+      .stats(iterationId)
+      .then((response) => response.json())
+      .then((response) => response.history)
 
   const initialize = (detail) => {
     chart.data.datasets = detail.columns
-      .map(column => column.taskName)
+      .map((column) => column.taskName)
       .filter(distinct)
       .reverse()
       .map((label, index) => createDataset(label, colors[index]))
-  };
+  }
 
   const update = async (iterationId) => {
-    const newHistory = await getHistory(iterationId);
+    const newHistory = await getHistory(iterationId)
 
-    const getSeries = label => newHistory.map(record => ({x: record.time, y: record[label]}));
+    const getSeries = (label) =>
+      newHistory.map((record) => ({ x: record.time, y: record[label] }))
 
-    chart.data.datasets.forEach(dataset => dataset.data = getSeries(dataset.label))
+    chart.data.datasets.forEach(
+      (dataset) => (dataset.data = getSeries(dataset.label))
+    )
 
     chart.update()
-  };
+  }
 
   const clear = () => chart.clear()
 
   return {
     initialize,
     update,
-    clear
+    clear,
   }
 }
 
-module.exports = Cfd;
+module.exports = Cfd

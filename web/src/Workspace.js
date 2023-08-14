@@ -1,38 +1,30 @@
-const Card = require("./Card");
-const Puzzle = require("./Puzzle");
+const Card = require('./Card')
 
 const initialize = () => {
   const $workspace = document.getElementById('workspace')
 
-  if (!$workspace) return;
+  if (!$workspace) return
 
-  const workColumnId = $workspace.dataset.columnId;
-  const difficulty = $workspace.dataset.columnDifficulty;
+  const workColumnId = $workspace.dataset.columnId
 
-  const generateQuestion = detail => {
-    const card = Card.find(detail);
-    const puzzle = Puzzle().generate(difficulty)
-    card.querySelector('.question').innerHTML = puzzle.question;
-    card.payload.tasks = card.payload.tasks || []
-    card.payload.tasks.push({workColumnId, question: puzzle.question})
-    card.querySelector('.answer').addEventListener('change', event => {
-      const task = card.payload.tasks.find(x => x.workColumnId === workColumnId);
-      const actualAnswer = event.target.value;
+  const generateQuestion = (detail) => {
+    const card = Card.find(detail)
+    const task = card.payload.tasks[workColumnId]
+    card.querySelector('.question').innerHTML = task.question
+    card.querySelector('.answer').addEventListener('change', (event) => {
+      const actualAnswer = event.target.value
       task.actualAnswer = actualAnswer
-      task.success = (actualAnswer === puzzle.answer);
-    });
-  };
+      task.success = actualAnswer === task.answer
+    })
+  }
 
-  document.addEventListener('TaskMoved', ({detail}) => {
-    if(detail.to.columnId !== workColumnId) return;
+  document.addEventListener('TaskMoved', ({ detail }) => {
+    if (detail.to.columnId !== workColumnId) return
 
-    generateQuestion(detail);
-
-    card.querySelector(".answer").focus();
-  });
-
-};
+    generateQuestion(detail)
+  })
+}
 
 module.exports = {
-  initialize
-};
+  initialize,
+}
