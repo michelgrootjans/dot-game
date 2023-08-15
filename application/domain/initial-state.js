@@ -13,7 +13,7 @@ const initialState = () => ({
       nextColumnId: 'c3',
       title: 'Analysis',
       taskName: 'analysis',
-      difficulty: 4,
+      difficulty: 1,
     },
     {
       columnId: 'c3',
