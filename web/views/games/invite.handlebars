@@ -5,6 +5,7 @@
             <a href="{{linkForParticipants}}" target="_blank">
                 <div id="qrcode"></div>
             </a>
+            <a href="/games/{{game.gameId}}">Go to game</a>
         </div>
         <div class="col">
 
@@ -12,17 +13,12 @@
                 <ul data-column-id="{{columnId}}">
                     <li>
                         {{title}}
-                        <span class="participants">
-                    </span>
+                        <span class="participants"></span>
                     </li>
                 </ul>
             {{/each}}
         </div>
 
-    </div>
-    <div class="row">
-        <div class="players"></div>
-        <a href="/games/{{game.gameId}}">Go to game</a>
     </div>
 </div>
 

@@ -3,17 +3,15 @@ const _0_9 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 const _1_10 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 const _1_9 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-const operatorFor = difficulty => {
-  if (difficulty === 2) return any(['x', '/'])
-  if (difficulty === 3) return any(['+', '-'])
-  if (difficulty === 4) return any(['+', '-'])
-  return any(['+', '-', 'x', '/'])
-};
+const operatorFor = (difficulty) => {
+  if (difficulty <= 2) return any(['x', '/'])
+  else return any(['+', '-'])
+}
 
 const numberWithDigits = (numberOfDigits = 1) => {
-  if (numberOfDigits <= 1) return any(_1_9);
-  return numberWithDigits(numberOfDigits - 1) * 10 + any(_0_9);
-};
+  if (numberOfDigits <= 1) return any(_1_9)
+  return numberWithDigits(numberOfDigits - 1) * 10 + any(_0_9)
+}
 
 const Puzzle = () => {
   const generate = (difficulty) => {
