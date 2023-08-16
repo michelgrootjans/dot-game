@@ -1,5 +1,4 @@
-const findColumn = (columnId) =>
-  document.querySelector('[data-column-id="' + columnId + '"]')
+const findColumn = (columnId) => document.querySelector('[data-column-id="' + columnId + '"]')
 
 const initialize = () => {
   const $playerTemplate = document.getElementById('player-template')

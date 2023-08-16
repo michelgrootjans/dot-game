@@ -2,12 +2,8 @@ const Cfd = require('./CFD')
 const Timer = require('./Timer')
 
 const setCurrentIteration = (iterationId) => {
-  document
-    .querySelectorAll('.iteration.current')
-    .forEach((element) => element.classList.remove('current'))
-  document
-    .querySelectorAll(`.iteration[data-iteration-id="${iterationId}"]`)
-    .forEach((element) => element.classList.add('current'))
+  document.querySelectorAll('.iteration.current').forEach((element) => element.classList.remove('current'))
+  document.querySelectorAll(`.iteration[data-iteration-id="${iterationId}"]`).forEach((element) => element.classList.add('current'))
 }
 
 const initialize = (gameId) => {
@@ -32,17 +28,13 @@ const initialize = (gameId) => {
 
     const iterationId = detail.iterationId
 
-    document
-      .querySelectorAll(
-        `.show-previous-iteration[data-iteration-id="${iterationId}"]`
-      )
-      .forEach((element) => {
-        element.addEventListener('click', () => {
-          update(iterationId).then(() => {
-            setCurrentIteration(iterationId)
-          })
+    document.querySelectorAll(`.show-previous-iteration[data-iteration-id="${iterationId}"]`).forEach((element) => {
+      element.addEventListener('click', () => {
+        update(iterationId).then(() => {
+          setCurrentIteration(iterationId)
         })
       })
+    })
   })
 }
 

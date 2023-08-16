@@ -68,15 +68,7 @@ const createDataset = (label, color) => ({
   borderWidth: 1,
 })
 
-const colors = [
-  '101, 103, 107',
-  '153, 102, 255',
-  '54, 162, 235',
-  '75, 192, 192',
-  '255, 205, 86',
-  '255, 159, 64',
-  '255, 99, 132',
-]
+const colors = ['101, 103, 107', '153, 102, 255', '54, 162, 235', '75, 192, 192', '255, 205, 86', '255, 159, 64', '255, 99, 132']
 
 const config = {
   type: 'line',
@@ -127,12 +119,9 @@ const Cfd = (context, gameId) => {
   const update = async (iterationId) => {
     const newHistory = await getHistory(iterationId)
 
-    const getSeries = (label) =>
-      newHistory.map((record) => ({ x: record.time, y: record[label] }))
+    const getSeries = (label) => newHistory.map((record) => ({ x: record.time, y: record[label] }))
 
-    chart.data.datasets.forEach(
-      (dataset) => (dataset.data = getSeries(dataset.label))
-    )
+    chart.data.datasets.forEach((dataset) => (dataset.data = getSeries(dataset.label)))
 
     chart.update()
   }

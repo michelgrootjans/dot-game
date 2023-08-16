@@ -1,14 +1,8 @@
 const { CreateGame } = require('../application/api/commands/game')
 const { StartIteration } = require('../application/api/commands/iteration')
-const {
-  TaskCreated,
-  TaskFinished,
-  TaskMoved,
-} = require('../application/api/events/task')
+const { TaskCreated, TaskFinished, TaskMoved } = require('../application/api/events/task')
 const TestApplication = require('./TestApplication')
-const {
-  StatsProcessManager,
-} = require('../application/domain/StatsProcessManager')
+const { StatsProcessManager } = require('../application/domain/StatsProcessManager')
 const StatsRepository = require('../application/StatsRepository')
 const EventBus = require('../application/EventBus')
 const { IterationStarted } = require('../application/api/events/iteration')
@@ -90,9 +84,7 @@ describe('Stats Process Manager', () => {
       })
     )
 
-    expect(stats.find('g1').history()).toMatchObject([
-      { time: 0, todo: 0, wip: 0 },
-    ])
+    expect(stats.find('g1').history()).toMatchObject([{ time: 0, todo: 0, wip: 0 }])
   })
 
   it('adds one item', () => {

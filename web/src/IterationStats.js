@@ -25,10 +25,8 @@ const IterationStats = (iterationId, details) => {
   const tasks = []
 
   const startTask = (details) => tasks.push(Task(details))
-  const finishTask = (details) =>
-    tasks.find((t) => t.taskId === details.taskId).finish()
-  const rejectTask = (details) =>
-    tasks.find((t) => t.taskId === details.taskId).reject()
+  const finishTask = (details) => tasks.find((t) => t.taskId === details.taskId).finish()
+  const rejectTask = (details) => tasks.find((t) => t.taskId === details.taskId).reject()
 
   const finishIteration = (details) => {}
   const tasksDone = () => tasks.filter((t) => t.done())
@@ -63,9 +61,7 @@ const initialize = () => {
   const $template = document.getElementById('iteration-stats-template')
   if (!($container && $template)) return
 
-  const $toggleAdvancedStats = document.getElementById(
-    'iterations-stats-toggler'
-  )
+  const $toggleAdvancedStats = document.getElementById('iterations-stats-toggler')
 
   const applyAdvancedView = (visible) => {
     const elements = document.querySelectorAll('.stats-advanced.collapse')
@@ -95,28 +91,18 @@ const initialize = () => {
   const renderIteration = (detail) => {
     $currentIteration = $template.content.firstElementChild.cloneNode(true)
     $currentIteration.dataset.iterationId = detail.iterationId
-    $currentIteration.querySelector('.iteration-name').innerText =
-      currentIteration.iterationId
+    $currentIteration.querySelector('.iteration-name').innerText = currentIteration.iterationId
     $container.append($currentIteration)
     applyAdvancedView(visible)
   }
 
   const updateIteration = (detail) => {
-    $currentIteration.querySelector(`.total`).textContent =
-      currentIteration.total()
-    $currentIteration.querySelector(`.defects`).textContent =
-      currentIteration.defects()
-    $currentIteration.querySelector(`.success`).textContent =
-      currentIteration.success()
+    $currentIteration.querySelector(`.total`).textContent = currentIteration.total()
+    $currentIteration.querySelector(`.defects`).textContent = currentIteration.defects()
+    $currentIteration.querySelector(`.success`).textContent = currentIteration.success()
     $currentIteration.querySelector(`.wip`).textContent = currentIteration.wip()
-    $currentIteration.querySelector(`.throughput`).textContent = round(
-      currentIteration.throughput(detail.timestamp),
-      2
-    )
-    $currentIteration.querySelector(`.lead-time`).textContent = round(
-      currentIteration.leadTime(detail.timestamp),
-      2
-    )
+    $currentIteration.querySelector(`.throughput`).textContent = round(currentIteration.throughput(detail.timestamp), 2)
+    $currentIteration.querySelector(`.lead-time`).textContent = round(currentIteration.leadTime(detail.timestamp), 2)
   }
 
   document.addEventListener('IterationStarted', ({ detail }) => {

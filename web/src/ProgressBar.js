@@ -10,9 +10,7 @@ const initialize = () => {
     const duration = detail.duration
     const startTime = detail.startTime
     progressBar.max = `${duration}`
-    timer = Timer(duration).start(
-      () => (progressBar.value = Date.now() - startTime)
-    )
+    timer = Timer(duration).start(() => (progressBar.value = Date.now() - startTime))
   })
 
   document.addEventListener('IterationFinished', () => timer.stop())

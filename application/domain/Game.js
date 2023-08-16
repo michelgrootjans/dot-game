@@ -1,15 +1,7 @@
 const { v4: uuid } = require('uuid')
 
-const {
-  IterationStarted,
-  IterationFinished,
-} = require('../api/events/iteration')
-const {
-  TaskCreated,
-  TaskMoved,
-  TaskFinished,
-  TaskRejected,
-} = require('../api/events/task')
+const { IterationStarted, IterationFinished } = require('../api/events/iteration')
+const { TaskCreated, TaskMoved, TaskFinished, TaskRejected } = require('../api/events/task')
 const { anyCardColor } = require('./Colors')
 const { Puzzle } = require('./Puzzle')
 
@@ -48,21 +40,11 @@ const Game = (state) => {
   const gameId = state.gameId
   const columns = state.columns.map(Column)
 
-  const todoColumn = columns.find(
-    (column) => column.columnType === 'todo-column'
-  )
-  const workColumns = columns.filter(
-    (column) => column.columnType === 'work-column'
-  )
-  const testColumn = columns.find(
-    (column) => column.columnType === 'test-column'
-  )
-  const doneColumn = columns.find(
-    (column) => column.columnType === 'done-column'
-  )
-  const defectsColumn = columns.find(
-    (column) => column.columnType === 'fail-column'
-  )
+  const todoColumn = columns.find((column) => column.columnType === 'todo-column')
+  const workColumns = columns.filter((column) => column.columnType === 'work-column')
+  const testColumn = columns.find((column) => column.columnType === 'test-column')
+  const doneColumn = columns.find((column) => column.columnType === 'done-column')
+  const defectsColumn = columns.find((column) => column.columnType === 'fail-column')
   const playerColumns = [todoColumn, ...workColumns, testColumn]
 
   const puzzleColumns = columns.filter((column) => column.difficulty > 0)
@@ -83,18 +65,13 @@ const Game = (state) => {
     if (column === defectsColumn) return testColumn
     return columns.find((c) => c.nextColumnId === column.columnId)
   }
-  const outboxOf = (work) =>
-    columns.find((c) => c.columnId === work.nextColumnId)
+  const outboxOf = (work) => columns.find((c) => c.columnId === work.nextColumnId)
 
   const currentIteration = () => state.currentIteration
   const iterationIsRunning = () => currentIteration()
   const ids = () => ({ gameId, iterationId: currentIteration().iterationId })
 
-  const startIteration = (
-    iterationId = uuid(),
-    duration = 5 * minutes,
-    publish
-  ) => {
+  const startIteration = (iterationId = uuid(), duration = 5 * minutes, publish) => {
     if (iterationIsRunning()) return
     const startTime = Date.now()
     let iteration = { iterationId, duration, startTime }
@@ -172,9 +149,7 @@ const Game = (state) => {
 
   return {
     ...state,
-    activeColumns: columns.filter(
-      (column) => ![doneColumn, defectsColumn].includes(column)
-    ),
+    activeColumns: columns.filter((column) => ![doneColumn, defectsColumn].includes(column)),
     endColumns: [doneColumn, defectsColumn],
     playerColumns,
 

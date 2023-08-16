@@ -1,9 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {
-  StartIteration,
-  EndIteration,
-} = require('../application/api/commands/iteration')
+const { StartIteration, EndIteration } = require('../application/api/commands/iteration')
 const { CreateGame } = require('../application/api/commands/game')
 const { CreateTask, RejectTask } = require('../application/api/commands/task')
 const { MoveTask } = require('../application/api/commands/task')
@@ -24,18 +21,15 @@ const init = (application) => {
     res.send({ ...stats, history: stats.history() })
   })
 
-  router.get(
-    '/:gameId/iterations/:iterationId/stats',
-    function (req, res, next) {
-      const { gameId, iterationId } = req.params
-      const stats = application.findStats(gameId, iterationId) || {
-        gameId,
-        iterationId,
-        history: () => {},
-      }
-      res.send({ ...stats, history: stats.history() })
+  router.get('/:gameId/iterations/:iterationId/stats', function (req, res, next) {
+    const { gameId, iterationId } = req.params
+    const stats = application.findStats(gameId, iterationId) || {
+      gameId,
+      iterationId,
+      history: () => {},
     }
-  )
+    res.send({ ...stats, history: stats.history() })
+  })
 
   router.post('/:gameId/iterations', function (req, res, next) {
     const command = StartIteration(allParams(req))

@@ -58,17 +58,11 @@ const Simulation = (createTask, createWorker) => {
   const start = ({ detail }) => {
     const columns = detail.columns
 
-    const workColumns = columns.filter((c) =>
-      ['work-column', 'test-column'].includes(c.columnType)
-    )
-    const inboxFor = (column) =>
-      columns.find((c) => c.nextColumnId === column.columnId)
-    const outboxFor = (column) =>
-      columns.find((c) => column.nextColumnId === c.columnId)
+    const workColumns = columns.filter((c) => ['work-column', 'test-column'].includes(c.columnType))
+    const inboxFor = (column) => columns.find((c) => c.nextColumnId === column.columnId)
+    const outboxFor = (column) => columns.find((c) => column.nextColumnId === c.columnId)
 
-    workers = workColumns.map((column) =>
-      createWorker(inboxFor(column), column, outboxFor(column))
-    )
+    workers = workColumns.map((column) => createWorker(inboxFor(column), column, outboxFor(column)))
     // timerHandle = setInterval(createTask, 500)
   }
 
@@ -78,9 +72,7 @@ const Simulation = (createTask, createWorker) => {
   }
 
   const onTaskMoved = async ({ detail }) => {
-    const worker = workers.find((worker) =>
-      worker.canWorkOn(detail.to.columnId)
-    )
+    const worker = workers.find((worker) => worker.canWorkOn(detail.to.columnId))
     if (worker) await worker.pushWork(detail.taskId)
   }
 
@@ -103,10 +95,7 @@ const initialize = (gameId) => {
     // if (strategy === 'pull') {
     //   return Simulation(PullTaskCreator(api, batchSize), PullWorker(api, batchSize));
     // }
-    return Simulation(
-      PushTaskCreator(api, batchSize),
-      PushWorker(api, batchSize)
-    )
+    return Simulation(PushTaskCreator(api, batchSize), PushWorker(api, batchSize))
   }
 
   window.runSimulation = (strategy = 'push', batchSize = 5) => {

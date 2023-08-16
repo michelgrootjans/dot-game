@@ -11,9 +11,7 @@ describe('Iteration', () => {
   })
 
   it('get the inbox work column', function () {
-    expect(
-      application.execute(FindWork({ gameId: 'g1', columnId: 'c1' }))
-    ).toMatchObject({
+    expect(application.execute(FindWork({ gameId: 'g1', columnId: 'c1' }))).toMatchObject({
       gameId: 'g1',
       inbox: undefined,
       work: { columnId: 'c1' },
@@ -23,9 +21,7 @@ describe('Iteration', () => {
   })
 
   it('get the first work column', function () {
-    expect(
-      application.execute(FindWork({ gameId: 'g1', columnId: 'c2' }))
-    ).toMatchObject({
+    expect(application.execute(FindWork({ gameId: 'g1', columnId: 'c2' }))).toMatchObject({
       gameId: 'g1',
       inbox: { columnId: 'c1' },
       work: { columnId: 'c2' },
@@ -35,9 +31,7 @@ describe('Iteration', () => {
   })
 
   it('get the second work column', function () {
-    expect(
-      application.execute(FindWork({ gameId: 'g1', columnId: 'c4' }))
-    ).toMatchObject({
+    expect(application.execute(FindWork({ gameId: 'g1', columnId: 'c4' }))).toMatchObject({
       gameId: 'g1',
       inbox: { columnId: 'c3', columnType: 'wait-column' },
       work: { columnId: 'c4', columnType: 'work-column' },
@@ -47,9 +41,7 @@ describe('Iteration', () => {
   })
 
   it('get the done column', function () {
-    expect(
-      application.execute(FindWork({ gameId: 'g1', columnId: 'c9' }))
-    ).toMatchObject({
+    expect(application.execute(FindWork({ gameId: 'g1', columnId: 'c9' }))).toMatchObject({
       gameId: 'g1',
       inbox: { columnId: 'c8' },
       work: { columnId: 'c9' },
@@ -59,9 +51,7 @@ describe('Iteration', () => {
   })
 
   it('get the defects column', function () {
-    expect(
-      application.execute(FindWork({ gameId: 'g1', columnId: 'c10' }))
-    ).toMatchObject({
+    expect(application.execute(FindWork({ gameId: 'g1', columnId: 'c10' }))).toMatchObject({
       gameId: 'g1',
       inbox: { columnId: 'c8' },
       work: { columnId: 'c10' },

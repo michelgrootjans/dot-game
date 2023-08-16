@@ -38,8 +38,7 @@ const IterationStats = (iterationStartedEvent, startTime) => {
 const GameStats = (iterationStartedEvent, startTime) => {
   let currentIteration = IterationStats(iterationStartedEvent, startTime)
 
-  const restart = (time) =>
-    (currentIteration = IterationStats(iterationStartedEvent, time))
+  const restart = (time) => (currentIteration = IterationStats(iterationStartedEvent, time))
 
   return {
     gameId: iterationStartedEvent.gameId,

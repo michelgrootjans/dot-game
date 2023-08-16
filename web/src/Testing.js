@@ -17,9 +17,7 @@ const initialize = () => {
     const answers = card.querySelector('.previous-puzzles')
     Object.values(card?.payload?.tasks).forEach((task) => {
       const answer = document.createElement('p')
-      answer.innerText = `${task.question + task.actualAnswer} ${
-        task.success ? '✅' : '❌'
-      }`
+      answer.innerText = `${task.question + task.actualAnswer} ${task.success ? '✅' : '❌'}`
       answers.append(answer)
     })
   })

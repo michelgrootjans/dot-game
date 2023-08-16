@@ -1,9 +1,7 @@
 const Card = require('./Card')
 
 const initialize = () => {
-  const columns = Array.from(
-    document.querySelectorAll('[data-column-id]')
-  ).reduce((map, item) => {
+  const columns = Array.from(document.querySelectorAll('[data-column-id]')).reduce((map, item) => {
     map[item.dataset.columnId] = item.querySelector('.tasks')
     return map
   }, {})

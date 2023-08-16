@@ -19,8 +19,7 @@ const create = ({ gameId, taskId, color, payload }) => {
   return card
 }
 
-const find = ({ taskId }) =>
-  document.querySelector(`[data-task-id="${taskId}"]`)
+const find = ({ taskId }) => document.querySelector(`[data-task-id="${taskId}"]`)
 const findOrCreate = (detail) => find(detail) || create(detail)
 const remove = (detail) => find(detail)?.remove()
 
