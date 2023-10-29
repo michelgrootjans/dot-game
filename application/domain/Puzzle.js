@@ -49,11 +49,13 @@ const Puzzle = () => {
     }
 
     if (operator === '-') {
-      const first = numberWithDigits(difficulty - 1)
-      const second = numberWithDigits(difficulty - 1)
+      const a = numberWithDigits(difficulty - 1)
+      const b = numberWithDigits(difficulty - 1)
+      const left = Math.max(a, b);
+      const right = Math.min(a, b);
       return {
-        question: `${Math.max(first, second)} - ${Math.min(first, second)} = `,
-        answer: `${first - second}`,
+        question: `${left} - ${right} = `,
+        answer: `${left - right}`,
       }
     }
     return { question: '1 + 1 = ', answer: '2' }
