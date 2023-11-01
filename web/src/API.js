@@ -1,14 +1,14 @@
 const API = (gameId) => {
   const apiBase = `/api/games/${gameId}`
 
-  const post = (url, data = {}) =>
-    fetch(`${apiBase}/${url}`, {
+  const post = (endpoint, data = {}) =>
+    fetch(`${apiBase}/${endpoint}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     })
 
-  const get = (url) => fetch(`${apiBase}/${url}`, { method: 'GET' })
+  const get = (endpoint) => fetch(`${apiBase}/${endpoint}`, { method: 'GET' })
 
   return {
     task: {
