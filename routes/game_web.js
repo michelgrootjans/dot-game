@@ -11,7 +11,8 @@ const basePath = (req) => req.protocol + '://' + req.get('host')
 const init = (application) => {
   router.post('/', function (req, res, next) {
     const gameId = req.body.gameId || uuid()
-    const command = CreateGame({ gameId })
+    const numberOfPlayers = req.body.numberOfPlayers
+    const command = CreateGame({ gameId, numberOfPlayers })
     application.execute(command)
     res.redirect(`/games/${gameId}/invite`)
   })

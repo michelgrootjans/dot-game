@@ -1,11 +1,13 @@
 const { GameCreated } = require('../api/events/game')
-const initialState = require('./initial-5-step-state')
+const initialState = require('./initial-state')
 
 const CreateGameHandler = (games, publish) => ({
-  execute: ({ gameId, state = initialState() }) => {
+  execute: ({ gameId, state, numberOfPlayers = 5 }) => {
     if (games.find(gameId)) return
 
-    const game = { ...state, gameId }
+    let newState = state || initialState(numberOfPlayers)
+
+    const game = { ...newState, gameId };
     games.add(game)
     publish(GameCreated(game))
   },

@@ -1,6 +1,8 @@
 const { CreateGame } = require('../application/api/commands/game')
 const { JoinGame, LeaveGame } = require('../application/api/commands/player')
-const initialState = require('../application/domain/initial-5-step-state')
+const initialState = require('../application/domain/initial-state')
+const fourPlayers = require('../application/domain/initial-4-step-state')
+const fivePlayers = require('../application/domain/initial-5-step-state')
 const TestApplication = require('./TestApplication')
 
 describe('Game', () => {
@@ -11,9 +13,19 @@ describe('Game', () => {
     jest.useFakeTimers()
   })
 
-  it('can only start once', () => {
+  it('defaults to 5 players', () => {
     application.execute(CreateGame({ gameId: 'g1' }))
-    expect(application.findGame('g1')).toMatchObject(initialState())
+    expect(application.findGame('g1')).toMatchObject(fivePlayers())
+  })
+
+  it('can initialize with 5 players', () => {
+    application.execute(CreateGame({ gameId: 'g1', state: initialState(5), numberOfPlayers: 5 }))
+    expect(application.findGame('g1')).toMatchObject(fivePlayers())
+  })
+
+  it('can initialize with 4 players', () => {
+    application.execute(CreateGame({ gameId: 'g1', state: initialState(4), numberOfPlayers: 4 }))
+    expect(application.findGame('g1')).toMatchObject(fourPlayers())
   })
 
   describe('joining a game', () => {
