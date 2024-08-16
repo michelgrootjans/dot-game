@@ -1,5 +1,5 @@
 const Card = require('./Card')
-const Task = require("./Task");
+const Task = require('./Task')
 
 const initialize = () => {
   const $testspace = document.getElementById('testspace')
@@ -16,14 +16,16 @@ const initialize = () => {
     const card = Card.find(detail)
 
     const answers = card.querySelector('.previous-puzzles')
-    Object.values(card?.payload?.tasks).map(t => Task(t)).forEach((task) => {
-      const answer = document.createElement('p')
-      answer.innerText = `${task.question + task.actualAnswer} ${task.success ? '✅' : '❌'}`
-      answers.append(answer)
-    })
+    Object.values(card?.payload?.tasks)
+      .map((t) => Task(t))
+      .forEach((task) => {
+        const answer = document.createElement('p')
+        answer.innerText = `${task.question + task.actualAnswer} ${task.success ? '✅' : '❌'}`
+        answers.append(answer)
+      })
   })
 }
 
 module.exports = {
-  initialize
+  initialize,
 }
