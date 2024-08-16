@@ -1,5 +1,5 @@
 const { GameCreated } = require('../api/events/game')
-const initialState = require('./initial-4-step-state')
+const initialState = require('./initial-5-step-state')
 
 const CreateGameHandler = (games, publish) => ({
   execute: ({ gameId, state = initialState() }) => {
