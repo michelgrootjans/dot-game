@@ -1,12 +1,12 @@
-const fourSteps = require('./initial-4-step-state')
-const defaultState = require('./initial-5-step-state')
-
+const fourPlayers = require('./initial-4-player-state')
+const fivePlayers = require('./initial-5-player-state')
 
 const initialState = (numberOfPlayers = 5) => {
-    if (numberOfPlayers === 4 || numberOfPlayers === "4")
-        return fourSteps()
-    else
-        return defaultState()
+  if (numberOfPlayers === 4 || numberOfPlayers === '4') {
+    return fourPlayers()
+  } else {
+    return fivePlayers()
+  }
 }
 
-module.exports = initialState;
+module.exports = initialState

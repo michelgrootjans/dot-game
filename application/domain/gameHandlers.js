@@ -7,7 +7,7 @@ const CreateGameHandler = (games, publish) => ({
 
     let newState = state || initialState(numberOfPlayers)
 
-    const game = { ...newState, gameId };
+    const game = { ...newState, gameId }
     games.add(game)
     publish(GameCreated(game))
   },

@@ -1,8 +1,8 @@
 const { CreateGame } = require('../application/api/commands/game')
 const { JoinGame, LeaveGame } = require('../application/api/commands/player')
 const initialState = require('../application/domain/initial-state')
-const fourPlayers = require('../application/domain/initial-4-step-state')
-const fivePlayers = require('../application/domain/initial-5-step-state')
+const fourPlayers = require('../application/domain/initial-4-player-state')
+const fivePlayers = require('../application/domain/initial-5-player-state')
 const TestApplication = require('./TestApplication')
 
 describe('Game', () => {
