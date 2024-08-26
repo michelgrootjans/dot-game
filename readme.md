@@ -98,6 +98,8 @@ run the following commands in two separate terminals:
 
 `open localhost:3000`
 
+The following step requires httpie tool to be installed.
+
 `./scripts/simple_scenario.sh`
 
 ## Run the tests
