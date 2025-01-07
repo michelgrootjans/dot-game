@@ -1,23 +1,54 @@
 <h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
 
 <form method="post" action="/games">
-    <label>
-        Please give your session a name
-        <input name="gameId">
-        <button>Start a new dot-game</button>
-        <fieldset>
-            <legend>Number of players</legend>
-            <div>
-                <input type="radio" id="4-players-radio-button" name="numberOfPlayers" value="4"/>
-                <label for="4-players-radio-button">4 Players</label>
+    <fieldset class="row mb-3">
+        <legend class="col-form-label col-sm-2 pt-0">Number of players</legend>
+        <div class="col-sm-10">
+            <div class="form-check">
+                <input type="radio" class="form-check-input" id="4-players-radio-button" name="numberOfPlayers" value="4"/>
+                <label for="4-players-radio-button" class="form-check-label">4 Players</label>
             </div>
-
-            <div>
-                <input type="radio" id="5-players-radio-button" name="numberOfPlayers" value="5" checked/>
-                <label for="5-players-radio-button">5 Players</label>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" id="5-players-radio-button" name="numberOfPlayers" value="5" checked/>
+                <label for="5-players-radio-button" class="form-check-label">5 Players</label>
             </div>
+        </div>
+    </fieldset>
 
-        </fieldset>
-    </label>
+    <div class="row mb-3">
+        <label for="task-1-name" class="col-sm-2 col-form-label">Task 1</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" placeholder="Task name" aria-label="Task 1" id="task-1-name" name="task-1-name" aria-describedby="task-1-name" value="Backlog">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="task-2-name" class="col-sm-2 col-form-label">Task 2</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" placeholder="Task name" aria-label="Task 2" id="task-2-name" name="task-2-name" aria-describedby="task-2-name" value="Analysis">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="task-3-name" class="col-sm-2 col-form-label">Task 3</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" placeholder="Task name" aria-label="Task 3" id="task-3-name" name="task-3-name" aria-describedby="task-3-name" value="Development">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="task-4-name" class="col-sm-2 col-form-label">Task 4</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" placeholder="Task name" aria-label="Task 4" id="task-4-name" name="task-4-name" aria-describedby="task-4-name" value="Ops">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="task-5-name" class="col-sm-2 col-form-label">Task 5</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" placeholder="Task name" aria-label="Task 5" id="task-5-name" name="task-5-name" aria-describedby="task-5-name" value="QA">
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Start a new dot-game</button>
 </form>
