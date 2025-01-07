@@ -1,4 +1,4 @@
-const initial5StepState = () => ({
+const initial4PlayerState = () => ({
   columns: [
     {
       columnId: 'c1',
@@ -58,4 +58,4 @@ const initial5StepState = () => ({
     },
   ],
 })
-module.exports = initial5StepState
+module.exports = initial4PlayerState
