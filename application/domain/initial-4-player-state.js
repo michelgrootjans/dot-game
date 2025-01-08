@@ -1,18 +1,18 @@
-const initial4PlayerState = () => ({
+const initial4PlayerState = (tasks) => ({
   columns: [
     {
       columnId: 'c1',
       columnType: 'todo-column',
       nextColumnId: 'c2',
-      title: 'To do',
-      taskName: 'todo',
+      title: tasks[0].title,
+      taskName: tasks[0].id,
     },
     {
       columnId: 'c2',
       columnType: 'work-column',
       nextColumnId: 'c3',
-      title: 'Analysis',
-      taskName: 'analysis',
+      title: tasks[1].title,
+      taskName: tasks[1].id,
       difficulty: 2,
     },
     {
@@ -20,14 +20,14 @@ const initial4PlayerState = () => ({
       columnType: 'wait-column',
       nextColumnId: 'c4',
       title: '',
-      taskName: 'analysis',
+      taskName: tasks[1].id,
     },
     {
       columnId: 'c4',
       columnType: 'work-column',
       nextColumnId: 'c5',
-      title: 'Development',
-      taskName: 'development',
+      title: tasks[2].title,
+      taskName: tasks[2].id,
       difficulty: 3,
     },
     {
@@ -35,26 +35,26 @@ const initial4PlayerState = () => ({
       columnType: 'wait-column',
       nextColumnId: 'c6',
       title: '',
-      taskName: 'development',
+      taskName: tasks[2].id,
     },
     {
       columnId: 'c6',
       columnType: 'test-column',
       nextColumnId: 'c7',
-      title: 'QA',
-      taskName: 'qa',
+      title: tasks[3].title,
+      taskName: tasks[3].id,
     },
     {
       columnId: 'c7',
       columnType: 'done-column',
       title: 'Done',
-      taskName: 'done',
+      taskName: 'Done',
     },
     {
       columnId: 'c8',
       columnType: 'fail-column',
       title: 'Defects',
-      taskName: 'defect',
+      taskName: 'Defects',
     },
   ],
 })

@@ -15,17 +15,17 @@ describe('Game', () => {
 
   it('defaults to 5 players', () => {
     application.execute(CreateGame({ gameId: 'g1' }))
-    expect(application.findGame('g1')).toMatchObject(fivePlayers())
+    expect(application.findGame('g1')).toMatchObject(initialState())
   })
 
   it('can initialize with 5 players', () => {
     application.execute(CreateGame({ gameId: 'g1', state: initialState(5), numberOfPlayers: 5 }))
-    expect(application.findGame('g1')).toMatchObject(fivePlayers())
+    expect(application.findGame('g1')).toMatchObject(initialState())
   })
 
   it('can initialize with 4 players', () => {
     application.execute(CreateGame({ gameId: 'g1', state: initialState(4), numberOfPlayers: 4 }))
-    expect(application.findGame('g1')).toMatchObject(fourPlayers())
+    expect(application.findGame('g1')).toMatchObject(initialState(4))
   })
 
   describe('joining a game', () => {
