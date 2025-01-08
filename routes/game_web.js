@@ -12,7 +12,8 @@ const init = (application) => {
   router.post('/', function (req, res, next) {
     const gameId = req.body.gameId || uuid()
     const numberOfPlayers = req.body.numberOfPlayers
-    const command = CreateGame({ gameId, numberOfPlayers })
+    const taskNames = req.body.taskNames
+    const command = CreateGame({ gameId, numberOfPlayers, taskNames })
     application.execute(command)
     res.redirect(`/games/${gameId}/invite`)
   })
