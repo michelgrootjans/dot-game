@@ -10,12 +10,9 @@ const basePath = (req) => req.protocol + '://' + req.get('host')
 
 const init = (application) => {
   router.post('/', function (req, res, next) {
-    const gameId = req.body.gameId || uuid()
-    const numberOfPlayers = req.body.numberOfPlayers
-    const taskNames = req.body.taskNames
-    const command = CreateGame({ gameId, numberOfPlayers, taskNames })
+    const command = CreateGame(req.body)
     application.execute(command)
-    res.redirect(`/games/${gameId}/invite`)
+    res.redirect(`/games/${command.gameId}/invite`)
   })
 
   router.get('/:gameId/invite', function (req, res, next) {

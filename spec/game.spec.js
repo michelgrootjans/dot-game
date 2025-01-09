@@ -4,6 +4,7 @@ const initialState = require('../application/domain/initial-state')
 const fourPlayers = require('../application/domain/initial-4-player-state')
 const fivePlayers = require('../application/domain/initial-5-player-state')
 const TestApplication = require('./TestApplication')
+const {DEFAULT_TASK_NAMES} = require("../application/domain/defaults");
 
 describe('Game', () => {
   let application = undefined
@@ -19,13 +20,13 @@ describe('Game', () => {
   })
 
   it('can initialize with 5 players', () => {
-    application.execute(CreateGame({ gameId: 'g1', state: initialState({numberOfPlayers: 5}), numberOfPlayers: 5 }))
-    expect(application.findGame('g1')).toMatchObject(initialState({}))
+    application.execute(CreateGame({ gameId: 'g1', numberOfPlayers: 5 }))
+    expect(application.findGame('g1')).toMatchObject(initialState())
   })
 
   it('can initialize with 4 players', () => {
-    application.execute(CreateGame({ gameId: 'g1', state: initialState({numberOfPlayers: 4}), numberOfPlayers: 4 }))
-    expect(application.findGame('g1')).toMatchObject(initialState({numberOfPlayers: 4}))
+    application.execute(CreateGame({ gameId: 'g1', numberOfPlayers: 4, taskNames: ['t1', 't2', 't3', 't4'] }))
+    expect(application.findGame('g1')).toMatchObject(initialState({numberOfPlayers: 4, taskNames: ['t1', 't2', 't3', 't4']}))
   })
 
   describe('joining a game', () => {
