@@ -1,8 +1,6 @@
 const { CreateGame } = require('../application/api/commands/game')
 const { JoinGame, LeaveGame } = require('../application/api/commands/player')
 const initialState = require('../application/domain/initial-state')
-const fourPlayers = require('../application/domain/initial-4-player-state')
-const fivePlayers = require('../application/domain/initial-5-player-state')
 const TestApplication = require('./TestApplication')
 const {DEFAULT_TASK_NAMES} = require("../application/domain/defaults");
 
@@ -16,17 +14,17 @@ describe('Game', () => {
 
   it('defaults to 5 players', () => {
     application.execute(CreateGame({ gameId: 'g1' }))
-    expect(application.findGame('g1')).toMatchObject(initialState())
+    expect(application.findGame('g1')).toMatchObject(initialState({taskNames: DEFAULT_TASK_NAMES}))
   })
 
   it('can initialize with 5 players', () => {
-    application.execute(CreateGame({ gameId: 'g1', numberOfPlayers: 5 }))
-    expect(application.findGame('g1')).toMatchObject(initialState())
+    application.execute(CreateGame({ gameId: 'g1', taskNames: ['t1', 't2', 't3', 't4'] }))
+    expect(application.findGame('g1')).toMatchObject(initialState({taskNames: ['t1', 't2', 't3', 't4']}))
   })
 
   it('can initialize with 4 players', () => {
-    application.execute(CreateGame({ gameId: 'g1', numberOfPlayers: 4, taskNames: ['t1', 't2', 't3', 't4'] }))
-    expect(application.findGame('g1')).toMatchObject(initialState({numberOfPlayers: 4, taskNames: ['t1', 't2', 't3', 't4']}))
+    application.execute(CreateGame({ gameId: 'g1', taskNames: ['t1', 't2', 't3', 't4'] }))
+    expect(application.findGame('g1')).toMatchObject(initialState({taskNames: ['t1', 't2', 't3', 't4']}))
   })
 
   describe('joining a game', () => {

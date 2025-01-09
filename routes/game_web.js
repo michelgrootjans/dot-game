@@ -1,5 +1,4 @@
 const express = require('express')
-const { v4: uuid } = require('uuid')
 
 const { CreateGame } = require('../application/api/commands/game')
 const { FindWork } = require('../application/api/commands/iteration')
