@@ -5,7 +5,7 @@ const {DEFAULT_TASK_NAMES} = require("./defaults");
 const toId = (name) => name.split(' ').join('')
 const toTasks = names => names.map(name => ({title: name, id: toId(name)}));
 
-const initialState = (numberOfPlayers = 5) => {
+const initialState = ({numberOfPlayers} = {numberOfPlayers: 5}) => {
   const taskNames = ['To Do', 'Analysis', 'Development', 'QA']
   if (numberOfPlayers === 4 || numberOfPlayers === '4') {
     return fourPlayers(toTasks(taskNames))

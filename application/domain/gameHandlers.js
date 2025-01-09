@@ -5,7 +5,7 @@ const CreateGameHandler = (games, publish) => ({
   execute: ({ gameId, state, numberOfPlayers = 5 }) => {
     if (games.find(gameId)) return
 
-    let newState = state || initialState(numberOfPlayers)
+    let newState = state || initialState({numberOfPlayers: numberOfPlayers})
 
     const game = { ...newState, gameId }
     games.add(game)
