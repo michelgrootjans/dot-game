@@ -6,15 +6,15 @@
     </div>
 
     <div class="row">
-        <div id="inbox" class="wait-column col" data-column-id="{{work.inbox.columnId}}">
-            <h2>Inbox</h2>
+        <div id="inbox" class="wait-column col-4" data-column-id="{{work.inbox.columnId}}">
+            <h2>To Test</h2>
+            <div class="tasks"></div>
+        </div>
+        <div id="testspace" class="col-6 workspace" data-column-id="{{work.work.columnId}}" data-column-difficulty="{{work.work.difficulty}}">
+            <h2>Testing</h2>
             <div class="tasks"></div>
         </div>
 
-        <div id="testspace" class="col workspace" data-column-id="{{work.work.columnId}}" data-column-difficulty="{{work.work.difficulty}}">
-            <h2>Test-space</h2>
-            <div class="tasks"></div>
-        </div>
     </div>
 
     <div class="row">
@@ -24,7 +24,7 @@
         </div>
 
         <div id="defects" class="wait-column col" data-column-id="{{work.defects.columnId}}">
-            <h2>Defect</h2>
+            <h2>Rejected</h2>
             <div class="tasks"></div>
         </div>
     </div>

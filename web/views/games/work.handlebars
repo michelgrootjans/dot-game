@@ -7,22 +7,19 @@
 
     <div class="row" id="work-container">
         <div id="inbox" class="wait-column col-4" data-column-id="{{work.inbox.columnId}}">
-            <h2>Inbox</h2>
+            <h2>To Do</h2>
             <div class="tasks"></div>
         </div>
-        <div class="col-6">
-            <div class="row">
-                <div id="workspace" class="col workspace" data-column-id="{{work.work.columnId}}" data-column-difficulty="{{work.work.difficulty}}">
-                    <h2>Workspace</h2>
-                    <div class="tasks"></div>
-                </div>
-                <div id="outbox" class="col wait-column" data-column-id="{{work.outbox.columnId}}">
-                    <h2>Outbox</h2>
-                    <div class="tasks"></div>
-                </div>
-            </div>
+        <div id="workspace" class="workspace col-6" data-column-id="{{work.work.columnId}}" data-column-difficulty="{{work.work.difficulty}}">
+            <h2>Doing</h2>
+            <div class="tasks"></div>
         </div>
-
+    </div>
+    <div class="row">
+        <div id="outbox" class="wait-column col" data-column-id="{{work.outbox.columnId}}">
+            <h2>Done</h2>
+            <div class="tasks"></div>
+        </div>
     </div>
 </div>
 
