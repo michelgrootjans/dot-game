@@ -3,37 +3,33 @@
 <form method="post" action="/games">
     <div class="row mb-3">
         <label for="task-1-name" class="col-sm-2 col-form-label">Task 1</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" placeholder="Task name" aria-label="Task 1" id="task-1-name" name="taskNames" aria-describedby="task-1-name" value="Backlog">
-        </div>
+        <input type="text" class="form-control" placeholder="Task name" aria-label="Task 1" id="task-1-name" name="taskNames" aria-describedby="task-1-name"
+               value="Backlog" required>
     </div>
 
     <div class="row mb-3">
         <label for="task-2-name" class="col-sm-2 col-form-label">Task 2</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" placeholder="Task name" aria-label="Task 2" id="task-2-name" name="taskNames" aria-describedby="task-2-name" value="Analysis">
-        </div>
+        <input type="text" class="form-control" placeholder="Task name" aria-label="Task 2" id="task-2-name" name="taskNames" aria-describedby="task-2-name"
+               value="Analysis" required>
     </div>
 
     <div class="row mb-3">
         <label for="task-3-name" class="col-sm-2 col-form-label">Task 3</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" placeholder="Task name" aria-label="Task 3" id="task-3-name" name="taskNames" aria-describedby="task-3-name" value="Development">
-        </div>
+        <input type="text" class="form-control" placeholder="Task name" aria-label="Task 3" id="task-3-name" name="taskNames" aria-describedby="task-3-name"
+               value="Development" required>
     </div>
 
     <div class="row mb-3">
         <label for="task-4-name" class="col-sm-2 col-form-label">Task 4</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" placeholder="Task name" aria-label="Task 4" id="task-4-name" name="taskNames" aria-describedby="task-4-name" value="Ops">
-        </div>
+        <input type="text" class="form-control" placeholder="Task name" aria-label="Task 4" id="task-4-name" name="taskNames" aria-describedby="task-4-name"
+               value="Ops">
+        <div class="form-text">Skip this task if you only want a four step process</div>
     </div>
 
     <div class="row mb-3">
         <label for="task-5-name" class="col-sm-2 col-form-label">Task 5</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" placeholder="Task name" aria-label="Task 5" id="task-5-name" name="taskNames" aria-describedby="task-5-name" value="QA">
-        </div>
+        <input type="text" class="form-control" placeholder="Task name" aria-label="Task 5" id="task-5-name" name="taskNames" aria-describedby="task-5-name"
+               value="QA" required>
     </div>
 
     <button type="submit" class="btn btn-primary">Start a new dot-game</button>
