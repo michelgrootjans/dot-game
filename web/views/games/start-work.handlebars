@@ -1,6 +1,4 @@
 <div class="container" data-game-id="{{work.gameId}}" data-work-column-id="{{work.work.columnId}}">
-    <h1>{{work.work.title}}</h1>
-
     <div class="row">
         <progress value="" id="progressbar"></progress>
     </div>
@@ -11,7 +9,7 @@
         </div>
 
         <div id="outbox" class="wait-column col-6" data-column-id="{{work.work.columnId}}">
-            <h2>Backlog</h2>
+            <h2>{{work.work.title}}</h2>
             <div class="tasks"></div>
         </div>
     </div>
