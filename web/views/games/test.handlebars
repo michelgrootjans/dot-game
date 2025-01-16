@@ -18,15 +18,16 @@
     </div>
 
     <div class="row">
-        <div id="outbox" class="wait-column col" data-column-id="{{work.outbox.columnId}}">
+        <div id="defects" class="wait-column col-4" data-column-id="{{work.defects.columnId}}">
+          <h2>Rejected</h2>
+          <div class="tasks"></div>
+        </div>
+
+        <div id="outbox" class="wait-column col-6" data-column-id="{{work.outbox.columnId}}">
             <h2>Done</h2>
             <div class="tasks"></div>
         </div>
 
-        <div id="defects" class="wait-column col" data-column-id="{{work.defects.columnId}}">
-            <h2>Rejected</h2>
-            <div class="tasks"></div>
-        </div>
     </div>
 
 </div>

@@ -1,3 +1,9 @@
 .workspace {
     min-height: 250px;
 }
+
+#workspace .postit,
+#testspace .postit{
+    width: 120px;
+    height: 120px;
+}
