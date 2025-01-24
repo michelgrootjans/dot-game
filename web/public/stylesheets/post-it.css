@@ -98,17 +98,18 @@
 /*Test-space*/
 #testspace .previous-puzzles {
     visibility: visible;
+    font-size: x-small;
 }
 #testspace .move-button {
     visibility: visible;
 }
 #testspace .move-button:before {
-    content: 'Accept ✅'
+    content: '✅'
 }
 #testspace .reject-button {
     visibility: visible;
 }
 #testspace .reject-button:before {
-    content: 'Reject ❌'
+    content: '❌'
 }
 
