@@ -1,4 +1,5 @@
 const Cfd = require('./CFD')
+const ScatterPlot = require('./ScatterPlot')
 const Timer = require('./Timer')
 
 const setCurrentIteration = (iterationId) => {
@@ -8,12 +9,17 @@ const setCurrentIteration = (iterationId) => {
 
 const initialize = (gameId) => {
   const $cfd = document.getElementById('cfd')
-  if (!$cfd) return
+  const $scatter = document.getElementById('scatter')
+  if (!$cfd || !$scatter) return
 
   const cfd = Cfd($cfd, gameId)
+  const scatter = ScatterPlot($scatter)
   let timer = undefined
 
-  const update = (iterationId) => cfd.update(iterationId)
+  const update = async (iterationId) => {
+    await cfd.update(iterationId)
+    scatter.update(iterationId)
+  }
 
   document.addEventListener('IterationStarted', ({ detail }) => {
     cfd.clear()
