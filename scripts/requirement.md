@@ -50,4 +50,6 @@ this script has the same requirements as above, with an extra constraint:
 - the PO is not allowed to create a task if the total work in progress is 10 or more
 - make this wip-limit an optional parameter WIP that defaults to 10
 
+Make sure there is the least duplication between the scripts. Common functions can be moved to common script files.
+
 Update readme.md accordingly
