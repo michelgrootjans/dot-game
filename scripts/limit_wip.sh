@@ -2,9 +2,11 @@
 
 # Set default WIP limit to 10 if not provided
 WIP=${1:-10}
+# Set default simulation time to 60 seconds if not provided
+TIME=${2:-60}
 
-# Start a new game iteration with 60 seconds duration (60000 ms)
-http --ignore-stdin -f POST :3000/api/games/dummy/iterations duration=60000
+# Start a new game iteration with TIME seconds duration (TIME*1000 ms)
+http --ignore-stdin -f POST :3000/api/games/dummy/iterations duration=$((TIME * 1000))
 
 # Create a temporary directory for task tracking
 TEMP_DIR=$(mktemp -d)
@@ -75,7 +77,7 @@ count_wip() {
 
 # Function for the Product Owner (PO)
 po_work() {
-  local end_time=$((SECONDS + 60))
+  local end_time=$((SECONDS + TIME))
   local task_id=1
 
   while [ $SECONDS -lt $end_time ]; do
@@ -101,7 +103,7 @@ po_work() {
 
 # Function for the Analyst
 analyst_work() {
-  local end_time=$((SECONDS + 60))
+  local end_time=$((SECONDS + TIME))
 
   while [ $SECONDS -lt $end_time ]; do
     # Check if there are tasks in the backlog
@@ -133,7 +135,7 @@ analyst_work() {
 
 # Function for the Developer
 developer_work() {
-  local end_time=$((SECONDS + 60))
+  local end_time=$((SECONDS + TIME))
 
   while [ $SECONDS -lt $end_time ]; do
     # Check if there are tasks in analysis done
@@ -165,7 +167,7 @@ developer_work() {
 
 # Function for the Ops
 ops_work() {
-  local end_time=$((SECONDS + 60))
+  local end_time=$((SECONDS + TIME))
 
   while [ $SECONDS -lt $end_time ]; do
     # Check if there are tasks in development done
@@ -197,7 +199,7 @@ ops_work() {
 
 # Function for the QA
 qa_work() {
-  local end_time=$((SECONDS + 60))
+  local end_time=$((SECONDS + TIME))
 
   while [ $SECONDS -lt $end_time ]; do
     # Check if there are tasks in ops done
@@ -238,7 +240,7 @@ qa_work() {
 }
 
 # Run all workers in parallel
-echo "Starting simulation for 60 seconds with WIP limit of $WIP..."
+echo "Starting simulation for $TIME seconds with WIP limit of $WIP..."
 po_work &
 po_pid=$!
 analyst_work &

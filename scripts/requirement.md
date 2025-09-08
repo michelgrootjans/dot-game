@@ -36,6 +36,7 @@ The ops takes one item at a time in their workspace, thinks for about 1.5 second
 The ops takes one item at a time in their workspace, thinks for about 0.9 seconds, then has a 9/10 probability to move the task to done, otherwise they reject the task
 
 All 5 workers work in parallel for the duration of the simulation. Thinking time is random with an average given in the requirements above.
+Make the length of the simulation an optional parameter TIME that defaults to 60
 
 starting an iteration is done by calling `http -f POST :3000/api/games/dummy/iterations duration=[duration in miliseconds]`
 creating an item and adding it to the backlog is done by calling `http -f POST :3000/api/games/dummy/tasks taskId='[id]'`
