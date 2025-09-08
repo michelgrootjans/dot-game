@@ -203,7 +203,9 @@ When migrating JavaScript files to TypeScript:
 ## Dependency Constraints
 
 - `ts-jest@27.1.5` requires `@types/jest@^27.0.0` as a peer dependency
+- `ts-jest@27.1.5` requires `typescript@>=3.8 <5.0` as a peer dependency
 - Do not upgrade `@types/jest` beyond version 27.x without also upgrading `ts-jest`
+- Do not upgrade `typescript` to version 5.x without also upgrading `ts-jest`
 - If you encounter dependency conflicts during installation, you may need to use `--legacy-peer-deps` flag
 
 # License
