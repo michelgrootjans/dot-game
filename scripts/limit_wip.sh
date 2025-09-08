@@ -1,9 +1,20 @@
 #!/bin/bash
 
-# Set default WIP limit to 10 if not provided
-WIP=${1:-10}
-# Set default simulation time to 60 seconds if not provided
-TIME=${2:-60}
+# Set default values
+WIP=10
+TIME=60
+
+# Parse command line arguments
+for arg in "$@"; do
+  case $arg in
+    WIP=*)
+      WIP="${arg#*=}"
+      ;;
+    TIME=*)
+      TIME="${arg#*=}"
+      ;;
+  esac
+done
 
 # Start a new game iteration with TIME seconds duration (TIME*1000 ms)
 http --ignore-stdin -f POST :3000/api/games/dummy/iterations duration=$((TIME * 1000))

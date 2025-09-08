@@ -1,7 +1,16 @@
 #!/bin/bash
 
 # Set default simulation time to 60 seconds if not provided
-TIME=${1:-60}
+TIME=60
+
+# Parse command line arguments
+for arg in "$@"; do
+  case $arg in
+    TIME=*)
+      TIME="${arg#*=}"
+      ;;
+  esac
+done
 
 # Start a new game iteration with TIME seconds duration (TIME*1000 ms)
 http --ignore-stdin -f POST :3000/api/games/dummy/iterations duration=$((TIME * 1000))
