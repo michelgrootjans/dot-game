@@ -82,14 +82,19 @@ const config = {
         type: 'linear',
         min: 0,
         suggestedMax: 60,
-        ticks: { stepSize: 60 },
+        ticks: { stepSize: 10 },
       },
       y: {
         type: 'linear',
         stacked: true,
         min: 0,
         suggestedMax: 10,
-        ticks: { stepSize: 10 },
+        ticks: { stepSize: 5 },
+        title: {
+          display: true,
+          text: '#items',
+          align: 'end',
+        }
       },
     },
     plugins: {

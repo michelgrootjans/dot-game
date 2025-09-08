@@ -78,13 +78,18 @@ const ScatterPlot = (context) => {
           type: 'linear',
           min: 0,
           suggestedMax: 60,
-          ticks: { stepSize: 60 },
+          ticks: { stepSize: 10 },
         },
         y: {
           type: 'linear',
           min: 0,
           suggestedMax: 10,
-          ticks: { stepSize: 10 },
+          ticks: { stepSize: 5 },
+          title: {
+            display: true,
+            text: 'Lead Time',
+            align: 'end',
+          }
         },
       },
       plugins: {
