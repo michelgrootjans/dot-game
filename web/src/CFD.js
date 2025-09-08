@@ -80,12 +80,16 @@ const config = {
     scales: {
       x: {
         type: 'linear',
-        ticks: { stepSize: 5 },
+        min: 0,
+        suggestedMax: 60,
+        ticks: { stepSize: 60 },
       },
       y: {
         type: 'linear',
-        ticks: { stepSize: 5 },
         stacked: true,
+        min: 0,
+        suggestedMax: 10,
+        ticks: { stepSize: 10 },
       },
     },
     plugins: {

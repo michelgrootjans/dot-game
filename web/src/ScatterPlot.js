@@ -76,16 +76,15 @@ const ScatterPlot = (context) => {
       scales: {
         x: {
           type: 'linear',
-          position: 'bottom',
-          startAtZero: true,
           min: 0,
-          suggestedMax: 50,
+          suggestedMax: 60,
+          ticks: { stepSize: 60 },
         },
         y: {
           type: 'linear',
-          startAtZero: true,
           min: 0,
-          suggestedMax: 50,
+          suggestedMax: 10,
+          ticks: { stepSize: 10 },
         },
       },
       plugins: {
