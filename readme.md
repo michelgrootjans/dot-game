@@ -117,6 +117,89 @@ There are a few scripts to simulate iterations. They require curl to be installe
 
 `npm run format`
 
+# TypeScript Migration
+
+This project is being gradually migrated to TypeScript. The setup allows for a smooth transition where JavaScript and TypeScript files can coexist.
+
+## TypeScript Setup
+
+The project has been configured with:
+- TypeScript compiler (`tsconfig.json`)
+- Webpack support for TypeScript files
+- Source maps for debugging
+- Scripts for building and developing with TypeScript
+
+## Running with TypeScript
+
+To build the project with TypeScript:
+```
+npm run build
+```
+
+For development with TypeScript (runs TypeScript compiler, webpack, and server in watch mode):
+```
+npm run dev
+```
+
+To run just the TypeScript compiler:
+```
+npm run tsc
+```
+
+To run the TypeScript compiler in watch mode:
+```
+npm run tsc:watch
+```
+
+## Migration Guidelines
+
+When migrating JavaScript files to TypeScript:
+
+1. **Create a new file**: Create a `.ts` file alongside the existing `.js` file.
+   - Example: `API.js` → `API.ts`
+
+2. **Add type annotations**: Start by adding basic type annotations and interfaces.
+   - Use `any` type initially if the exact type is unclear
+   - Gradually refine types as you understand the code better
+
+3. **Module compatibility**: 
+   - When migrating CommonJS modules to TypeScript, maintain separate implementations for ES modules and CommonJS compatibility:
+     1. TypeScript file (e.g., `API.ts`) should use only ES module syntax:
+        ```typescript
+        // Export for ES modules only
+        export default API;
+        ```
+     2. Keep the original JavaScript file (e.g., `API.js`) with a direct implementation using CommonJS:
+        ```javascript
+        // Direct implementation for CommonJS compatibility
+        const API = (gameId) => {
+          // Implementation details...
+        };
+        
+        // Export for CommonJS
+        module.exports = API;
+        ```
+   - This approach is more reliable than trying to have one file import from the other
+   - It avoids issues with webpack's module system by keeping a clean separation between module systems
+   - Existing JavaScript files can continue to use `require('./API')` and will get the CommonJS version
+   - TypeScript files can use `import from './API'` and get the ES module version
+   - Keep both implementations in sync when making changes
+
+4. **Testing**: 
+   - Ensure the TypeScript version works correctly before removing the JavaScript version
+   - After making changes to module exports, always rebuild with `npm run build` and test in the browser
+   - Check both ES module imports and CommonJS requires to ensure compatibility
+
+5. **Incremental adoption**: Focus on one module at a time, starting with simpler, less-connected modules.
+
+## TypeScript Conventions
+
+- Use interfaces for object shapes
+- Prefer explicit return types on functions
+- Use `type` for unions, intersections, and aliases
+- Keep the `strict` mode disabled during migration to reduce friction
+- Use source maps for debugging
+
 # License
 
 Shield: [![CC BY 4.0][cc-by-shield]][cc-by]

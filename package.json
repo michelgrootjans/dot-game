@@ -10,7 +10,11 @@
     "serverstart": "DEBUG=dot-game:* npm run devstart",
     "webpack": "webpack",
     "webpack:watch": "webpack --watch",
-    "format": "prettier --write '**/*.js'"
+    "format": "prettier --write '**/*.{js,ts}'",
+    "tsc": "tsc",
+    "tsc:watch": "tsc --watch",
+    "build": "npm run tsc && npm run webpack",
+    "dev": "concurrently \"npm run tsc:watch\" \"npm run webpack:watch\" \"npm run devstart\""
   },
   "dependencies": {
     "chart.js": "^3.5.1",
@@ -33,9 +37,12 @@
     "webpack-cli": "^4.8.0"
   },
   "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "concurrently": "^9.2.1",
     "jest": "^27.1.0",
     "nodemon": "^2.0.12",
     "prettier": "^3.0.0",
+    "ts-jest": "^27.1.5",
     "typescript": "^5.2.2"
   }
 }
