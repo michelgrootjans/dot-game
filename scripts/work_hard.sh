@@ -48,6 +48,16 @@ add_task() {
   fi
 }
 
+# Function to generate random thinking time with a specific average
+random_thinking_time() {
+  local average=$1
+  # Generate a random number between 0.5*average and 1.5*average
+  # This will ensure the times average to the specified value over multiple iterations
+  local random_factor=$(echo "scale=3; 0.5 + $RANDOM / 32767" | bc)
+  local random_time=$(echo "scale=3; $average * $random_factor" | bc)
+  echo $random_time
+}
+
 # Function for the Product Owner (PO)
 po_work() {
   local end_time=$((SECONDS + 30))
@@ -82,8 +92,8 @@ analyst_work() {
       http --ignore-stdin -f POST :3000/api/games/dummy/tasks/$task/move
       echo "Analyst moved task $task to analysis"
 
-      # Analyst thinks for about 1.2 seconds
-      sleep 1.2
+      # Analyst thinks for about 1.2 seconds on average
+      sleep $(random_thinking_time 1.2)
 
       # Move from analysis to analysis done
       remove_task "analysis" "$task"
@@ -114,8 +124,8 @@ developer_work() {
       http --ignore-stdin -f POST :3000/api/games/dummy/tasks/$task/move
       echo "Developer moved task $task to development"
 
-      # Developer thinks for about 2 seconds
-      sleep 2
+      # Developer thinks for about 2 seconds on average
+      sleep $(random_thinking_time 2)
 
       # Move from development to development done
       remove_task "development" "$task"
@@ -146,8 +156,8 @@ ops_work() {
       http --ignore-stdin -f POST :3000/api/games/dummy/tasks/$task/move
       echo "Ops moved task $task to ops"
 
-      # Ops thinks for about 1.5 seconds
-      sleep 1.5
+      # Ops thinks for about 1.5 seconds on average
+      sleep $(random_thinking_time 1.5)
 
       # Move from ops to ops done
       remove_task "ops" "$task"
@@ -178,8 +188,8 @@ qa_work() {
       http --ignore-stdin -f POST :3000/api/games/dummy/tasks/$task/move
       echo "QA moved task $task to qa"
 
-      # QA thinks for about 0.9 seconds
-      sleep 0.9
+      # QA thinks for about 0.9 seconds on average
+      sleep $(random_thinking_time 0.9)
 
       # 9/10 probability to move to done, otherwise reject
       if [ $(( RANDOM % 10 )) -lt 9 ]; then
