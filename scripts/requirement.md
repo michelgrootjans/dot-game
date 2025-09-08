@@ -1,6 +1,6 @@
 add a script /scripts/work_hard.sh, similar to /scripts/simple_scenario.sh that simulates the following:
 
-the scenrio runs for 30 seconds
+the scenrio runs for 60 seconds
 there are 10 columns:
 - backlog
 - analysis
