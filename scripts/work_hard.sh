@@ -35,7 +35,7 @@ po_work() {
     add_task "backlog" "$task_id"
 
     task_id=$((task_id + 1))
-    sleep 1
+    sleep $(random_thinking_time 1)
   done
 }
 

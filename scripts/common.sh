@@ -73,8 +73,7 @@ analyst_work() {
       curl -s -X POST http://localhost:3000/api/games/dummy/tasks/$task/move > /dev/null
       echo "Analyst moved task $task to analysis"
 
-      # Analyst thinks for about 1.2 seconds on average
-      sleep $(random_thinking_time 1.2)
+      sleep $(random_thinking_time 2)
 
       # Move from analysis to analysis done
       remove_task "analysis" "$task"
@@ -105,8 +104,7 @@ developer_work() {
       curl -s -X POST http://localhost:3000/api/games/dummy/tasks/$task/move > /dev/null
       echo "Developer moved task $task to development"
 
-      # Developer thinks for about 2 seconds on average
-      sleep $(random_thinking_time 2)
+      sleep $(random_thinking_time 5)
 
       # Move from development to development done
       remove_task "development" "$task"
@@ -137,8 +135,7 @@ ops_work() {
       curl -s -X POST http://localhost:3000/api/games/dummy/tasks/$task/move > /dev/null
       echo "Ops moved task $task to ops"
 
-      # Ops thinks for about 1.5 seconds on average
-      sleep $(random_thinking_time 1.5)
+      sleep $(random_thinking_time 2)
 
       # Move from ops to ops done
       remove_task "ops" "$task"
@@ -169,8 +166,7 @@ qa_work() {
       curl -s -X POST http://localhost:3000/api/games/dummy/tasks/$task/move > /dev/null
       echo "QA moved task $task to qa"
 
-      # QA thinks for about 0.9 seconds on average
-      sleep $(random_thinking_time 0.9)
+      sleep $(random_thinking_time 1)
 
       # 9/10 probability to move to done, otherwise reject
       if [ $(( RANDOM % 10 )) -lt 9 ]; then

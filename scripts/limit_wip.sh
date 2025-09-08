@@ -59,7 +59,7 @@ po_work() {
       echo "PO waiting - WIP limit reached: $wip/$WIP"
     fi
 
-    sleep 1
+    sleep $(random_thinking_time 1)
   done
 }
 
