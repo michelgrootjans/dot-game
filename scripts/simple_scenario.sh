@@ -1,164 +1,166 @@
-http -f POST :3000/api/games/dummy/iterations duration=35000
+#!/bin/bash
+
+curl -X POST -d "duration=20000" http://localhost:3000/api/games/dummy/iterations
 
 #po
-http -f POST :3000/api/games/dummy/tasks taskId='1'
-http -f POST :3000/api/games/dummy/tasks taskId='2'
-http -f POST :3000/api/games/dummy/tasks taskId='3'
-http -f POST :3000/api/games/dummy/tasks taskId='4'
-http -f POST :3000/api/games/dummy/tasks taskId='5'
+curl -X POST -d "taskId=1" http://localhost:3000/api/games/dummy/tasks
+curl -X POST -d "taskId=2" http://localhost:3000/api/games/dummy/tasks
+curl -X POST -d "taskId=3" http://localhost:3000/api/games/dummy/tasks
+curl -X POST -d "taskId=4" http://localhost:3000/api/games/dummy/tasks
+curl -X POST -d "taskId=5" http://localhost:3000/api/games/dummy/tasks
 
 #analyst
-http -f POST :3000/api/games/dummy/tasks/1/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/1/move
 #po
-http -f POST :3000/api/games/dummy/tasks taskId='6'
+curl -X POST -d "taskId=6" http://localhost:3000/api/games/dummy/tasks
 
 sleep 1
 #analyst
-http -f POST :3000/api/games/dummy/tasks/1/move
-http -f POST :3000/api/games/dummy/tasks/2/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/1/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/2/move
 #design
-http -f POST :3000/api/games/dummy/tasks/1/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/1/move
 #po
-http -f POST :3000/api/games/dummy/tasks taskId='7'
+curl -X POST -d "taskId=7" http://localhost:3000/api/games/dummy/tasks
 
 sleep 1
 #design
-http -f POST :3000/api/games/dummy/tasks/1/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/1/move
 #dev
-http -f POST :3000/api/games/dummy/tasks/1/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/1/move
 
 sleep 1
 #analyst
-http -f POST :3000/api/games/dummy/tasks/2/move
-http -f POST :3000/api/games/dummy/tasks/3/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/2/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/3/move
 #design
-http -f POST :3000/api/games/dummy/tasks/2/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/2/move
 #po
-http -f POST :3000/api/games/dummy/tasks taskId='8'
+curl -X POST -d "taskId=8" http://localhost:3000/api/games/dummy/tasks
 
 sleep 1
 #analyst
-http -f POST :3000/api/games/dummy/tasks/3/move
-http -f POST :3000/api/games/dummy/tasks/4/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/3/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/4/move
 #po
-http -f POST :3000/api/games/dummy/tasks taskId='9'
+curl -X POST -d "taskId=9" http://localhost:3000/api/games/dummy/tasks
 
 sleep 1
 #analyst
-http -f POST :3000/api/games/dummy/tasks/4/move
-http -f POST :3000/api/games/dummy/tasks/5/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/4/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/5/move
 #po
-http -f POST :3000/api/games/dummy/tasks taskId='10'
+curl -X POST -d "taskId=10" http://localhost:3000/api/games/dummy/tasks
 
 sleep 1
 #design
-http -f POST :3000/api/games/dummy/tasks/2/move
-http -f POST :3000/api/games/dummy/tasks/3/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/2/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/3/move
 
 sleep 1
 #analyst
-http -f POST :3000/api/games/dummy/tasks/5/move
-http -f POST :3000/api/games/dummy/tasks/6/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/5/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/6/move
 #po
-http -f POST :3000/api/games/dummy/tasks taskId='11'
+curl -X POST -d "taskId=11" http://localhost:3000/api/games/dummy/tasks
 #design
-http -f POST :3000/api/games/dummy/tasks/3/move
-http -f POST :3000/api/games/dummy/tasks/4/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/3/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/4/move
 
 sleep 1
 #analyst
-http -f POST :3000/api/games/dummy/tasks/6/move
-http -f POST :3000/api/games/dummy/tasks/7/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/6/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/7/move
 #po
-http -f POST :3000/api/games/dummy/tasks taskId='12'
+curl -X POST -d "taskId=12" http://localhost:3000/api/games/dummy/tasks
 #design
-http -f POST :3000/api/games/dummy/tasks/4/move
-http -f POST :3000/api/games/dummy/tasks/5/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/4/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/5/move
 #dev
-http -f POST :3000/api/games/dummy/tasks/1/move
-http -f POST :3000/api/games/dummy/tasks/2/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/1/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/2/move
 #qa
-http -f POST :3000/api/games/dummy/tasks/1/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/1/move
 
 sleep 1
 #analyst
-http -f POST :3000/api/games/dummy/tasks/7/move
-http -f POST :3000/api/games/dummy/tasks/8/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/7/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/8/move
 #po
-http -f POST :3000/api/games/dummy/tasks taskId='13'
+curl -X POST -d "taskId=13" http://localhost:3000/api/games/dummy/tasks
 #design
-http -f POST :3000/api/games/dummy/tasks/5/move
-http -f POST :3000/api/games/dummy/tasks/6/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/5/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/6/move
 #qa
-http -f POST :3000/api/games/dummy/tasks/1/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/1/move
 
 sleep 1
 #analyst
-http -f POST :3000/api/games/dummy/tasks/8/move
-http -f POST :3000/api/games/dummy/tasks/9/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/8/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/9/move
 #po
-http -f POST :3000/api/games/dummy/tasks taskId='14'
+curl -X POST -d "taskId=14" http://localhost:3000/api/games/dummy/tasks
 #design
-http -f POST :3000/api/games/dummy/tasks/6/move
-http -f POST :3000/api/games/dummy/tasks/7/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/6/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/7/move
 
 sleep 1
 #analyst
-http -f POST :3000/api/games/dummy/tasks/9/move
-http -f POST :3000/api/games/dummy/tasks/10/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/9/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/10/move
 #po
-http -f POST :3000/api/games/dummy/tasks taskId='15'
+curl -X POST -d "taskId=15" http://localhost:3000/api/games/dummy/tasks
 #design
-http -f POST :3000/api/games/dummy/tasks/7/move
-http -f POST :3000/api/games/dummy/tasks/8/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/7/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/8/move
 
 sleep 1
 #analyst
-http -f POST :3000/api/games/dummy/tasks/10/move
-http -f POST :3000/api/games/dummy/tasks/11/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/10/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/11/move
 #po
-http -f POST :3000/api/games/dummy/tasks taskId='16'
+curl -X POST -d "taskId=16" http://localhost:3000/api/games/dummy/tasks
 #design
-http -f POST :3000/api/games/dummy/tasks/8/move
-http -f POST :3000/api/games/dummy/tasks/9/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/8/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/9/move
 #dev
-http -f POST :3000/api/games/dummy/tasks/2/move
-http -f POST :3000/api/games/dummy/tasks/3/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/2/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/3/move
 #qa
-http -f POST :3000/api/games/dummy/tasks/2/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/2/move
 
 sleep 1
 #analyst
-http -f POST :3000/api/games/dummy/tasks/11/move
-http -f POST :3000/api/games/dummy/tasks/12/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/11/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/12/move
 #po
-http -f POST :3000/api/games/dummy/tasks taskId='17'
+curl -X POST -d "taskId=17" http://localhost:3000/api/games/dummy/tasks
 #design
-http -f POST :3000/api/games/dummy/tasks/9/move
-http -f POST :3000/api/games/dummy/tasks/10/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/9/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/10/move
 #qa
-http -f POST :3000/api/games/dummy/tasks/2/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/2/move
 
 sleep 1
 #analyst
-http -f POST :3000/api/games/dummy/tasks/12/move
-http -f POST :3000/api/games/dummy/tasks/13/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/12/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/13/move
 #po
-http -f POST :3000/api/games/dummy/tasks taskId='18'
+curl -X POST -d "taskId=18" http://localhost:3000/api/games/dummy/tasks
 #design
-http -f POST :3000/api/games/dummy/tasks/10/move
-http -f POST :3000/api/games/dummy/tasks/11/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/10/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/11/move
 
 sleep 1
 #design
-http -f POST :3000/api/games/dummy/tasks/11/move
-http -f POST :3000/api/games/dummy/tasks/12/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/11/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/12/move
 #dev
-http -f POST :3000/api/games/dummy/tasks/3/move
-http -f POST :3000/api/games/dummy/tasks/4/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/3/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/4/move
 #qa
-http -f POST :3000/api/games/dummy/tasks/3/move
+curl -X POST http://localhost:3000/api/games/dummy/tasks/3/move
 
 sleep 1
 #design
-http -f POST :3000/api/games/dummy/tasks/3/reject
+curl -X POST http://localhost:3000/api/games/dummy/tasks/3/reject

@@ -39,15 +39,15 @@ All 5 workers work in parallel for the duration of the simulation. Thinking time
 Make the length of the simulation an optional parameter TIME that defaults to 60
 Parameters should be provided as `./scripts/work_hard.sh TIME=30`.
 
-starting an iteration is done by calling `http -f POST :3000/api/games/dummy/iterations duration=[duration in miliseconds]`
-creating an item and adding it to the backlog is done by calling `http -f POST :3000/api/games/dummy/tasks taskId='[id]'`
-moving an item to the next column is done by calling `http -f POST :3000/api/games/dummy/tasks/[id]/move`
-rejecting a task is done by calling `http -f POST :3000/api/games/dummy/tasks/[id]/reject`
+starting an iteration is done by calling `curl -X POST -d "duration=[duration in miliseconds]" http://localhost:3000/api/games/dummy/iterations`
+creating an item and adding it to the backlog is done by calling `curl -X POST -d "taskId=[id]" http://localhost:3000/api/games/dummy/tasks`
+moving an item to the next column is done by calling `curl -X POST http://localhost:3000/api/games/dummy/tasks/[id]/move`
+rejecting a task is done by calling `curl -X POST http://localhost:3000/api/games/dummy/tasks/[id]/reject`
 
 create a second script /scripts/limit_wip.sh
 this script has the same requirements as above, with an extra constraint:
 - the total work in progress is the number of tasks that have been created and are not done or rejected
-- the PO not allowed to create a task if the total work in progress is 10 or more
+- the PO is not allowed to create a task if the total work in progress is 10 or more
 - make this wip-limit an optional parameter WIP that defaults to 10
 
 Update readme.md accordingly
