@@ -200,6 +200,12 @@ When migrating JavaScript files to TypeScript:
 - Keep the `strict` mode disabled during migration to reduce friction
 - Use source maps for debugging
 
+## Dependency Constraints
+
+- `ts-jest@27.1.5` requires `@types/jest@^27.0.0` as a peer dependency
+- Do not upgrade `@types/jest` beyond version 27.x without also upgrading `ts-jest`
+- If you encounter dependency conflicts during installation, you may need to use `--legacy-peer-deps` flag
+
 # License
 
 Shield: [![CC BY 4.0][cc-by-shield]][cc-by]
