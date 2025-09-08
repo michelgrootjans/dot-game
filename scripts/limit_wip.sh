@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Set default WIP limit to 10 if not provided
+WIP=${1:-10}
+
 # Start a new game iteration with 60 seconds duration (60000 ms)
 http --ignore-stdin -f POST :3000/api/games/dummy/iterations duration=60000
 
@@ -79,17 +82,17 @@ po_work() {
     # Check if WIP limit is reached
     local wip=$(count_wip)
 
-    if [ $wip -lt 10 ]; then
+    if [ $wip -lt $WIP ]; then
       # PO generates 1 task per second if WIP is under limit
       http --ignore-stdin -f POST :3000/api/games/dummy/tasks taskId="$task_id"
-      echo "PO created task $task_id (WIP: $wip)"
+      echo "PO created task $task_id (WIP: $wip/$WIP)"
 
       # Add task to backlog
       add_task "backlog" "$task_id"
 
       task_id=$((task_id + 1))
     else
-      echo "PO waiting - WIP limit reached: $wip"
+      echo "PO waiting - WIP limit reached: $wip/$WIP"
     fi
 
     sleep 1
@@ -235,7 +238,7 @@ qa_work() {
 }
 
 # Run all workers in parallel
-echo "Starting simulation for 60 seconds with WIP limit of 10..."
+echo "Starting simulation for 60 seconds with WIP limit of $WIP..."
 po_work &
 po_pid=$!
 analyst_work &

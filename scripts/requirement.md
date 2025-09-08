@@ -46,3 +46,4 @@ create a second script /scripts/limit_wip.sh
 this script has the same requirements as above, with an extra constraint:
 - the total work in progress is the number of tasks that have been created and are not done or rejected
 - the PO not allowed to create a task if the total work in progress is 10 or more
+- make this wip-limit an optional parameter WIP that defaults to 10
