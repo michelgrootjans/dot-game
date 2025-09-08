@@ -42,3 +42,7 @@ creating an item and adding it to the backlog is done by calling `http -f POST :
 moving an item to the next column is done by calling `http -f POST :3000/api/games/dummy/tasks/[id]/move`
 rejecting a task is done by calling `http -f POST :3000/api/games/dummy/tasks/[id]/reject`
 
+create a second script /scripts/limit_wip.sh
+this script has the same requirements as above, with an extra constraint:
+- the total work in progress is the number of tasks that have been created and are not done or rejected
+- the PO not allowed to create a task if the total work in progress is 10 or more
