@@ -17,7 +17,7 @@ for arg in "$@"; do
 done
 
 # Start a new game iteration with TIME seconds duration (TIME*1000 ms)
-curl -X POST -d "duration=$((TIME * 1000))" http://localhost:3000/api/games/dummy/iterations
+curl -s -X POST -d "duration=$((TIME * 1000))" http://localhost:3000/api/games/dummy/iterations > /dev/null
 
 # Create a temporary directory for task tracking
 TEMP_DIR=$(mktemp -d)
@@ -97,7 +97,7 @@ po_work() {
 
     if [ $wip -lt $WIP ]; then
       # PO generates 1 task per second if WIP is under limit
-      curl -X POST -d "taskId=$task_id" http://localhost:3000/api/games/dummy/tasks
+      curl -s -X POST -d "taskId=$task_id" http://localhost:3000/api/games/dummy/tasks > /dev/null
       echo "PO created task $task_id (WIP: $wip/$WIP)"
 
       # Add task to backlog
@@ -125,7 +125,7 @@ analyst_work() {
       remove_task "backlog" "$task"
       add_task "analysis" "$task"
 
-      curl -X POST http://localhost:3000/api/games/dummy/tasks/$task/move
+      curl -s -X POST http://localhost:3000/api/games/dummy/tasks/$task/move > /dev/null
       echo "Analyst moved task $task to analysis"
 
       # Analyst thinks for about 1.2 seconds on average
@@ -135,7 +135,7 @@ analyst_work() {
       remove_task "analysis" "$task"
       add_task "analysis_done" "$task"
 
-      curl -X POST http://localhost:3000/api/games/dummy/tasks/$task/move
+      curl -s -X POST http://localhost:3000/api/games/dummy/tasks/$task/move > /dev/null
       echo "Analyst moved task $task to analysis done"
     else
       # If no tasks, wait a bit
@@ -157,7 +157,7 @@ developer_work() {
       remove_task "analysis_done" "$task"
       add_task "development" "$task"
 
-      curl -X POST http://localhost:3000/api/games/dummy/tasks/$task/move
+      curl -s -X POST http://localhost:3000/api/games/dummy/tasks/$task/move > /dev/null
       echo "Developer moved task $task to development"
 
       # Developer thinks for about 2 seconds on average
@@ -167,7 +167,7 @@ developer_work() {
       remove_task "development" "$task"
       add_task "development_done" "$task"
 
-      curl -X POST http://localhost:3000/api/games/dummy/tasks/$task/move
+      curl -s -X POST http://localhost:3000/api/games/dummy/tasks/$task/move > /dev/null
       echo "Developer moved task $task to development done"
     else
       # If no tasks, wait a bit
@@ -189,7 +189,7 @@ ops_work() {
       remove_task "development_done" "$task"
       add_task "ops" "$task"
 
-      curl -X POST http://localhost:3000/api/games/dummy/tasks/$task/move
+      curl -s -X POST http://localhost:3000/api/games/dummy/tasks/$task/move > /dev/null
       echo "Ops moved task $task to ops"
 
       # Ops thinks for about 1.5 seconds on average
@@ -199,7 +199,7 @@ ops_work() {
       remove_task "ops" "$task"
       add_task "ops_done" "$task"
 
-      curl -X POST http://localhost:3000/api/games/dummy/tasks/$task/move
+      curl -s -X POST http://localhost:3000/api/games/dummy/tasks/$task/move > /dev/null
       echo "Ops moved task $task to ops done"
     else
       # If no tasks, wait a bit
@@ -221,7 +221,7 @@ qa_work() {
       remove_task "ops_done" "$task"
       add_task "qa" "$task"
 
-      curl -X POST http://localhost:3000/api/games/dummy/tasks/$task/move
+      curl -s -X POST http://localhost:3000/api/games/dummy/tasks/$task/move > /dev/null
       echo "QA moved task $task to qa"
 
       # QA thinks for about 0.9 seconds on average
@@ -233,14 +233,14 @@ qa_work() {
         remove_task "qa" "$task"
         add_task "done" "$task"
 
-        curl -X POST http://localhost:3000/api/games/dummy/tasks/$task/move
+        curl -s -X POST http://localhost:3000/api/games/dummy/tasks/$task/move > /dev/null
         echo "QA moved task $task to done"
       else
         # Reject the task
         remove_task "qa" "$task"
         add_task "rejected" "$task"
 
-        curl -X POST http://localhost:3000/api/games/dummy/tasks/$task/reject
+        curl -s -X POST http://localhost:3000/api/games/dummy/tasks/$task/reject > /dev/null
         echo "QA rejected task $task"
       fi
     else
