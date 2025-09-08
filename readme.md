@@ -99,13 +99,16 @@ run the following commands in two separate terminals:
 There are a few scripts to simulate iterations. They require curl to be installed (which is usually pre-installed on most systems).
 - `./scripts/simple_scenario.sh` - A simple predefined scenario
 - `./scripts/work_hard.sh` - Workers process tasks in parallel
-  - Optional parameter: `TIME=30` (default: 60) - Sets the simulation duration in seconds
-  - Example: `./scripts/work_hard.sh TIME=30`
+  - Optional parameters: 
+    - `TIME=30` (default: 60) - Sets the simulation duration in seconds
+    - `BASE_URL=https://example.com` (default: http://localhost:3000) - Sets the base URL for API calls
+  - Example: `./scripts/work_hard.sh TIME=30 BASE_URL=https://afternoon-bayou-75731.herokuapp.com`
 - `./scripts/limit_wip.sh` - Workers process tasks in parallel with a WIP limit
   - Optional parameters: 
     - `WIP=5` (default: 10) - Sets the work-in-progress limit
     - `TIME=30` (default: 60) - Sets the simulation duration in seconds
-  - Example: `./scripts/limit_wip.sh WIP=5 TIME=30`
+    - `BASE_URL=https://example.com` (default: http://localhost:3000) - Sets the base URL for API calls
+  - Example: `./scripts/limit_wip.sh WIP=5 TIME=30 BASE_URL=https://afternoon-bayou-75731.herokuapp.com`
 
 ## Run the tests
 
