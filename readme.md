@@ -96,8 +96,16 @@ run the following commands in two separate terminals:
 
 `open localhost:3000`
 
-There are a few scripts to simulate iterations. They requires httpie tool to be installed.
-- `./scripts/simple_scenario.sh`
+There are a few scripts to simulate iterations. They require httpie tool to be installed.
+- `./scripts/simple_scenario.sh` - A simple predefined scenario
+- `./scripts/work_hard.sh` - Workers process tasks in parallel
+  - Optional parameter: `TIME=30` (default: 60) - Sets the simulation duration in seconds
+  - Example: `./scripts/work_hard.sh TIME=30`
+- `./scripts/limit_wip.sh` - Workers process tasks in parallel with a WIP limit
+  - Optional parameters: 
+    - `WIP=5` (default: 10) - Sets the work-in-progress limit
+    - `TIME=30` (default: 60) - Sets the simulation duration in seconds
+  - Example: `./scripts/limit_wip.sh WIP=5 TIME=30`
 
 ## Run the tests
 
