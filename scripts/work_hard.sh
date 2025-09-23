@@ -28,7 +28,7 @@ export BASE_URL
 export GAME_ID
 
 # Start a new game iteration with TIME seconds duration (TIME*1000 ms)
-curl -s -X POST -d "duration=$((TIME * 1000))" "$(game_url)/iterations" > /dev/null
+start_iteration $((TIME * 1000))
 
 # Setup environment
 setup_environment
@@ -40,7 +40,7 @@ po_work() {
 
   while [ $SECONDS -lt $end_time ]; do
     # PO generates 1 task per second
-    curl -s -X POST -d "taskId=$task_id" "$(game_url)/tasks" > /dev/null
+    create_task "$task_id"
     echo "PO created task $task_id"
 
     # Add task to backlog
