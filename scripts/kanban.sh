@@ -175,7 +175,7 @@ qa_work() {
 
       sleep $(qa_thinking_time)
 
-      if [ $(( RANDOM % 10 )) -lt 9 ]; then
+      if qa_approves; then
         remove_task "qa" "$task"
         add_task "done" "$task"
         curl -s -X POST "$BASE_URL/api/games/dummy/tasks/$task/move" > /dev/null

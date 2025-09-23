@@ -77,6 +77,14 @@ qa_thinking_time() {
   random_thinking_time 1
 }
 
+# QA approval probability helper (centralized)
+# Configure with QA_APPROVE_PERCENT (0-100), default 90
+qa_approves() {
+  local percent=${QA_APPROVE_PERCENT:-90}
+  local roll=$((RANDOM % 100))
+  [ "$roll" -lt "$percent" ]
+}
+
 # Function for the Analyst
 analyst_work() {
   local end_time=$((SECONDS + TIME))
@@ -188,8 +196,8 @@ qa_work() {
 
       sleep $(random_thinking_time 1)
 
-      # 9/10 probability to move to done, otherwise reject
-      if [ $(( RANDOM % 10 )) -lt 9 ]; then
+      # Decide approval using centralized helper
+      if qa_approves; then
         # Move from qa to done
         remove_task "qa" "$task"
         add_task "done" "$task"
