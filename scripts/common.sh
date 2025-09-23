@@ -4,6 +4,28 @@
 BASE_URL=${BASE_URL:-"http://localhost:3000"}
 # Default game id (can be overridden by scripts that source this file or via env)
 GAME_ID=${GAME_ID:-"dummy"}
+# Default time in seconds for simulations (can be overridden by scripts or via env)
+TIME=${TIME:-60}
+
+# Parse common KEY=VALUE CLI args: TIME, BASE_URL, GAME_ID
+# This function will be invoked automatically when common.sh is sourced
+parse_common_args() {
+  for arg in "$@"; do
+    case $arg in
+      TIME=*)
+        TIME="${arg#*=}"
+        ;;
+      BASE_URL=*)
+        BASE_URL="${arg#*=}"
+        ;;
+      GAME_ID=*)
+        GAME_ID="${arg#*=}"
+        ;;
+    esac
+  done
+  export BASE_URL
+  export GAME_ID
+}
 
 # Common helper to build the game API base URL
 # Usage: curl "$(game_url)/iterations" ...
@@ -241,6 +263,10 @@ qa_work() {
 
 # Function to run all workers in parallel
 run_workers() {
+  # Ensure iteration is started and environment is ready
+  start_iteration $((TIME * 1000))
+  setup_environment
+
   # Run all workers in parallel
   po_work &
   po_pid=$!
@@ -259,6 +285,9 @@ run_workers() {
   wait $developer_pid
   wait $ops_pid
   wait $qa_pid
+
+  # Perform cleanup once all workers are done
+  cleanup
 }
 
 # Function to clean up
@@ -267,3 +296,7 @@ cleanup() {
   rm -rf "$TEMP_DIR"
   echo "Simulation completed."
 }
+
+# Auto-parse common args when this file is sourced
+# This uses the parent script's "$@" to pick up KEY=VALUE args
+parse_common_args "$@"

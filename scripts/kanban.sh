@@ -5,37 +5,15 @@ source "$(dirname "$0")/common.sh"
 
 # Defaults
 WIP=4
-TIME=60
-BASE_URL="http://localhost:3000"
-GAME_ID="dummy"
 
-# Parse command line args: KEY=VALUE
+# Parse WIP locally and common args via common.sh helper
 for arg in "$@"; do
   case $arg in
     WIP=*)
       WIP="${arg#*=}"
       ;;
-    TIME=*)
-      TIME="${arg#*=}"
-      ;;
-    BASE_URL=*)
-      BASE_URL="${arg#*=}"
-      ;;
-    GAME_ID=*)
-      GAME_ID="${arg#*=}"
-      ;;
   esac
 done
-
-# Export for sourced common.sh usage
-export BASE_URL
-export GAME_ID
-
-# Start a new game iteration with TIME seconds duration (TIME*1000 ms)
-start_iteration $((TIME * 1000))
-
-# Setup environment (temp files per column)
-setup_environment
 
 # --- Helpers specific to Kanban WIP constraints ---
 count_column() {
@@ -184,6 +162,5 @@ qa_work() {
 # Display startup message
 echo "Starting Kanban simulation for $TIME seconds with per-worker outbox WIP limit of $WIP..."
 
-# Run and cleanup
+# Run (includes cleanup)
 run_workers
-cleanup

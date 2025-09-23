@@ -5,36 +5,15 @@ source "$(dirname "$0")/common.sh"
 
 # Set default values
 WIP=10
-TIME=60
-GAME_ID="dummy"
 
-# Parse command line arguments
+# Parse WIP locally and common args via common.sh helper
 for arg in "$@"; do
   case $arg in
     WIP=*)
       WIP="${arg#*=}"
       ;;
-    TIME=*)
-      TIME="${arg#*=}"
-      ;;
-    BASE_URL=*)
-      BASE_URL="${arg#*=}"
-      ;;
-    GAME_ID=*)
-      GAME_ID="${arg#*=}"
-      ;;
   esac
 done
-
-# Export BASE_URL for common.sh
-export BASE_URL
-export GAME_ID
-
-# Start a new game iteration with TIME seconds duration (TIME*1000 ms)
-start_iteration $((TIME * 1000))
-
-# Setup environment
-setup_environment
 
 # Function to count total work in progress
 # WIP is defined as tasks that are not in done or rejected columns
@@ -77,8 +56,5 @@ po_work() {
 # Display startup message
 echo "Starting simulation for $TIME seconds with WIP limit of $WIP..."
 
-# Run all workers in parallel
+# Run all workers in parallel (includes cleanup)
 run_workers
-
-# Clean up
-cleanup
