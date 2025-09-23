@@ -60,6 +60,23 @@ random_thinking_time() {
   echo $random_time
 }
 
+# Role-specific thinking time helpers (centralized)
+PO_thinking_time() {
+  random_thinking_time 1
+}
+analyst_thinking_time() {
+  random_thinking_time 2
+}
+developer_thinking_time() {
+  random_thinking_time 5
+}
+ops_thinking_time() {
+  random_thinking_time 2
+}
+qa_thinking_time() {
+  random_thinking_time 1
+}
+
 # Function for the Analyst
 analyst_work() {
   local end_time=$((SECONDS + TIME))

@@ -69,7 +69,7 @@ po_work() {
     echo "PO created task $task_id"
     add_task "backlog" "$task_id"
     task_id=$((task_id + 1))
-    sleep $(random_thinking_time 1)
+    sleep $(PO_thinking_time)
   done
 }
 
@@ -92,7 +92,7 @@ analyst_work() {
       curl -s -X POST "$BASE_URL/api/games/dummy/tasks/$task/move" > /dev/null
       echo "Analyst moved task $task to analysis"
 
-      sleep $(random_thinking_time 1.2)
+      sleep $(analyst_thinking_time)
 
       remove_task "analysis" "$task"
       add_task "analysis_done" "$task"
@@ -121,7 +121,7 @@ developer_work() {
       curl -s -X POST "$BASE_URL/api/games/dummy/tasks/$task/move" > /dev/null
       echo "Developer moved task $task to development"
 
-      sleep $(random_thinking_time 2)
+      sleep $(developer_thinking_time)
 
       remove_task "development" "$task"
       add_task "development_done" "$task"
@@ -150,7 +150,7 @@ ops_work() {
       curl -s -X POST "$BASE_URL/api/games/dummy/tasks/$task/move" > /dev/null
       echo "Ops moved task $task to ops"
 
-      sleep $(random_thinking_time 1.5)
+      sleep $(ops_thinking_time)
 
       remove_task "ops" "$task"
       add_task "ops_done" "$task"
@@ -173,7 +173,7 @@ qa_work() {
       curl -s -X POST "$BASE_URL/api/games/dummy/tasks/$task/move" > /dev/null
       echo "QA moved task $task to qa"
 
-      sleep $(random_thinking_time 0.9)
+      sleep $(qa_thinking_time)
 
       if [ $(( RANDOM % 10 )) -lt 9 ]; then
         remove_task "qa" "$task"
