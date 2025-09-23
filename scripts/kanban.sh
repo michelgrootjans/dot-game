@@ -52,11 +52,19 @@ count_columns_sum() {
 }
 
 # --- Workers (override the ones from common.sh with WIP gating) ---
-# Product Owner: generates 1 task per second (no personal WIP gate)
+# Product Owner: generates 1 task per second, but is WIP-gated on backlog outbox
 po_work() {
   local end_time=$((SECONDS + TIME))
   local task_id=1
   while [ $SECONDS -lt $end_time ]; do
+    # Apply WIP gate: PO outbox is the backlog column
+    local outbox_count=$(count_column "backlog")
+    if [ "$outbox_count" -ge "$WIP" ]; then
+      # Outbox full, wait
+      sleep 0.2
+      continue
+    fi
+
     curl -s -X POST -d "taskId=$task_id" "$BASE_URL/api/games/dummy/tasks" > /dev/null
     echo "PO created task $task_id"
     add_task "backlog" "$task_id"
@@ -154,16 +162,10 @@ ops_work() {
   done
 }
 
-# QA: outbox is done or rejected combined; avg think ~0.9s
+# QA: no outbox constraint; avg think ~0.9s
 qa_work() {
   local end_time=$((SECONDS + TIME))
   while [ $SECONDS -lt $end_time ]; do
-    local outbox_count=$(count_columns_sum done rejected)
-    if [ "$outbox_count" -ge "$WIP" ]; then
-      sleep 0.2
-      continue
-    fi
-
     local task=$(get_next_task "ops_done")
     if [ -n "$task" ]; then
       remove_task "ops_done" "$task"
