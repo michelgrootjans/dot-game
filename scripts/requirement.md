@@ -48,6 +48,14 @@ creating an item and adding it to the backlog is done by calling `curl -X POST -
 moving an item to the next column is done by calling `curl -X POST http://localhost:3000/api/games/dummy/tasks/[id]/move`
 rejecting a task is done by calling `curl -X POST http://localhost:3000/api/games/dummy/tasks/[id]/reject`
 
+# Kanban
+
+create a second script /scripts/kanban.sh
+
+this script has the same requirements as above. However, all workers limit their work in progress to 4:
+- workers are not allowed to start a new task if their outbox contains 4 or more work items
+- make parameters optional with the same defaults (WIP default 4, BASE_URL default localhost, TIME default 60) 
+
 ## Limit WIP
 
 create a third script /scripts/limit_wip.sh

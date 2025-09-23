@@ -103,6 +103,12 @@ There are a few scripts to simulate iterations. They require curl to be installe
     - `TIME=30` (default: 60) - Sets the simulation duration in seconds
     - `BASE_URL=https://example.com` (default: http://localhost:3000) - Sets the base URL for API calls
   - Example: `./scripts/work_hard.sh TIME=30 BASE_URL=https://afternoon-bayou-75731.herokuapp.com`
+- `./scripts/kanban.sh` - Kanban: workers limit their personal outbox WIP
+  - Optional parameters:
+    - `WIP=4` (default: 4) - Personal outbox limit per worker (QA counts both done and rejected)
+    - `TIME=30` (default: 60) - Simulation duration in seconds
+    - `BASE_URL=https://example.com` (default: http://localhost:3000) - Base URL for API calls
+  - Example: `./scripts/kanban.sh WIP=4 TIME=45 BASE_URL=https://afternoon-bayou-75731.herokuapp.com`
 - `./scripts/limit_wip.sh` - Workers process tasks in parallel with a WIP limit
   - Optional parameters: 
     - `WIP=5` (default: 10) - Sets the work-in-progress limit
