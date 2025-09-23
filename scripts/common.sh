@@ -5,6 +5,12 @@ BASE_URL=${BASE_URL:-"http://localhost:3000"}
 # Default game id (can be overridden by scripts that source this file or via env)
 GAME_ID=${GAME_ID:-"dummy"}
 
+# Common helper to build the game API base URL
+# Usage: curl "$(game_url)/iterations" ...
+game_url() {
+  echo "$BASE_URL/api/games/$GAME_ID"
+}
+
 # Create a temporary directory for task tracking
 setup_environment() {
   TEMP_DIR=$(mktemp -d)
@@ -100,7 +106,7 @@ analyst_work() {
       remove_task "backlog" "$task"
       add_task "analysis" "$task"
 
-      curl -s -X POST "$BASE_URL/api/games/$GAME_ID/tasks/$task/move" > /dev/null
+      curl -s -X POST "$(game_url)/tasks/$task/move" > /dev/null
       echo "Analyst moved task $task to analysis"
 
       sleep $(random_thinking_time 2)
@@ -109,7 +115,7 @@ analyst_work() {
       remove_task "analysis" "$task"
       add_task "analysis_done" "$task"
 
-      curl -s -X POST "$BASE_URL/api/games/$GAME_ID/tasks/$task/move" > /dev/null
+      curl -s -X POST "$(game_url)/tasks/$task/move" > /dev/null
       echo "Analyst moved task $task to analysis done"
     else
       # If no tasks, wait a bit
@@ -131,7 +137,7 @@ developer_work() {
       remove_task "analysis_done" "$task"
       add_task "development" "$task"
 
-      curl -s -X POST "$BASE_URL/api/games/$GAME_ID/tasks/$task/move" > /dev/null
+      curl -s -X POST "$(game_url)/tasks/$task/move" > /dev/null
       echo "Developer moved task $task to development"
 
       sleep $(random_thinking_time 5)
@@ -140,7 +146,7 @@ developer_work() {
       remove_task "development" "$task"
       add_task "development_done" "$task"
 
-      curl -s -X POST "$BASE_URL/api/games/$GAME_ID/tasks/$task/move" > /dev/null
+      curl -s -X POST "$(game_url)/tasks/$task/move" > /dev/null
       echo "Developer moved task $task to development done"
     else
       # If no tasks, wait a bit
@@ -162,7 +168,7 @@ ops_work() {
       remove_task "development_done" "$task"
       add_task "ops" "$task"
 
-      curl -s -X POST "$BASE_URL/api/games/$GAME_ID/tasks/$task/move" > /dev/null
+      curl -s -X POST "$(game_url)/tasks/$task/move" > /dev/null
       echo "Ops moved task $task to ops"
 
       sleep $(random_thinking_time 2)
@@ -171,7 +177,7 @@ ops_work() {
       remove_task "ops" "$task"
       add_task "ops_done" "$task"
 
-      curl -s -X POST "$BASE_URL/api/games/$GAME_ID/tasks/$task/move" > /dev/null
+      curl -s -X POST "$(game_url)/tasks/$task/move" > /dev/null
       echo "Ops moved task $task to ops done"
     else
       # If no tasks, wait a bit
@@ -193,7 +199,7 @@ qa_work() {
       remove_task "ops_done" "$task"
       add_task "qa" "$task"
 
-      curl -s -X POST "$BASE_URL/api/games/$GAME_ID/tasks/$task/move" > /dev/null
+      curl -s -X POST "$(game_url)/tasks/$task/move" > /dev/null
       echo "QA moved task $task to qa"
 
       sleep $(random_thinking_time 1)
@@ -204,14 +210,14 @@ qa_work() {
         remove_task "qa" "$task"
         add_task "done" "$task"
 
-        curl -s -X POST "$BASE_URL/api/games/$GAME_ID/tasks/$task/move" > /dev/null
+        curl -s -X POST "$(game_url)/tasks/$task/move" > /dev/null
         echo "QA moved task $task to done"
       else
         # Reject the task
         remove_task "qa" "$task"
         add_task "rejected" "$task"
 
-        curl -s -X POST "$BASE_URL/api/games/$GAME_ID/tasks/$task/reject" > /dev/null
+        curl -s -X POST "$(game_url)/tasks/$task/reject" > /dev/null
         echo "QA rejected task $task"
       fi
     else

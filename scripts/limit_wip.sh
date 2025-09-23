@@ -31,7 +31,7 @@ export BASE_URL
 export GAME_ID
 
 # Start a new game iteration with TIME seconds duration (TIME*1000 ms)
-curl -s -X POST -d "duration=$((TIME * 1000))" "$BASE_URL/api/games/$GAME_ID/iterations" > /dev/null
+curl -s -X POST -d "duration=$((TIME * 1000))" "$(game_url)/iterations" > /dev/null
 
 # Setup environment
 setup_environment
@@ -59,7 +59,7 @@ po_work() {
 
     if [ $wip -lt $WIP ]; then
       # PO generates 1 task per second if WIP is under limit
-      curl -s -X POST -d "taskId=$task_id" "$BASE_URL/api/games/$GAME_ID/tasks" > /dev/null
+      curl -s -X POST -d "taskId=$task_id" "$(game_url)/tasks" > /dev/null
       echo "PO created task $task_id (WIP: $wip/$WIP)"
 
       # Add task to backlog
