@@ -7,6 +7,7 @@ source "$(dirname "$0")/common.sh"
 WIP=4
 TIME=60
 BASE_URL="http://localhost:3000"
+GAME_ID="dummy"
 
 # Parse command line args: KEY=VALUE
 for arg in "$@"; do
@@ -20,14 +21,18 @@ for arg in "$@"; do
     BASE_URL=*)
       BASE_URL="${arg#*=}"
       ;;
+    GAME_ID=*)
+      GAME_ID="${arg#*=}"
+      ;;
   esac
 done
 
 # Export for sourced common.sh usage
 export BASE_URL
+export GAME_ID
 
 # Start a new game iteration with TIME seconds duration (TIME*1000 ms)
-curl -s -X POST -d "duration=$((TIME * 1000))" "$BASE_URL/api/games/dummy/iterations" > /dev/null
+curl -s -X POST -d "duration=$((TIME * 1000))" "$BASE_URL/api/games/$GAME_ID/iterations" > /dev/null
 
 # Setup environment (temp files per column)
 setup_environment
@@ -65,7 +70,7 @@ po_work() {
       continue
     fi
 
-    curl -s -X POST -d "taskId=$task_id" "$BASE_URL/api/games/dummy/tasks" > /dev/null
+    curl -s -X POST -d "taskId=$task_id" "$BASE_URL/api/games/$GAME_ID/tasks" > /dev/null
     echo "PO created task $task_id"
     add_task "backlog" "$task_id"
     task_id=$((task_id + 1))
@@ -89,14 +94,14 @@ analyst_work() {
     if [ -n "$task" ]; then
       remove_task "backlog" "$task"
       add_task "analysis" "$task"
-      curl -s -X POST "$BASE_URL/api/games/dummy/tasks/$task/move" > /dev/null
+      curl -s -X POST "$BASE_URL/api/games/$GAME_ID/tasks/$task/move" > /dev/null
       echo "Analyst moved task $task to analysis"
 
       sleep $(analyst_thinking_time)
 
       remove_task "analysis" "$task"
       add_task "analysis_done" "$task"
-      curl -s -X POST "$BASE_URL/api/games/dummy/tasks/$task/move" > /dev/null
+      curl -s -X POST "$BASE_URL/api/games/$GAME_ID/tasks/$task/move" > /dev/null
       echo "Analyst moved task $task to analysis done"
     else
       sleep 0.2
@@ -118,14 +123,14 @@ developer_work() {
     if [ -n "$task" ]; then
       remove_task "analysis_done" "$task"
       add_task "development" "$task"
-      curl -s -X POST "$BASE_URL/api/games/dummy/tasks/$task/move" > /dev/null
+      curl -s -X POST "$BASE_URL/api/games/$GAME_ID/tasks/$task/move" > /dev/null
       echo "Developer moved task $task to development"
 
       sleep $(developer_thinking_time)
 
       remove_task "development" "$task"
       add_task "development_done" "$task"
-      curl -s -X POST "$BASE_URL/api/games/dummy/tasks/$task/move" > /dev/null
+      curl -s -X POST "$BASE_URL/api/games/$GAME_ID/tasks/$task/move" > /dev/null
       echo "Developer moved task $task to development done"
     else
       sleep 0.2
@@ -147,14 +152,14 @@ ops_work() {
     if [ -n "$task" ]; then
       remove_task "development_done" "$task"
       add_task "ops" "$task"
-      curl -s -X POST "$BASE_URL/api/games/dummy/tasks/$task/move" > /dev/null
+      curl -s -X POST "$BASE_URL/api/games/$GAME_ID/tasks/$task/move" > /dev/null
       echo "Ops moved task $task to ops"
 
       sleep $(ops_thinking_time)
 
       remove_task "ops" "$task"
       add_task "ops_done" "$task"
-      curl -s -X POST "$BASE_URL/api/games/dummy/tasks/$task/move" > /dev/null
+      curl -s -X POST "$BASE_URL/api/games/$GAME_ID/tasks/$task/move" > /dev/null
       echo "Ops moved task $task to ops done"
     else
       sleep 0.2
@@ -170,7 +175,7 @@ qa_work() {
     if [ -n "$task" ]; then
       remove_task "ops_done" "$task"
       add_task "qa" "$task"
-      curl -s -X POST "$BASE_URL/api/games/dummy/tasks/$task/move" > /dev/null
+      curl -s -X POST "$BASE_URL/api/games/$GAME_ID/tasks/$task/move" > /dev/null
       echo "QA moved task $task to qa"
 
       sleep $(qa_thinking_time)
@@ -178,12 +183,12 @@ qa_work() {
       if qa_approves; then
         remove_task "qa" "$task"
         add_task "done" "$task"
-        curl -s -X POST "$BASE_URL/api/games/dummy/tasks/$task/move" > /dev/null
+        curl -s -X POST "$BASE_URL/api/games/$GAME_ID/tasks/$task/move" > /dev/null
         echo "QA moved task $task to done"
       else
         remove_task "qa" "$task"
         add_task "rejected" "$task"
-        curl -s -X POST "$BASE_URL/api/games/dummy/tasks/$task/reject" > /dev/null
+        curl -s -X POST "$BASE_URL/api/games/$GAME_ID/tasks/$task/reject" > /dev/null
         echo "QA rejected task $task"
       fi
     else
