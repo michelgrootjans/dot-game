@@ -92,16 +92,12 @@ analyst_work() {
 
     local task=$(get_next_task "backlog")
     if [ -n "$task" ]; then
-      remove_task "backlog" "$task"
-      add_task "analysis" "$task"
-      move_task "$task"
+      advance_task "$task" "backlog" "analysis"
       echo "Analyst moved task $task to analysis"
 
       sleep $(analyst_thinking_time)
 
-      remove_task "analysis" "$task"
-      add_task "analysis_done" "$task"
-      move_task "$task"
+      advance_task "$task" "analysis" "analysis_done"
       echo "Analyst moved task $task to analysis done"
     else
       sleep 0.2
@@ -121,16 +117,12 @@ developer_work() {
 
     local task=$(get_next_task "analysis_done")
     if [ -n "$task" ]; then
-      remove_task "analysis_done" "$task"
-      add_task "development" "$task"
-      move_task "$task"
+      advance_task "$task" "analysis_done" "development"
       echo "Developer moved task $task to development"
 
       sleep $(developer_thinking_time)
 
-      remove_task "development" "$task"
-      add_task "development_done" "$task"
-      move_task "$task"
+      advance_task "$task" "development" "development_done"
       echo "Developer moved task $task to development done"
     else
       sleep 0.2
@@ -150,16 +142,12 @@ ops_work() {
 
     local task=$(get_next_task "development_done")
     if [ -n "$task" ]; then
-      remove_task "development_done" "$task"
-      add_task "ops" "$task"
-      move_task "$task"
+      advance_task "$task" "development_done" "ops"
       echo "Ops moved task $task to ops"
 
       sleep $(ops_thinking_time)
 
-      remove_task "ops" "$task"
-      add_task "ops_done" "$task"
-      move_task "$task"
+      advance_task "$task" "ops" "ops_done"
       echo "Ops moved task $task to ops done"
     else
       sleep 0.2
@@ -173,17 +161,13 @@ qa_work() {
   while [ $SECONDS -lt $end_time ]; do
     local task=$(get_next_task "ops_done")
     if [ -n "$task" ]; then
-      remove_task "ops_done" "$task"
-      add_task "qa" "$task"
-      move_task "$task"
+      advance_task "$task" "ops_done" "qa"
       echo "QA moved task $task to qa"
 
       sleep $(qa_thinking_time)
 
       if qa_approves; then
-        remove_task "qa" "$task"
-        add_task "done" "$task"
-        move_task "$task"
+        advance_task "$task" "qa" "done"
         echo "QA moved task $task to done"
       else
         remove_task "qa" "$task"

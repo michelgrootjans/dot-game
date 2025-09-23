@@ -83,6 +83,17 @@ add_task() {
   fi
 }
 
+# Advance a task from one column to another and notify server
+# Usage: advance_task "<taskId>" "<from>" "<to>"
+advance_task() {
+  local task=$1
+  local from=$2
+  local to=$3
+  remove_task "$from" "$task"
+  add_task "$to" "$task"
+  move_task "$task"
+}
+
 # Function to generate random thinking time with a specific average
 random_thinking_time() {
   local average=$1
@@ -128,19 +139,13 @@ analyst_work() {
 
     if [ -n "$task" ]; then
       # Move task from backlog to analysis
-      remove_task "backlog" "$task"
-      add_task "analysis" "$task"
-
-      move_task "$task"
+      advance_task "$task" "backlog" "analysis"
       echo "Analyst moved task $task to analysis"
 
       sleep $(random_thinking_time 2)
 
       # Move from analysis to analysis done
-      remove_task "analysis" "$task"
-      add_task "analysis_done" "$task"
-
-      move_task "$task"
+      advance_task "$task" "analysis" "analysis_done"
       echo "Analyst moved task $task to analysis done"
     else
       # If no tasks, wait a bit
@@ -159,19 +164,13 @@ developer_work() {
 
     if [ -n "$task" ]; then
       # Move task from analysis done to development
-      remove_task "analysis_done" "$task"
-      add_task "development" "$task"
-
-      move_task "$task"
+      advance_task "$task" "analysis_done" "development"
       echo "Developer moved task $task to development"
 
       sleep $(random_thinking_time 5)
 
       # Move from development to development done
-      remove_task "development" "$task"
-      add_task "development_done" "$task"
-
-      move_task "$task"
+      advance_task "$task" "development" "development_done"
       echo "Developer moved task $task to development done"
     else
       # If no tasks, wait a bit
@@ -190,19 +189,13 @@ ops_work() {
 
     if [ -n "$task" ]; then
       # Move task from development done to ops
-      remove_task "development_done" "$task"
-      add_task "ops" "$task"
-
-      move_task "$task"
+      advance_task "$task" "development_done" "ops"
       echo "Ops moved task $task to ops"
 
       sleep $(random_thinking_time 2)
 
       # Move from ops to ops done
-      remove_task "ops" "$task"
-      add_task "ops_done" "$task"
-
-      move_task "$task"
+      advance_task "$task" "ops" "ops_done"
       echo "Ops moved task $task to ops done"
     else
       # If no tasks, wait a bit
@@ -221,10 +214,7 @@ qa_work() {
 
     if [ -n "$task" ]; then
       # Move task from ops done to qa
-      remove_task "ops_done" "$task"
-      add_task "qa" "$task"
-
-      move_task "$task"
+      advance_task "$task" "ops_done" "qa"
       echo "QA moved task $task to qa"
 
       sleep $(random_thinking_time 1)
@@ -232,10 +222,7 @@ qa_work() {
       # Decide approval using centralized helper
       if qa_approves; then
         # Move from qa to done
-        remove_task "qa" "$task"
-        add_task "done" "$task"
-
-        move_task "$task"
+        advance_task "$task" "qa" "done"
         echo "QA moved task $task to done"
       else
         # Reject the task
