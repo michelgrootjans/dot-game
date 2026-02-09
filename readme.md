@@ -97,7 +97,6 @@ run the following commands in two separate terminals:
 `open localhost:3000`
 
 There are a few scripts to simulate iterations. They require curl to be installed (which is usually pre-installed on most systems).
-- `./scripts/simple_scenario.sh` - A simple predefined scenario
 - `./scripts/work_hard.sh` - Workers process tasks in parallel
   - Optional parameters: 
     - `TIME=30` (default: 60) - Sets the simulation duration in seconds
