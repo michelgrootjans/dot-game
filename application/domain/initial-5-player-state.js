@@ -69,7 +69,7 @@ const initial5PlayerState = (tasks) =>
         {
           columnId: 'c10',
           columnType: 'fail-column',
-          title: 'Defects',
+          title: 'Rejected',
           taskName: 'Defects',
         },
       ],
