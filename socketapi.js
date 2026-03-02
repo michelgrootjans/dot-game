@@ -5,7 +5,7 @@ let init = (server, events, application) => {
   const io = new Server(server)
 
   const publish = (event) => {
-    console.log({ event })
+    console.log('socketapi.publish(event)', { event })
     io.to(event.gameId).emit('message', event)
   }
 
