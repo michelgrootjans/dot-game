@@ -99,19 +99,22 @@ run the following commands in two separate terminals:
 There are a few scripts to simulate iterations. They require curl to be installed (which is usually pre-installed on most systems).
 - `./scripts/work_hard.sh` - Workers process tasks in parallel
   - Optional parameters: 
-    - `TIME=30` (default: 60) - Sets the simulation duration in seconds
-    - `BASE_URL=https://example.com` (default: http://localhost:3000) - Sets the base URL for API calls
+      - `GAME_ID=[game id]` (default: `dummy`) - Runs the iteration in that game
+      - `TIME=30` (default: 60) - Sets the iteration duration in seconds
+      - `BASE_URL=https://example.com` (default: http://localhost:3000) - Sets the base URL for API calls
   - Example: `./scripts/work_hard.sh TIME=30 BASE_URL=https://afternoon-bayou-75731.herokuapp.com`
 - `./scripts/kanban.sh` - Kanban: workers limit their personal outbox WIP (PO included; QA not constrained)
   - Optional parameters:
+    - `GAME_ID=[game id]` (default: `dummy`) - Runs the iteration in that game
     - `WIP=4` (default: 4) - Personal outbox limit per worker (applies to PO, Analyst, Developer, Ops; QA has no outbox WIP limit)
     - `TIME=30` (default: 60) - Simulation duration in seconds
     - `BASE_URL=https://example.com` (default: http://localhost:3000) - Base URL for API calls
   - Example: `./scripts/kanban.sh WIP=4 TIME=45 BASE_URL=https://afternoon-bayou-75731.herokuapp.com`
 - `./scripts/limit_wip.sh` - Workers process tasks in parallel with a WIP limit
   - Optional parameters: 
-    - `WIP=5` (default: 10) - Sets the work-in-progress limit
-    - `TIME=30` (default: 60) - Sets the simulation duration in seconds
+    - `GAME_ID=[game id]` (default: `dummy`) - Runs the iteration in that game
+    - `WIP=5` (default: 10) - Sets the WIP limit for the whole iteration
+    - `TIME=30` (default: 60) - Sets the iteration duration in seconds
     - `BASE_URL=https://example.com` (default: http://localhost:3000) - Sets the base URL for API calls
   - Example: `./scripts/limit_wip.sh WIP=5 TIME=30 BASE_URL=https://afternoon-bayou-75731.herokuapp.com`
 
