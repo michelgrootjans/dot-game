@@ -1,13 +1,21 @@
-<h1>{{title}}</h1>
+<div class="container">
+  <div class="row">
+    <h1>{{title}}</h1>
+  </div>
+  <div class="row">
+    <div class="col">
+      <form method="post" action="/games">
+        <img src="/img/foodtruck-process.png" class="img-fluid" style="height: 800px" alt="image of a food truck">
 
-<form method="post" action="/games">
-  <img src="/img/foodtruck.png" class="img-fluid" alt="image of a food truck">
+        <input type="hidden" name="taskNames" value="Order">
+        <input type="hidden" name="taskNames" value="Payment">
+        <input type="hidden" name="taskNames" value="Preparation">
+        <input type="hidden" name="taskNames" value="Packaging">
+        <input type="hidden" name="taskNames" value="Customer">
 
-  <input type="hidden" name="taskNames" value="Order">
-  <input type="hidden" name="taskNames" value="Payment">
-  <input type="hidden" name="taskNames" value="Preparation">
-  <input type="hidden" name="taskNames" value="Packaging">
-  <input type="hidden" name="taskNames" value="Customer">
+        <button type="submit" class="btn btn-primary">Start game</button>
+      </form>
+    </div>
+  </div>
+</div>
 
-  <button type="submit" class="btn btn-primary">Start game</button>
-</form>
