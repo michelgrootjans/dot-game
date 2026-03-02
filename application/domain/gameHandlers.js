@@ -8,12 +8,15 @@ const hasValue = (text) => {
 };
 
 const CreateGameHandler = (games, publish) => ({
-  execute: ({ gameId, state, taskNames = DEFAULT_TASK_NAMES }) => {
+  execute: (options) => {
+    const gameId = options.gameId
+    const title = options.title || 'The Dot Game'
+    const taskNames = options.taskNames === undefined ? DEFAULT_TASK_NAMES : options.taskNames
     if (games.find(gameId)) return
 
-    const newState = state || initialState({taskNames: taskNames.filter(hasValue)});
+    const newState = options.state || initialState({title, taskNames: taskNames.filter(hasValue)});
 
-    const game = { ...newState, gameId }
+    const game = { ...newState, gameId, title }
     games.add(game)
     publish(GameCreated(game))
   },

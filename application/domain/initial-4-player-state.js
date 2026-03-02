@@ -1,4 +1,5 @@
 const initial4PlayerState = (tasks) => ({
+  title: 'The Dot Game',
   columns: [
     {
       columnId: 'c1',
