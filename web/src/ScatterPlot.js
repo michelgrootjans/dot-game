@@ -8,6 +8,7 @@ class WorkItem {
   }
 
   moveTo(column) {
+    this.currentColumn = column.taskName
     this.backgroundColor = column.backgroundColor
     this.borderColor = column.borderColor
   }
@@ -88,10 +89,14 @@ const ScatterPlot = (context) => {
         },
       },
       plugins: {
-        legend: {
-          display: false,
-          position: 'bottom',
-          align: 'start',
+        legend: { display: false, },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              console.log('Scatter Plot', 'tooltip', { context })
+              return context.raw.item.currentColumn
+            }
+          }
         },
       },
     },
