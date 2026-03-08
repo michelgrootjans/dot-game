@@ -6,10 +6,6 @@ This is an online simulation of the agile dot game
 
 Go to https://afternoon-bayou-75731.herokuapp.com/
 
-# Progress
-
-see https://github.com/michelgrootjans/dot-game/projects/2
-
 # How I use it during a workshop
 
 ## Introduction
