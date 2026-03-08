@@ -17,6 +17,11 @@ class WorkItem {
     this.state = 'started'
   }
 
+  moveTo(column) {
+    this.backgroundColor = column.backgroundColor
+    this.borderColor = column.borderColor
+  }
+
   finish(dateFinished) {
     this.dateFinished = dateFinished
     this.state = 'finished'
@@ -54,20 +59,20 @@ const ScatterPlot = (context) => {
         {
           label: 'In Progress',
           data: [],
-          borderColor: 'rgb(255, 99, 132)',
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: (point) => point?.raw?.item?.borderColor || 'rgb(255, 99, 132)',
+          backgroundColor: (point) => point?.raw?.item?.backgroundColor || 'rgba(255, 99, 132, 0.1)',
         },
         {
           label: 'Finished',
           data: [],
-          borderColor: 'rgb(54, 162, 235)',
-          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          borderColor: (point) => point?.raw?.item?.borderColor || 'rgb(54, 162, 235)',
+          backgroundColor: (point) => point?.raw?.item?.backgroundColor || 'rgba(54, 162, 235, 0.2)',
         },
         {
           label: 'Rejected',
           data: [],
-          borderColor: 'rgb(201, 203, 207)',
-          backgroundColor: 'rgba(201, 203, 207, 0.2)',
+          borderColor: (point) => point?.raw?.item?.borderColor || 'rgb(201, 203, 207)',
+          backgroundColor: (point) => point?.raw?.item?.backgroundColor || 'rgba(201, 203, 207, 0.2)',
         },
       ],
     },
@@ -89,7 +94,7 @@ const ScatterPlot = (context) => {
             display: true,
             text: 'Lead Time',
             align: 'end',
-          }
+          },
         },
       },
       plugins: {
@@ -108,40 +113,50 @@ const ScatterPlot = (context) => {
   const update = () => {
     chart.data.datasets[0].data = data
       .filter((item) => item.state === 'started')
-      .map((item) => ({ x: item.dateDelivered(startDate), y: item.duration() }))
+      .map((item) => ({ x: item.dateDelivered(startDate), y: item.duration(), item }))
 
     chart.data.datasets[1].data = data
       .filter((item) => item.state === 'finished')
-      .map((item) => ({ x: item.dateDelivered(startDate), y: item.duration() }))
+      .map((item) => ({ x: item.dateDelivered(startDate), y: item.duration(), item }))
 
     chart.data.datasets[2].data = data
       .filter((item) => item.state === 'rejected')
-      .map((item) => ({ x: item.dateDelivered(startDate), y: item.duration() }))
+      .map((item) => ({ x: item.dateDelivered(startDate), y: item.duration(), item }))
 
     console.log({ data })
 
     chart.update()
   }
 
-  document.addEventListener('IterationStarted', () => {
+  document.addEventListener('IterationStarted', (event) => {
+    console.log('Scatter Plot', 'IterationStarted', { event })
+
     startDate = Date.now()
     data = []
     chart.clear()
 
     document.addEventListener('TaskCreated', (event) => {
-      console.log('TaskCreated', event.detail.taskId)
+      console.log('Scatter Plot', 'TaskCreated', { event })
       if (data.find((item) => item.id === event.detail.taskId)) return
-      data.push(new WorkItem(event.detail.taskId, Date.now()))
+      const workItem = new WorkItem(event.detail.taskId, Date.now())
+      workItem.moveTo(event.detail.column)
+      data.push(workItem)
+    })
+
+    document.addEventListener('TaskMoved', (event) => {
+      console.log('Scatter Plot', 'TaskMoved', { event })
+      const workItem = data.find((item) => item.id === event.detail.taskId)
+      workItem.moveTo(event.detail.to)
     })
 
     document.addEventListener('TaskFinished', (event) => {
-      console.log('TaskFinished', event.detail.taskId)
+      console.log('Scatter Plot', 'TaskFinished', { event })
       const workItem = data.find((item) => item.id === event.detail.taskId)
       workItem.finish(Date.now())
     })
 
     document.addEventListener('TaskRejected', (event) => {
-      console.log('TaskRejected', event.detail.taskId)
+      console.log('Scatter Plot', 'TaskRejected', { event })
       const workItem = data.find((item) => item.id === event.detail.taskId)
       workItem.reject(Date.now())
     })

@@ -54,21 +54,17 @@ Chart.register(
 
 const API = require('./API')
 
-const distinct = (value, index, self) => self.indexOf(value) === index
-
-const createDataset = (label, color) => ({
-  label: label,
+const createDataset = (taskName, backgroundColor, borderColor) => ({
+  label: taskName,
   type: 'line',
   data: [],
   fill: true,
   stepped: true,
   pointRadius: 0,
-  backgroundColor: `rgba(${color}, 0.1)`,
-  borderColor: `rgba(${color}, 1)`,
+  backgroundColor: backgroundColor,
+  borderColor: borderColor,
   borderWidth: 1,
 })
-
-const colors = ['101, 103, 107', '153, 102, 255', '54, 162, 235', '75, 192, 192', '255, 205, 86', '255, 159, 64', '255, 99, 132']
 
 const config = {
   type: 'line',
@@ -119,10 +115,9 @@ const Cfd = (context, gameId) => {
 
   const initialize = (detail) => {
     chart.data.datasets = detail.columns
-      .map((column) => column.taskName)
-      .filter(distinct)
+      .filter(column => column.columnType !== 'wait-column')
       .reverse()
-      .map((label, index) => createDataset(label, colors[index]))
+      .map((column) => createDataset(column.taskName, column.backgroundColor, column.borderColor))
   }
 
   const update = async (iterationId) => {
