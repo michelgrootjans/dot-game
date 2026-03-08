@@ -133,7 +133,7 @@ const ScatterPlot = (context) => {
     document.addEventListener('TaskCreated', (event) => {
       console.log('Scatter Plot', 'TaskCreated', { event })
       if (data.find((item) => item.id === event.detail.taskId)) return
-      const workItem = new WorkItem(event.detail.taskId, Date.now())
+      const workItem = new WorkItem(event.detail.taskId, event.detail.timestamp)
       workItem.moveTo(event.detail.column)
       data.push(workItem)
     })
@@ -147,13 +147,13 @@ const ScatterPlot = (context) => {
     document.addEventListener('TaskFinished', (event) => {
       console.log('Scatter Plot', 'TaskFinished', { event })
       const workItem = data.find((item) => item.id === event.detail.taskId)
-      workItem.finish(Date.now())
+      workItem.finish(event.detail.timestamp)
     })
 
     document.addEventListener('TaskRejected', (event) => {
       console.log('Scatter Plot', 'TaskRejected', { event })
       const workItem = data.find((item) => item.id === event.detail.taskId)
-      workItem.reject(Date.now())
+      workItem.reject(event.detail.timestamp)
     })
   })
 
