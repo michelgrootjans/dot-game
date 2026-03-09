@@ -99,24 +99,21 @@ run the following commands in two separate terminals:
 There are a few scripts to simulate iterations. They require curl to be installed (which is usually pre-installed on most systems).
 - `./scripts/work_hard.sh` - Workers process tasks in parallel
   - Optional parameters: 
-      - `GAME_ID=[game id]` (default: `dummy`) - Runs the iteration in that game
+      - `GAME_URL=[full game url]` (default: `http://localhost:3000/games/dummy`) - Full URL to the game
       - `TIME=30` (default: 60) - Sets the iteration duration in seconds
-      - `BASE_URL=https://example.com` (default: http://localhost:3000) - Sets the base URL for API calls
-  - Example: `./scripts/work_hard.sh TIME=30 BASE_URL=https://afternoon-bayou-75731.herokuapp.com`
-- `./scripts/kanban.sh` - Kanban: workers limit their personal outbox WIP (PO included; QA not constrained)
+  - Example: `./scripts/work_hard.sh TIME=30 GAME_URL=https://afternoon-bayou-75731.herokuapp.com/games/4d8ba18c-59d6-455b-bc4f-dcc2a7dfa442`
+- `./scripts/kanban.sh` - Kanban: workers limit their personal outbox WIP
   - Optional parameters:
-    - `GAME_ID=[game id]` (default: `dummy`) - Runs the iteration in that game
+    - `GAME_URL=[full game url]` (default: `http://localhost:3000/games/dummy`) - Full URL to the game
     - `WIP=4` (default: 4) - Personal outbox limit per worker (applies to PO, Analyst, Developer, Ops; QA has no outbox WIP limit)
     - `TIME=30` (default: 60) - Simulation duration in seconds
-    - `BASE_URL=https://example.com` (default: http://localhost:3000) - Base URL for API calls
-  - Example: `./scripts/kanban.sh WIP=4 TIME=45 BASE_URL=https://afternoon-bayou-75731.herokuapp.com`
-- `./scripts/limit_wip.sh` - Workers process tasks in parallel with a WIP limit
+  - Example: `./scripts/kanban.sh WIP=4 TIME=45 GAME_URL=https://afternoon-bayou-75731.herokuapp.com/games/4d8ba18c-59d6-455b-bc4f-dcc2a7dfa442`
+- `./scripts/limit_wip.sh` - Workers process tasks in parallel with a system-wide WIP limit
   - Optional parameters: 
-    - `GAME_ID=[game id]` (default: `dummy`) - Runs the iteration in that game
+    - `GAME_URL=[full game url]` (default: `http://localhost:3000/games/dummy`) - Full URL to the game
     - `WIP=5` (default: 10) - Sets the WIP limit for the whole iteration
     - `TIME=30` (default: 60) - Sets the iteration duration in seconds
-    - `BASE_URL=https://example.com` (default: http://localhost:3000) - Sets the base URL for API calls
-  - Example: `./scripts/limit_wip.sh WIP=5 TIME=30 BASE_URL=https://afternoon-bayou-75731.herokuapp.com`
+  - Example: `./scripts/limit_wip.sh WIP=5 TIME=30 GAME_URL=https://afternoon-bayou-75731.herokuapp.com/games/4d8ba18c-59d6-455b-bc4f-dcc2a7dfa442`
 
 ## Run the tests
 
