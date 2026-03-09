@@ -101,6 +101,7 @@ const Game = (state) => {
 
     const task = {
       taskId,
+      createdAt: (Date.now() - currentIteration().startTime),
       color: anyCardColor(),
       columnId: todoColumn.columnId,
       payload: { tasks },
@@ -120,9 +121,11 @@ const Game = (state) => {
 
     const nextColumn = findColumn(column.nextColumnId)
     task.columnId = nextColumn.columnId
+    task.lastMovementAt = (Date.now() - currentIteration().startTime)
 
     publish(TaskMoved({ ...task, from: column, to: nextColumn, ...ids() }))
     if (task.columnId === doneColumn.columnId) {
+      task.finishedAt = (Date.now() - currentIteration().startTime)
       publish(TaskFinished({ ...task, column: doneColumn, ...ids() }))
     }
   }
@@ -135,6 +138,8 @@ const Game = (state) => {
     const column = findColumn(task.columnId)
 
     task.columnId = defectsColumn.columnId
+    task.finishedAt = (Date.now() - currentIteration().startTime)
+    task.lastMovementAt = task.finishedAt
 
     publish(TaskMoved({ ...task, from: column, to: defectsColumn, ...ids() }))
     publish(TaskRejected({ ...task, column: defectsColumn, ...ids() }))
