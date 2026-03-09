@@ -8,7 +8,7 @@ const initial5PlayerState = (tasks) =>
           nextColumnId: 'c2',
           title: tasks[0].title,
           taskName: tasks[0].id,
-          backgroundColor: 'rgba(255, 99, 132, 0.5)',
+          backgroundColor: 'rgba(255, 99, 132, 1)',
           borderColor: 'rgb(255, 99, 132)',
         },
         {
@@ -18,7 +18,7 @@ const initial5PlayerState = (tasks) =>
           title: tasks[1].title,
           taskName: tasks[1].id,
           difficulty: 1,
-          backgroundColor: 'rgba(255, 159, 64, 0.5)',
+          backgroundColor: 'rgba(255, 159, 64, 1)',
           borderColor: 'rgb(255, 159, 64)',
         },
         {
@@ -27,7 +27,7 @@ const initial5PlayerState = (tasks) =>
           nextColumnId: 'c4',
           title: '',
           taskName: tasks[1].id,
-          backgroundColor: 'rgba(255, 159, 64, 0.5)',
+          backgroundColor: 'rgba(255, 159, 64, 1)',
           borderColor: 'rgb(255, 159, 64)',
         },
         {
@@ -37,7 +37,7 @@ const initial5PlayerState = (tasks) =>
           title: tasks[2].title,
           taskName: tasks[2].id,
           difficulty: 3,
-          backgroundColor: 'rgba(255, 205, 86, 0.5)',
+          backgroundColor: 'rgba(255, 205, 86, 1)',
           borderColor: 'rgb(255, 205, 86)',
         },
         {
@@ -46,7 +46,7 @@ const initial5PlayerState = (tasks) =>
           nextColumnId: 'c6',
           title: '',
           taskName: tasks[2].id,
-          backgroundColor: 'rgba(255, 205, 86, 0.5)',
+          backgroundColor: 'rgba(255, 205, 86, 1)',
           borderColor: 'rgb(255, 205, 86)',
         },
         {
@@ -56,7 +56,7 @@ const initial5PlayerState = (tasks) =>
           title: tasks[3].title,
           taskName: tasks[3].id,
           difficulty: 2,
-          backgroundColor: 'rgba(75, 192, 192, 0.5)',
+          backgroundColor: 'rgba(75, 192, 192, 1)',
           borderColor: 'rgb(75, 192, 192)',
         },
         {
@@ -65,7 +65,7 @@ const initial5PlayerState = (tasks) =>
           nextColumnId: 'c8',
           title: '',
           taskName: tasks[3].id,
-          backgroundColor: 'rgba(75, 192, 192, 0.5)',
+          backgroundColor: 'rgba(75, 192, 192, 1)',
           borderColor: 'rgb(75, 192, 192)',
         },
         {
@@ -74,7 +74,7 @@ const initial5PlayerState = (tasks) =>
           nextColumnId: 'c9',
           title: tasks[4].title,
           taskName: tasks[4].id,
-          backgroundColor: 'rgba(54, 162, 235, 0.5)',
+          backgroundColor: 'rgba(54, 162, 235, 1)',
           borderColor: 'rgb(54, 162, 235)',
         },
         {
@@ -82,7 +82,7 @@ const initial5PlayerState = (tasks) =>
           columnType: 'done-column',
           title: 'Done',
           taskName: 'Done',
-          backgroundColor: 'rgba(153, 102, 255, 0.5)',
+          backgroundColor: 'rgba(153, 102, 255, 1)',
           borderColor: 'rgb(153, 102, 255)',
         },
         {
@@ -90,8 +90,8 @@ const initial5PlayerState = (tasks) =>
           columnType: 'fail-column',
           title: 'Rejected',
           taskName: 'Defects',
-          backgroundColor: 'rgba(101, 103, 107, 0.5)',
-          borderColor: 'rgb(101, 103, 107)',
+          backgroundColor: 'rgba(201, 203, 207, 1)',
+          borderColor: 'rgb(201, 203, 207)',
         },
       ],
     })
