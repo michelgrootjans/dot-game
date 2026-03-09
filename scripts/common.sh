@@ -1,13 +1,11 @@
 #!/bin/bash
 
-# Default base URL (can be overridden by scripts that source this file)
-BASE_URL=${BASE_URL:-"http://localhost:3000"}
-# Default game id (can be overridden by scripts that source this file or via env)
-GAME_ID=${GAME_ID:-"dummy"}
+# Default game URL (can be overridden by scripts that source this file)
+GAME_URL=${GAME_URL:-"http://localhost:3000/games/dummy"}
 # Default time in seconds for simulations (can be overridden by scripts or via env)
 TIME=${TIME:-60}
 
-# Parse common KEY=VALUE CLI args: TIME, BASE_URL, GAME_ID
+# Parse common KEY=VALUE CLI args: TIME, GAME_URL
 # This function will be invoked automatically when common.sh is sourced
 parse_common_args() {
   for arg in "$@"; do
@@ -15,22 +13,20 @@ parse_common_args() {
       TIME=*)
         TIME="${arg#*=}"
         ;;
-      BASE_URL=*)
-        BASE_URL="${arg#*=}"
-        ;;
-      GAME_ID=*)
-        GAME_ID="${arg#*=}"
+      GAME_URL=*)
+        GAME_URL="${arg#*=}"
         ;;
     esac
   done
-  export BASE_URL
-  export GAME_ID
+  export GAME_URL
 }
 
 # Common helper to build the game API base URL
 # Usage: curl "$(game_url)/iterations" ...
 game_url() {
-  echo "$BASE_URL/api/games/$GAME_ID"
+  # Transform GAME_URL by inserting /api before /games
+  # Example: https://example.com/games/123 -> https://example.com/api/games/123
+  echo "$GAME_URL" | sed 's|/games/|/api/games/|'
 }
 
 # --- Common API wrappers ---
