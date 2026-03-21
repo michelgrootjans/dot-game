@@ -19,20 +19,17 @@ class WorkItem {
   }
 
   reject(dateRejected) {
-    this.dateRejected = dateRejected
+    this.dateFinished = dateRejected
     this.state = 'rejected'
   }
 
   dateDelivered(startDate) {
-    if (this.dateFinished) return this.diff(startDate, this.dateFinished)
-    if (this.dateRejected) return this.diff(startDate, this.dateRejected)
-    return this.diff(startDate, Date.now())
+    return this.diff(startDate, this.dateFinished)
   }
 
-  duration() {
-    if (this.dateFinished) return this.diff(this.dateStarted, this.dateFinished)
-    if (this.dateRejected) return this.diff(this.dateStarted, this.dateRejected)
-    return this.diff(this.dateStarted, Date.now())
+  duration(now) {
+    if(this.dateFinished) return this.diff(this.dateStarted, this.dateFinished)
+    return this.diff(this.dateStarted, now)
   }
 
   diff = (from, to) => {
@@ -103,20 +100,24 @@ const ScatterPlot = (context) => {
   }
 
   const chart = new Chart(context, config)
-  let startDate = Date.now()
+  let startDate = undefined
+  let endDate = undefined
 
   const update = () => {
+
+    const now = Math.min(Date.now(), endDate)
+
     chart.data.datasets[0].data = data
       .filter((item) => item.state === 'started')
-      .map((item) => ({ x: item.dateDelivered(startDate), y: item.duration(), item }))
+      .map((item) => ({ x: (now - startDate)/1000, y: item.duration(now), item }))
 
     chart.data.datasets[1].data = data
       .filter((item) => item.state === 'finished')
-      .map((item) => ({ x: item.dateDelivered(startDate), y: item.duration(), item }))
+      .map((item) => ({ x: item.dateDelivered(startDate), y: item.duration(now), item }))
 
     chart.data.datasets[2].data = data
       .filter((item) => item.state === 'rejected')
-      .map((item) => ({ x: item.dateDelivered(startDate), y: item.duration(), item }))
+      .map((item) => ({ x: item.dateDelivered(startDate), y: item.duration(now), item }))
 
     console.log({ data })
 
@@ -124,37 +125,39 @@ const ScatterPlot = (context) => {
   }
 
   document.addEventListener('IterationStarted', (event) => {
-    console.log('Scatter Plot', 'IterationStarted', { event })
-
-    startDate = Date.now()
+    startDate = event.detail.startTime
+    endDate = event.detail.startTime + event.detail.duration
     data = []
     chart.clear()
 
+    console.log('Scatter Plot', 'IterationStarted', { event, startDate, endDate, data })
+
     document.addEventListener('TaskCreated', (event) => {
-      console.log('Scatter Plot', 'TaskCreated', { event })
       if (data.find((item) => item.id === event.detail.taskId)) return
       const workItem = new WorkItem(event.detail.taskId, event.detail.timestamp)
       workItem.moveTo(event.detail.column)
       data.push(workItem)
+      console.log('Scatter Plot', 'TaskCreated', { event, startDate, endDate, data })
     })
 
     document.addEventListener('TaskMoved', (event) => {
-      console.log('Scatter Plot', 'TaskMoved', { event })
       const workItem = data.find((item) => item.id === event.detail.taskId)
       workItem.moveTo(event.detail.to)
+      console.log('Scatter Plot', 'TaskMoved', { event, startDate, endDate, data })
     })
 
     document.addEventListener('TaskFinished', (event) => {
-      console.log('Scatter Plot', 'TaskFinished', { event })
       const workItem = data.find((item) => item.id === event.detail.taskId)
       workItem.finish(event.detail.timestamp)
+      console.log('Scatter Plot', 'TaskFinished', { event, startDate, endDate, data })
     })
 
     document.addEventListener('TaskRejected', (event) => {
-      console.log('Scatter Plot', 'TaskRejected', { event })
       const workItem = data.find((item) => item.id === event.detail.taskId)
       workItem.reject(event.detail.timestamp)
+      console.log('Scatter Plot', 'TaskRejected', { event, startDate, endDate, data })
     })
+
   })
 
   return {
