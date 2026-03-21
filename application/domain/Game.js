@@ -74,7 +74,7 @@ const Game = (state) => {
   const startIteration = (iterationId = uuid(), duration = 5 * minutes, publish) => {
     if (iterationIsRunning()) return
     const startTime = Date.now()
-    let iteration = { iterationId, duration, startTime }
+    let iteration = { iterationId, duration: Number(duration), startTime }
 
     publish(IterationStarted({ ...state, ...iteration, gameId }))
     state.currentIteration = iteration
