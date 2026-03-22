@@ -76,6 +76,7 @@ const initialize = (gameId) => {
 
     document.querySelectorAll(`.show-previous-iteration[data-iteration-id="${iterationId}"]`).forEach((element) => {
       element.addEventListener('click', () => {
+        document.dispatchEvent(new CustomEvent('ReplayIteration', { detail: { iterationId } }))
         update(iterationId).then(() => {
           setCurrentIteration(iterationId)
         })
