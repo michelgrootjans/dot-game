@@ -19,6 +19,25 @@ const initialize = () => {
       Card.remove(detail)
     }
   })
+
+  const snapshots = {}
+
+  document.addEventListener('IterationFinished', ({ detail }) => {
+    snapshots[detail.iterationId] = Object.fromEntries(
+      Object.entries(columns).map(([id, tasksEl]) => [
+        id,
+        Array.from(tasksEl.children).map(child => child.cloneNode(true)),
+      ])
+    )
+  })
+
+  document.addEventListener('ReplayIteration', ({ detail }) => {
+    const snapshot = snapshots[detail.iterationId]
+    if (!snapshot) return
+    Object.entries(columns).forEach(([id, tasksEl]) => {
+      tasksEl.replaceChildren(...(snapshot[id] ?? []).map(node => node.cloneNode(true)))
+    })
+  })
 }
 
 module.exports = {
