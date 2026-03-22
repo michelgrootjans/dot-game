@@ -4,7 +4,7 @@
 source "$(dirname "$0")/common.sh"
 
 # Defaults
-WIP=5
+WIP=4
 
 # Parse WIP locally and common args via common.sh helper
 for arg in "$@"; do
