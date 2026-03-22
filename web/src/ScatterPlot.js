@@ -1,5 +1,7 @@
 const { Chart } = require('chart.js')
 
+const iterations = {}
+
 class WorkItem {
   constructor(id, dateStarted) {
     this.id = id
@@ -14,32 +16,29 @@ class WorkItem {
   }
 
   finish(dateFinished) {
+    if (this.dateFinished) {
+      console.warn('WorkItem', 'finish failed', { workItem: this, dateFinished })
+      return
+    }
     this.dateFinished = dateFinished
     this.state = 'finished'
   }
 
   reject(dateRejected) {
+    if (this.dateFinished) {
+      console.warn('WorkItem', 'reject failed', { workItem: this, dateFinished })
+      return
+    }
     this.dateFinished = dateRejected
     this.state = 'rejected'
   }
 
-  dateDelivered(startDate) {
-    return this.diff(startDate, this.dateFinished)
-  }
-
-  duration(now) {
-    if(this.dateFinished) return this.diff(this.dateStarted, this.dateFinished)
-    return this.diff(this.dateStarted, now)
-  }
-
-  diff = (from, to) => {
-    return (to - from) / 1000
+  cycleTime() {
+    return this.dateFinished - this.dateStarted
   }
 }
 
 const ScatterPlot = (context) => {
-  let data = []
-
   const config = {
     type: 'scatter',
     data: {
@@ -86,78 +85,88 @@ const ScatterPlot = (context) => {
         },
       },
       plugins: {
-        legend: { display: false, },
+        legend: { display: false },
         tooltip: {
           callbacks: {
-            label: function(context) {
+            label: function (context) {
               console.log('Scatter Plot', 'tooltip', { context })
               return context.raw.item.currentColumn
-            }
-          }
+            },
+          },
         },
       },
     },
   }
 
   const chart = new Chart(context, config)
-  let startDate = undefined
-  let endDate = undefined
 
-  const update = () => {
-
-    const now = Math.min(Date.now(), endDate)
+  const update = (iterationId) => {
+    const iteration = iterations[iterationId]
+    const data = iteration.data
+    const iterationStart = iteration.startDate
+    const iterationEnd = iteration.endDate
+    const now = Math.min(Date.now(), iterationEnd)
 
     chart.data.datasets[0].data = data
       .filter((item) => item.state === 'started')
-      .map((item) => ({ x: (now - startDate)/1000, y: item.duration(now), item }))
+      .map((item) => ({
+        x: (now - iterationStart) / 1000,
+        y: (now - item.dateStarted) / 1000,
+        item,
+      }))
 
     chart.data.datasets[1].data = data
       .filter((item) => item.state === 'finished')
-      .map((item) => ({ x: item.dateDelivered(startDate), y: item.duration(now), item }))
+      .map((item) => ({
+        x: (item.dateFinished - iterationStart) / 1000,
+        y: item.cycleTime() / 1000,
+        item,
+      }))
 
     chart.data.datasets[2].data = data
       .filter((item) => item.state === 'rejected')
-      .map((item) => ({ x: item.dateDelivered(startDate), y: item.duration(now), item }))
-
-    console.log({ data })
+      .map((item) => ({
+        x: (item.dateFinished - iterationStart) / 1000,
+        y: item.cycleTime() / 1000,
+        item,
+      }))
 
     chart.update()
   }
 
   document.addEventListener('IterationStarted', (event) => {
-    startDate = event.detail.startTime
-    endDate = event.detail.startTime + event.detail.duration
-    data = []
+    iterations[event.detail.iterationId] = {
+      id: event.detail.iterationId,
+      startDate: event.detail.startTime,
+      endDate: event.detail.startTime + event.detail.duration,
+      data: [],
+    }
     chart.clear()
+  })
 
-    console.log('Scatter Plot', 'IterationStarted', { event, startDate, endDate, data })
+  document.addEventListener('TaskCreated', (event) => {
+    const iteration = iterations[event.detail.iterationId]
+    const workItem = new WorkItem(event.detail.taskId, event.detail.timestamp)
+    workItem.moveTo(event.detail.column)
+    iteration.data.push(workItem)
+  })
 
-    document.addEventListener('TaskCreated', (event) => {
-      if (data.find((item) => item.id === event.detail.taskId)) return
-      const workItem = new WorkItem(event.detail.taskId, event.detail.timestamp)
-      workItem.moveTo(event.detail.column)
-      data.push(workItem)
-      console.log('Scatter Plot', 'TaskCreated', { event, startDate, endDate, data })
-    })
+  document.addEventListener('TaskMoved', (event) => {
+    const iteration = iterations[event.detail.iterationId]
+    const workItem = iteration.data.find((item) => item.id === event.detail.taskId)
+    workItem.moveTo(event.detail.to)
+  })
 
-    document.addEventListener('TaskMoved', (event) => {
-      const workItem = data.find((item) => item.id === event.detail.taskId)
-      workItem.moveTo(event.detail.to)
-      console.log('Scatter Plot', 'TaskMoved', { event, startDate, endDate, data })
-    })
+  document.addEventListener('TaskFinished', (event) => {
+    const iteration = iterations[event.detail.iterationId]
+    const workItem = iteration.data.find((item) => item.id === event.detail.taskId)
+    workItem.finish(event.detail.timestamp)
+  })
 
-    document.addEventListener('TaskFinished', (event) => {
-      const workItem = data.find((item) => item.id === event.detail.taskId)
-      workItem.finish(event.detail.timestamp)
-      console.log('Scatter Plot', 'TaskFinished', { event, startDate, endDate, data })
-    })
-
-    document.addEventListener('TaskRejected', (event) => {
-      const workItem = data.find((item) => item.id === event.detail.taskId)
-      workItem.reject(event.detail.timestamp)
-      console.log('Scatter Plot', 'TaskRejected', { event, startDate, endDate, data })
-    })
-
+  document.addEventListener('TaskRejected', (event) => {
+    const iteration = iterations[event.detail.iterationId]
+    const workItem = iteration.data.find((item) => item.id === event.detail.taskId)
+    workItem.reject(event.detail.timestamp)
   })
 
   return {
