@@ -137,6 +137,7 @@ const Cfd = (context) => {
       .filter((c) => c.columnType !== 'wait-column')
       .reverse()
       .map((c) => createDataset(c.taskName, c.backgroundColor, c.borderColor))
+    chart.options.scales.x.suggestedMax = detail.duration / 1000
     recordSnapshot(detail.iterationId, detail.startTime)
     render(detail.iterationId)
   }

@@ -152,7 +152,9 @@ const ScatterPlot = (context) => {
       endDate: event.detail.startTime + event.detail.duration,
       data: [],
     }
-    chart.clear()
+    chart.options.scales.x.suggestedMax = event.detail.duration / 1000
+    chart.data.datasets.forEach((ds) => (ds.data = []))
+    chart.update()
   })
 
   document.addEventListener('TaskCreated', (event) => {
