@@ -1,5 +1,5 @@
 const { Chart } = require('chart.js')
-const Cfd = require('./CFD')
+const Cfd = require('./event-based-cfd')
 const ScatterPlot = require('./ScatterPlot')
 const Timer = require('./Timer')
 
@@ -52,20 +52,15 @@ const initialize = (gameId) => {
   const $scatter = document.getElementById('scatter')
   if (!$cfd || !$scatter) return
 
-  const cfd = Cfd($cfd, gameId)
+  const cfd = Cfd($cfd)
   const scatter = ScatterPlot($scatter)
   let timer = undefined
-
-  const update = async (iterationId) => {
-    await cfd.update(iterationId)
-    scatter.update(iterationId)
-  }
 
   document.addEventListener('IterationStarted', ({ detail }) => {
     cfd.clear()
     cfd.initialize(detail)
 
-    timer = Timer(detail.duration).start(() => update(detail.iterationId))
+    timer = Timer(detail.duration).start(() => scatter.update(detail.iterationId))
     setCurrentIteration(detail.iterationId)
   })
 
@@ -77,9 +72,9 @@ const initialize = (gameId) => {
     document.querySelectorAll(`.show-previous-iteration[data-iteration-id="${iterationId}"]`).forEach((element) => {
       element.addEventListener('click', () => {
         document.dispatchEvent(new CustomEvent('ReplayIteration', { detail: { iterationId } }))
-        update(iterationId).then(() => {
-          setCurrentIteration(iterationId)
-        })
+        cfd.update(iterationId)
+        scatter.update(iterationId)
+        setCurrentIteration(iterationId)
       })
     })
   })
