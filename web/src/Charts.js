@@ -56,6 +56,11 @@ const initialize = (gameId) => {
   const scatter = ScatterPlot($scatter)
   let timer = undefined
 
+  document.addEventListener('ScrubTo', ({ detail }) => {
+    cfd.scrubTo(detail.iterationId, detail.timestamp)
+    scatter.scrubTo(detail.iterationId, detail.timestamp)
+  })
+
   document.addEventListener('IterationStarted', ({ detail }) => {
     cfd.clear()
     cfd.initialize(detail)

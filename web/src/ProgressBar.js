@@ -10,10 +10,14 @@ const initialize = () => {
     const duration = detail.duration
     const startTime = detail.startTime
     progressBar.max = `${duration}`
+    progressBar.hidden = false
     timer = Timer(duration).start(() => (progressBar.value = Date.now() - startTime))
   })
 
-  document.addEventListener('IterationFinished', () => timer.stop())
+  document.addEventListener('IterationFinished', () => {
+    timer.stop()
+    progressBar.hidden = true
+  })
 }
 
 module.exports = { initialize }

@@ -7,12 +7,23 @@ class WorkItem {
     this.id = id
     this.dateStarted = dateStarted
     this.state = 'started'
+    this.columnHistory = []
   }
 
-  moveTo(column) {
+  moveTo(column, timestamp) {
     this.currentColumn = column.taskName
     this.backgroundColor = column.backgroundColor
     this.borderColor = column.borderColor
+    this.columnHistory.push({ timestamp, column })
+  }
+
+  columnAt(timestamp) {
+    let result = this.columnHistory[0]
+    for (const entry of this.columnHistory) {
+      if (entry.timestamp <= timestamp) result = entry
+      else break
+    }
+    return result?.column
   }
 
   finish(dateFinished) {
@@ -147,14 +158,14 @@ const ScatterPlot = (context) => {
   document.addEventListener('TaskCreated', (event) => {
     const iteration = iterations[event.detail.iterationId]
     const workItem = new WorkItem(event.detail.taskId, event.detail.timestamp)
-    workItem.moveTo(event.detail.column)
+    workItem.moveTo(event.detail.column, event.detail.timestamp)
     iteration.data.push(workItem)
   })
 
   document.addEventListener('TaskMoved', (event) => {
     const iteration = iterations[event.detail.iterationId]
     const workItem = iteration.data.find((item) => item.id === event.detail.taskId)
-    workItem.moveTo(event.detail.to)
+    workItem.moveTo(event.detail.to, event.detail.timestamp)
   })
 
   document.addEventListener('TaskFinished', (event) => {
@@ -169,8 +180,41 @@ const ScatterPlot = (context) => {
     workItem.reject(event.detail.timestamp)
   })
 
+  const scrubTo = (iterationId, timestamp) => {
+    const iteration = iterations[iterationId]
+    const data = iteration.data
+    const iterationStart = iteration.startDate
+
+    chart.data.datasets[0].data = data
+      .filter((item) => item.dateStarted <= timestamp && (!item.dateFinished || item.dateFinished > timestamp))
+      .map((item) => ({
+        x: (timestamp - iterationStart) / 1000,
+        y: (timestamp - item.dateStarted) / 1000,
+        item: { ...item, ...item.columnAt(timestamp) },
+      }))
+
+    chart.data.datasets[1].data = data
+      .filter((item) => item.state === 'finished' && item.dateFinished <= timestamp)
+      .map((item) => ({
+        x: (item.dateFinished - iterationStart) / 1000,
+        y: item.cycleTime() / 1000,
+        item,
+      }))
+
+    chart.data.datasets[2].data = data
+      .filter((item) => item.state === 'rejected' && item.dateFinished <= timestamp)
+      .map((item) => ({
+        x: (item.dateFinished - iterationStart) / 1000,
+        y: item.cycleTime() / 1000,
+        item,
+      }))
+
+    chart.update()
+  }
+
   return {
     update,
+    scrubTo,
   }
 }
 

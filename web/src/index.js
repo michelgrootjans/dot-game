@@ -8,6 +8,7 @@ import Workspace from './Workspace'
 import IterationStats from './IterationStats'
 import Testing from './Testing'
 import Players from './Players'
+import IterationTimeline from './IterationTimeline'
 
 const $gameId = document.querySelector('[data-game-id]')
 
@@ -28,6 +29,7 @@ const initializeGame = (gameId) => {
   ProgressBar.initialize()
   IterationStats.initialize(gameId)
   Players.initialize(gameId)
+  IterationTimeline.initialize()
 }
 
 if ($gameId) {
