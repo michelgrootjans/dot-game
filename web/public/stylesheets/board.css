@@ -4,15 +4,13 @@
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.18), 0 1px 3px rgba(0, 0, 0, 0.08);
     overflow: hidden;
     min-height: 600px;
-    width: fit-content;
     flex-wrap: nowrap;
     --bs-gutter-x: 0;
 }
 
 .board-column {
-    flex: 0 0 160px;
-    width: 160px;
-    max-width: none;
+    flex: 1 1 0;
+    min-width: 0;
     padding: 0;
     background: transparent;
     border-left: 1px solid rgba(0, 0, 0, 0.08);
@@ -60,8 +58,8 @@
 
 /* Grouped columns (work + wait pair under a shared header) */
 .board-column-group {
-    flex: 0 0 320px;
-    width: 320px;
+    flex: 2 1 0;
+    min-width: 0;
     padding: 0;
     border-left: 1px solid rgba(0, 0, 0, 0.08);
 }
@@ -84,8 +82,8 @@
 }
 
 .board-sub-column {
-    flex: 0 0 160px;
-    width: 160px;
+    flex: 1 1 0;
+    min-width: 0;
     padding: 0;
     background: transparent;
     border-left: 1px solid rgba(0, 0, 0, 0.08);
