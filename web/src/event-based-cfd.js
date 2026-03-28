@@ -138,6 +138,7 @@ const Cfd = (context) => {
       .reverse()
       .map((c) => createDataset(c.taskName, c.backgroundColor, c.borderColor))
     chart.options.scales.x.suggestedMax = detail.duration / 1000
+    delete chart.options.scales.x.max
     recordSnapshot(detail.iterationId, detail.startTime)
     render(detail.iterationId)
   }
@@ -165,6 +166,7 @@ const Cfd = (context) => {
     const data = iterationData[detail.iterationId]
     if (!data) return
     recordSnapshot(detail.iterationId, detail.endTime)
+    chart.options.scales.x.max = detail.actualDuration / 1000
     if (detail.iterationId === displayIterationId) render(detail.iterationId)
   })
 
