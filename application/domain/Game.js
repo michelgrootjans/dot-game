@@ -152,9 +152,26 @@ const Game = (state) => {
     return { gameId, inbox, work, outbox, defects: defectsColumn }
   }
 
+  const activeColumns = columns.filter((column) => ![doneColumn, defectsColumn].includes(column))
+
+  const columnGroups = []
+  let i = 0
+  while (i < activeColumns.length) {
+    const col = activeColumns[i]
+    const next = activeColumns[i + 1]
+    if (next && next.columnType === 'wait-column') {
+      columnGroups.push({ main: col, wait: next })
+      i += 2
+    } else {
+      columnGroups.push({ main: col, wait: null })
+      i++
+    }
+  }
+
   return {
     ...state,
-    activeColumns: columns.filter((column) => ![doneColumn, defectsColumn].includes(column)),
+    activeColumns,
+    columnGroups,
     endColumns: [doneColumn, defectsColumn],
     playerColumns,
 

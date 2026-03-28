@@ -39,22 +39,40 @@
     </div>
 
     <div id="board" class="row">
-        {{#each game.activeColumns}}
-            <div class="col board-column {{columnType}}" data-column-id="{{columnId}}">
-                <h2>
-                    <a href="/games/{{../game.gameId}}/{{columnId}}" target="_blank">{{title}}</a>
-                    <span class="participants">
-                    </span>
-                </h2>
-                <h4></h4>
-                <div class="tasks"></div>
-            </div>
+        {{#each game.columnGroups}}
+            {{#if this.wait}}
+                <div class="board-column-group {{this.main.columnType}}">
+                    <h2 style="border-bottom-color: {{this.main.borderColor}}">
+                        <a href="/games/{{../../game.gameId}}/{{this.main.columnId}}" target="_blank">{{this.main.title}}</a>
+                        <span class="participants"></span>
+                    </h2>
+                    <div class="d-flex">
+                        <div class="board-sub-column {{this.main.columnType}}" data-column-id="{{this.main.columnId}}">
+                            <h4></h4>
+                            <div class="tasks"></div>
+                        </div>
+                        <div class="board-sub-column wait-column" data-column-id="{{this.wait.columnId}}">
+                            <h4></h4>
+                            <div class="tasks"></div>
+                        </div>
+                    </div>
+                </div>
+            {{else}}
+                <div class="col board-column {{this.main.columnType}}" data-column-id="{{this.main.columnId}}">
+                    <h2 style="border-bottom-color: {{this.main.borderColor}}">
+                        <a href="/games/{{../../game.gameId}}/{{this.main.columnId}}" target="_blank">{{this.main.title}}</a>
+                        <span class="participants"></span>
+                    </h2>
+                    <h4></h4>
+                    <div class="tasks"></div>
+                </div>
+            {{/if}}
         {{/each}}
         <div class="col board-column done-column">
             {{#each game.endColumns}}
             <div class="row">
                 <div class="col" data-column-id="{{columnId}}">
-                    <h2>{{title}}</h2>
+                    <h2 style="border-bottom-color: {{borderColor}}">{{title}}</h2>
                     <h4></h4>
                     <div class="tasks"></div>
                 </div>
