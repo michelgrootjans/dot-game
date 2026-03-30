@@ -41,7 +41,7 @@ const init = (application) => {
     if (game.isOpen()) {
       res.redirect(`/games/${game.gameId}/${game.findFreeWork(5000)}`)
     } else {
-      res.status(404).send('Sorry, this game is full')
+      res.status(404).render('games/full', { layout: 'mobile', title: 'Game Full', gameId })
     }
   })
 
