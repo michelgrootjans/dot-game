@@ -26,12 +26,14 @@ const Column = (state) => {
   }
 
   const isOpen = () => state.numberOfAssignments === 0 && !state.reserved
+  const isReserved = () => state.numberOfAssignments === 0 && state.reserved
 
   return {
     ...state,
     join,
     leave,
     isOpen,
+    isReserved,
     reserve,
   }
 }
@@ -52,6 +54,12 @@ const Game = (state) => {
   const isOpen = () => playerColumns.some((c) => c.isOpen())
   const join = (columnId) => findColumn(columnId).join()
   const leave = (columnId) => findColumn(columnId).leave()
+  const nextPlayerColumn = (columnId) => {
+    const idx = playerColumns.findIndex((c) => c.columnId === columnId)
+    return idx >= 0 ? playerColumns[idx + 1] : undefined
+  }
+  const isColumnReserved = (columnId) =>
+    playerColumns.find((c) => c.columnId === columnId)?.isReserved() ?? false
   const findFreeWork = (timeout = 5000) => {
     const column = playerColumns.find((c) => c.isOpen())
     if (column) column.reserve(timeout)
@@ -177,8 +185,10 @@ const Game = (state) => {
 
     isOpen,
     join,
-    findFreeWork,
     leave,
+    nextPlayerColumn,
+    isColumnReserved,
+    findFreeWork,
     assignments,
 
     startIteration,

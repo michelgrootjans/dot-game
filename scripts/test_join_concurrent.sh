@@ -23,8 +23,8 @@ PLAYER_PIDS=()
 
 cleanup() {
   for pid in "${PLAYER_PIDS[@]}"; do
-    pkill -P "$pid" 2>/dev/null  # kill child node process
-    kill "$pid" 2>/dev/null       # kill the subshell itself
+    pkill -P "$pid" 2>/dev/null
+    kill "$pid" 2>/dev/null
   done
   wait 2>/dev/null
   rm -rf "$TEMP_DIR"
@@ -33,14 +33,17 @@ trap cleanup EXIT
 
 join_and_connect() {
   local i=$1
-  local result base_url game_id column_id
+  local out status base_url game_id column_id
 
-  result=$(curl -s -o /dev/null -w "%{url_effective}" -L "$JOIN_URL")
-  echo "$result" > "$TEMP_DIR/player_$i"
+  out=$(curl -s -o /dev/null -w "%{url_effective} %{http_code}" -L "$JOIN_URL")
+  local result="${out% *}"
+  local status="${out##* }"
 
-  if [[ "$result" != *"/join" ]]; then
+  echo "$result $status" > "$TEMP_DIR/player_$i"
+
+  if [ "$status" = "200" ]; then
     base_url=$(echo "$result" | sed 's|/games/.*||')
-    game_id=$(echo "$result" | sed 's|.*/games/||' | cut -d'/' -f1)
+    game_id=$(echo "$result"  | sed 's|.*/games/||' | cut -d'/' -f1)
     column_id=$(echo "$result" | rev | cut -d'/' -f1 | rev)
     node "$SCRIPT_DIR/ws_connect.js" "$base_url" "$game_id" "$column_id"
   fi
@@ -65,8 +68,11 @@ FULL_COUNT=0
 JOINED_COUNT=0
 
 for i in $(seq 1 $NUM_PLAYERS); do
-  RESULT=$(cat "$TEMP_DIR/player_$i")
-  if [[ "$RESULT" == *"/join" ]]; then
+  line=$(cat "$TEMP_DIR/player_$i")
+  RESULT="${line% *}"
+  STATUS="${line##* }"
+
+  if [ "$STATUS" = "404" ]; then
     echo "  Player $i: game full"
     FULL_COUNT=$((FULL_COUNT + 1))
   else

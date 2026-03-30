@@ -26,7 +26,7 @@ const init = (application) => {
         title: 'Join the Dot Game',
       })
     } else {
-      res.redirect('/')
+      res.status(404).render('games/not-found', { layout: 'desktop', title: 'Game Not Found' })
     }
   })
 
@@ -34,15 +34,10 @@ const init = (application) => {
     const gameId = req.params.gameId
     const game = application.findGame(gameId)
     if (!game) {
-      res.redirect('/')
+      res.status(404).render('games/not-found', { layout: 'mobile', title: 'Game Not Found' })
       return
     }
-
-    if (game.isOpen()) {
-      res.redirect(`/games/${game.gameId}/${game.findFreeWork(5000)}`)
-    } else {
-      res.status(404).render('games/full', { layout: 'mobile', title: 'Game Full', gameId })
-    }
+    res.redirect(`/games/${gameId}/${game.playerColumns[0].columnId}`)
   })
 
   router.get('/:gameId', function (req, res, next) {
@@ -51,15 +46,38 @@ const init = (application) => {
     if (game) {
       res.render('games/index', { game, layout: 'desktop' })
     } else {
-      res.redirect('/')
+      res.status(404).render('games/not-found', { layout: 'desktop', title: 'Game Not Found' })
     }
   })
 
   router.get('/:gameId/:columnId', function (req, res, next) {
     const params = allParams(req)
+    const { gameId, columnId } = params
+    const game = application.findGame(gameId)
+
+    if (!game) {
+      res.status(404).render('games/not-found', { layout: 'mobile', title: 'Game Not Found' })
+      return
+    }
+
+    const playerColumn = game.playerColumns.find((c) => c.columnId === columnId)
+    if (playerColumn) {
+      if (playerColumn.isOpen()) {
+        playerColumn.reserve(5000)
+      } else {
+        const next = game.nextPlayerColumn(columnId)
+        if (next) {
+          res.redirect(`/games/${gameId}/${next.columnId}`)
+        } else {
+          res.status(404).render('games/full', { layout: 'mobile', title: 'Game Full', gameId })
+        }
+        return
+      }
+    }
+
     const work = application.execute(FindWork(params))
     if (!work) {
-      res.status(404).send('This games does not exist.')
+      res.status(404).send('This game does not exist.')
       return
     }
 

@@ -43,6 +43,12 @@ if ($gameId) {
     document.dispatchEvent(new CustomEvent(event.type, { detail: event }))
   }
 
-  socket.on('message', (event) => publish(event))
+  socket.on('message', (event) => {
+    if (event.type === 'ColumnTaken') {
+      window.location.href = `/games/${gameId}/join`
+      return
+    }
+    publish(event)
+  })
   socket.on('replay', (events) => events.forEach((event) => publish(event)))
 }

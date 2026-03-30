@@ -16,10 +16,15 @@ let init = (server, events, application) => {
     socket.emit('replay', events.eventsFor(gameId))
 
     if (workColumnId) {
-      application.execute(JoinGame({ gameId, columnId: workColumnId }))
-      socket.on('disconnect', () => {
-        application.execute(LeaveGame({ gameId, columnId: workColumnId }))
-      })
+      const game = application.findGame(gameId)
+      if (game?.isColumnReserved(workColumnId)) {
+        application.execute(JoinGame({ gameId, columnId: workColumnId }))
+        socket.on('disconnect', () => {
+          application.execute(LeaveGame({ gameId, columnId: workColumnId }))
+        })
+      } else {
+        socket.emit('message', { type: 'ColumnTaken', gameId })
+      }
     }
   })
 
