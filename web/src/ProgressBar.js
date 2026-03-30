@@ -1,6 +1,13 @@
 const Timer = require('./Timer')
 
 const initialize = () => {
+  const container = document.querySelector('[data-work-column-id]')
+  if (container) {
+    container.classList.add('inactive')
+    document.addEventListener('IterationStarted', () => container.classList.remove('inactive'))
+    document.addEventListener('IterationFinished', () => container.classList.add('inactive'))
+  }
+
   const progressBar = document.getElementById('progressbar')
   if (!progressBar) return
 
