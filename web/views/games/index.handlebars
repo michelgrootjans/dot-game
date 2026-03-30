@@ -43,7 +43,7 @@
             {{#if this.wait}}
                 <div class="board-column-group {{this.main.columnType}}">
                     <h2 style="border-bottom-color: {{this.main.borderColor}}">
-                        <a href="/games/{{../../game.gameId}}/{{this.main.columnId}}" target="_blank">{{this.main.title}}</a>
+                        <a href="/games/{{../game.gameId}}/{{this.main.columnId}}" target="_blank">{{this.main.title}}</a>
                         <span class="participants"></span>
                     </h2>
                     <div class="d-flex">
@@ -60,7 +60,7 @@
             {{else}}
                 <div class="col board-column {{this.main.columnType}}" data-column-id="{{this.main.columnId}}">
                     <h2 style="border-bottom-color: {{this.main.borderColor}}">
-                        <a href="/games/{{../../game.gameId}}/{{this.main.columnId}}" target="_blank">{{this.main.title}}</a>
+                        <a href="/games/{{../game.gameId}}/{{this.main.columnId}}" target="_blank">{{this.main.title}}</a>
                         <span class="participants"></span>
                     </h2>
                     <h4></h4>
