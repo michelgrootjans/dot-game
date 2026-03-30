@@ -41,7 +41,7 @@
     <div id="board" class="row">
         {{#each game.columnGroups}}
             {{#if this.wait}}
-                <div class="board-column-group {{this.main.columnType}}">
+                <div class="board-column-group {{this.main.columnType}}" data-column-id="{{this.main.columnId}}">
                     <h2 style="border-bottom-color: {{this.main.borderColor}}">
                         <a href="/games/{{../game.gameId}}/{{this.main.columnId}}" target="_blank">{{this.main.title}}</a>
                         <span class="participants"></span>
