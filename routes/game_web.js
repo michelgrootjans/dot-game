@@ -50,6 +50,16 @@ const init = (application) => {
     }
   })
 
+  router.get('/:gameId/full', function (req, res, next) {
+    const gameId = req.params.gameId
+    const game = application.findGame(gameId)
+    if (!game) {
+      res.status(404).render('games/not-found', { layout: 'mobile', title: 'Game Not Found' })
+      return
+    }
+    res.render('games/full', { layout: 'mobile', title: 'Game Full', gameId })
+  })
+
   router.get('/:gameId/:columnId', function (req, res, next) {
     const params = allParams(req)
     const { gameId, columnId } = params
@@ -69,7 +79,7 @@ const init = (application) => {
         if (next) {
           res.redirect(`/games/${gameId}/${next.columnId}`)
         } else {
-          res.status(404).render('games/full', { layout: 'mobile', title: 'Game Full', gameId })
+          res.redirect(`/games/${gameId}/full`)
         }
         return
       }
