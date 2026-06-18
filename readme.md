@@ -4,7 +4,9 @@ This is an online simulation of the agile dot game
 
 # Play the game
 
-Go to https://afternoon-bayou-75731.herokuapp.com/
+EU-hosted: https://eu-dot-game-ccf84866fb82.herokuapp.com/
+
+US-hosted: https://afternoon-bayou-75731.herokuapp.com/
 
 # Progress
 
