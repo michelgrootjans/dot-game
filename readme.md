@@ -4,13 +4,11 @@ This is an online simulation of the agile dot game
 
 # Play the game
 
-EU-hosted: https://eu-dot-game-ccf84866fb82.herokuapp.com/
+Ready to feel the pain of batching? Jump right in:
 
-US-hosted: https://afternoon-bayou-75731.herokuapp.com/
+**EU players**: [fire up the game here](https://eu-dot-game-ccf84866fb82.herokuapp.com/), or grab the [food truck edition](https://eu-dot-game-ccf84866fb82.herokuapp.com/foodtruck) if you prefer your insights served from a van.
 
-# Progress
-
-see https://github.com/michelgrootjans/dot-game/projects/2
+**US players**: [your version lives here](https://afternoon-bayou-75731.herokuapp.com/), with a [food truck flavour](https://eu-dot-game-ccf84866fb82.herokuapp.com/foodtruck) on the side.
 
 # How I use it during a workshop
 
